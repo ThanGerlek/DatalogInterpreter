@@ -5,11 +5,7 @@
 
 void Scanner::removeWhitespace()
 {
-    std::cout << "Input: '" << input << "', length: " << input.length() << std::endl;
-    if (input == "")
-        return;
-
-    while (std::isspace(input.at(0))) // FIXME: out_of_range with newlines
+    while (input.length() > 0 && std::isspace(input.at(0)))
     {
         if (input.at(0) == '\n')
         {
