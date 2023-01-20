@@ -30,69 +30,79 @@ Token Scanner::scanToken()
     MaybeToken mToken = scanForEOFToken(); // END_OF_FILE token
     if (mToken.hasToken())
     {
+        std::cout << "Found EOF token: ";
         Token t = mToken.getToken();
         return t;
     }
 
-    MaybeToken scanForCharTokens(); // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
+    mToken = scanForCharTokens(); // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
     if (mToken.hasToken())
     {
+        std::cout << "Found char token: ";
         Token t = mToken.getToken();
         return t;
     }
 
-    MaybeToken scanForColonTokens(); // COLON and COLON_DASH tokens
+    mToken = scanForColonTokens(); // COLON and COLON_DASH tokens
     if (mToken.hasToken())
     {
+        std::cout << "Found colon or colon_dash token: ";
         Token t = mToken.getToken();
         return t;
     }
 
-    MaybeToken scanForSchemesToken(); // SCHEMES token
+    mToken = scanForSchemesToken(); // SCHEMES token
     if (mToken.hasToken())
     {
+        std::cout << "Found schemes token: ";
         Token t = mToken.getToken();
         return t;
     }
 
-    MaybeToken scanForFactsToken(); // FACTS token
+    mToken = scanForFactsToken(); // FACTS token
     if (mToken.hasToken())
     {
+        std::cout << "Found facts token: ";
         Token t = mToken.getToken();
         return t;
     }
 
-    MaybeToken scanForRulesToken(); // RULES token
+    mToken = scanForRulesToken(); // RULES token
     if (mToken.hasToken())
     {
+        std::cout << "Found rules token: ";
         Token t = mToken.getToken();
         return t;
     }
 
-    MaybeToken scanForQueriesToken(); // QUERIES token
+    mToken = scanForQueriesToken(); // QUERIES token
     if (mToken.hasToken())
     {
+        std::cout << "Found queries token: ";
         Token t = mToken.getToken();
         return t;
     }
 
-    MaybeToken scanForIdToken(); // ID token
+    mToken = scanForIdToken(); // ID token
     if (mToken.hasToken())
     {
+        std::cout << "Found id token: ";
         Token t = mToken.getToken();
         return t;
     }
 
-    MaybeToken scanForStringToken(); // STRING token
+    mToken = scanForStringToken(); // STRING token
     if (mToken.hasToken())
     {
+        std::cout << "Found string token: ";
         Token t = mToken.getToken();
         return t;
     }
 
-    MaybeToken scanForCommentToken(); // COMMENT token
+    mToken = scanForCommentToken(); // COMMENT token
     if (mToken.hasToken())
     {
+        std::cout << "Found comment token: ";
         Token t = mToken.getToken();
         return t;
     }
@@ -186,17 +196,18 @@ MaybeToken Scanner::scanForColonTokens() // COLON and COLON_DASH tokens
         return MaybeToken();
     }
 
-    TokenType type = COLON;
-    std::string value = ":";
-
     if (input.at(1) == '-')
     {
-        type = COLON_DASH;
-        value = ":-";
+        Token token = Token(COLON_DASH, ":-", currentLine);
+        input = input.substr(2);
+        return MaybeToken(token);
     }
-
-    Token t = Token(type, value, currentLine);
-    return MaybeToken(t);
+    else
+    {
+        Token token = Token(COLON, ":", currentLine);
+        input = input.substr(1);
+        return MaybeToken(token);
+    }
 }
 
 MaybeToken Scanner::scanForSchemesToken() // SCHEMES token
