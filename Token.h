@@ -31,9 +31,9 @@ enum TokenType
 class Token
 {
 private:
-    const TokenType type;
-    const std::string value;
-    const int line;
+    TokenType type;
+    std::string value;
+    int line;
 
     std::string typeName(TokenType type) const
     {
@@ -119,26 +119,19 @@ public:
 struct MaybeToken
 {
 private:
-    Token *tokenPtr;
+    Token token;
+    bool isToken;
 
 public:
-    MaybeToken() : tokenPtr(NULL){};
+    MaybeToken() : isToken(false){};
     MaybeToken(Token token)
     {
         setToken(token);
     };
 
-    ~MaybeToken()
-    {
-        if (tokenPtr)
-        {
-            delete tokenPtr;
-        }
-    }
-
     bool hasToken()
     {
-        return tokenPtr != NULL;
+        return isToken;
     }
 
     Token getToken()
@@ -148,12 +141,13 @@ public:
             std::cout << "ERROR: Tried to call getToken() on a MaybeToken with no token." << std::endl;
             throw;
         }
-        return *tokenPtr;
+        return token;
     }
 
     void setToken(Token token)
     {
-        tokenPtr = new Token(token.getType(), token.getValue(), token.getLine());
+        this->token = Token(token.getType(), token.getValue(), token.getLine());
+        isToken = true;
     }
 };
 
