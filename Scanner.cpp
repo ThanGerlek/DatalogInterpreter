@@ -3,10 +3,13 @@
 
 #include "Scanner.h"
 
-Token Scanner::scanToken()
+void Scanner::removeWhitespace()
 {
-    // Remove leading whitespace
-    while (std::isspace(input.at(0)))
+    std::cout << "Input: '" << input << "', length: " << input.length() << std::endl;
+    if (input == "")
+        return;
+
+    while (std::isspace(input.at(0))) // FIXME: out_of_range with newlines
     {
         if (input.at(0) == '\n')
         {
@@ -14,6 +17,17 @@ Token Scanner::scanToken()
         }
         input = input.substr(1);
     }
+}
+
+bool Scanner::hasNext()
+{
+    removeWhitespace();
+    return input.length() > 0;
+}
+
+Token Scanner::scanToken()
+{
+    removeWhitespace();
 
     // TODO! Token checking
 
@@ -89,6 +103,7 @@ Token Scanner::scanToken()
 
     // TODO Finish UNDEFINED token (handler function?)
     std::string value = input.substr(0, 1);
+    input = input.substr(1);
     Token t = Token(UNDEFINED, value, currentLine);
     return t;
 }

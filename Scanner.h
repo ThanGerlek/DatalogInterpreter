@@ -15,6 +15,8 @@ public:
     int currentLine;
     Scanner(const std::string &input) : input(input), currentLine(0){};
     Token scanToken();
+    void removeWhitespace();
+    bool hasNext();
     MaybeToken scanForEOFToken();       // END_OF_FILE token
     MaybeToken scanForCharTokens();     // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
     MaybeToken scanForColonTokens();    // COLON and COLON_DASH tokens
