@@ -220,39 +220,58 @@ MaybeToken Scanner::scanForColonTokens()
 }
 
 /**
+ * Scan for a token whose value is the given string.
+ * Called by SCHEMES, FACTS, RULES, and QUERIES token scanners.
+ */
+MaybeToken Scanner::scanForKeywordTokens(TokenType type, std::string value)
+{
+    // Fail if input doesn't begin with value
+    if (input.length() < value.length() || input.substr(0, value.length()) != value)
+    {
+        return MaybeToken();
+    }
+
+    // Fail if the first character following value is not a whitespace
+    if (input.length() > value.length() && !std::isspace(input.at(value.length())))
+    {
+        return MaybeToken();
+    }
+
+    input = input.substr(value.length());
+    Token token = Token(type, value, currentLine);
+    return MaybeToken(token);
+}
+
+/**
  * Scan for SCHEMES token.
  */
-MaybeToken Scanner::scanForSchemesToken() // SCHEMES token
+MaybeToken Scanner::scanForSchemesToken()
 {
-    return MaybeToken();
-    // TODO
+    return scanForKeywordTokens(SCHEMES, "Schemes");
 }
 
 /**
  * Scan for FACTS token.
  */
-MaybeToken Scanner::scanForFactsToken() // FACTS token
+MaybeToken Scanner::scanForFactsToken()
 {
-    return MaybeToken();
-    // TODO
+    return scanForKeywordTokens(FACTS, "Facts");
 }
 
 /**
  * Scan for RULES token.
  */
-MaybeToken Scanner::scanForRulesToken() // RULES token
+MaybeToken Scanner::scanForRulesToken()
 {
-    return MaybeToken();
-    // TODO
+    return scanForKeywordTokens(RULES, "Rules");
 }
 
 /**
  * Scan for QUERIES token.
  */
-MaybeToken Scanner::scanForQueriesToken() // QUERIES token
+MaybeToken Scanner::scanForQueriesToken()
 {
-    return MaybeToken();
-    // TODO
+    return scanForKeywordTokens(QUERIES, "Queries");
 }
 
 /**
