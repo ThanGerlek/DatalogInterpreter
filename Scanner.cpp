@@ -3,6 +3,9 @@
 
 #include "Scanner.h"
 
+/**
+ * Remove any leading whitespace from the input string.
+ */
 void Scanner::removeWhitespace()
 {
     while (input.length() > 0 && std::isspace(input.at(0)))
@@ -15,17 +18,23 @@ void Scanner::removeWhitespace()
     }
 }
 
+/**
+ * Return true iff there is more text in the input string to scan.
+ */
 bool Scanner::hasNext()
 {
     removeWhitespace();
     return input.length() > 0;
 }
 
+/**
+ * Scan a single token, removing it from the input string.
+ */
 Token Scanner::scanToken()
 {
     removeWhitespace();
 
-    // TODO! Token checking
+    // TODO Order calls according to frequency
 
     MaybeToken mToken = scanForEOFToken(); // END_OF_FILE token
     if (mToken.hasToken())
@@ -107,22 +116,34 @@ Token Scanner::scanToken()
         return t;
     }
 
-    // TODO Finish UNDEFINED token (handler function?)
+    // UNDEFINED token
     std::string value = input.substr(0, 1);
     input = input.substr(1);
     Token t = Token(UNDEFINED, value, currentLine);
     return t;
 }
 
+////
+////
+////
+//                 Individual token scanners
+////
+
+/**
+ * Scan for END_OF_FILE token.
+ */
 MaybeToken Scanner::scanForEOFToken() // END_OF_FILE token
 {
-    if (input.length() == 0 /*|| input.at(0) == 'EOF'*/)
+    if (input.length() == 0)
     {
         return MaybeToken(Token(END_OF_FILE, "", currentLine));
     }
     return MaybeToken();
 }
 
+/**
+ * Scan for COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, MULTIPLY, and ADD tokens.
+ */
 MaybeToken Scanner::scanForCharTokens()
 {
     char c = input.at(0);
@@ -174,22 +195,10 @@ MaybeToken Scanner::scanForCharTokens()
     return mToken;
 }
 
-// TODO
-//     COLON,
-//     COLON_DASH,
-
-//     SCHEMES,
-//     FACTS,
-//     RULES,
-//     QUERIES,
-//     ID,
-//     STRING,
-//     COMMENT,
-//     UNDEFINED,
-
-//     END_OF_FILE
-
-MaybeToken Scanner::scanForColonTokens() // COLON and COLON_DASH tokens
+/**
+ * Scan for COLON and COLON_DASH tokens.
+ */
+MaybeToken Scanner::scanForColonTokens()
 {
     if (input.at(0) != ':')
     {
@@ -210,51 +219,67 @@ MaybeToken Scanner::scanForColonTokens() // COLON and COLON_DASH tokens
     }
 }
 
+/**
+ * Scan for SCHEMES token.
+ */
 MaybeToken Scanner::scanForSchemesToken() // SCHEMES token
 {
     return MaybeToken();
-    //
+    // TODO
 }
 
+/**
+ * Scan for FACTS token.
+ */
 MaybeToken Scanner::scanForFactsToken() // FACTS token
 {
     return MaybeToken();
-    //
+    // TODO
 }
 
+/**
+ * Scan for RULES token.
+ */
 MaybeToken Scanner::scanForRulesToken() // RULES token
 {
     return MaybeToken();
-    //
+    // TODO
 }
 
+/**
+ * Scan for QUERIES token.
+ */
 MaybeToken Scanner::scanForQueriesToken() // QUERIES token
 {
     return MaybeToken();
-    //
+    // TODO
 }
 
+/**
+ * Scan for ID token.
+ */
 MaybeToken Scanner::scanForIdToken() // ID token
 {
     return MaybeToken();
-    //
+    // TODO
 }
 
+/**
+ * Scan for STRING token.
+ */
 MaybeToken Scanner::scanForStringToken() // STRING token
 {
     return MaybeToken();
-    //
+    // TODO
 }
+
+/**
+ * Scan for COMMENT token.
+ */
 MaybeToken Scanner::scanForCommentToken() // COMMENT token
 {
     return MaybeToken();
-    //
-}
-
-MaybeToken Scanner::scanForUndefinedToken() // UNDEFINED token
-{
-    return MaybeToken();
-    //
+    // TODO
 }
 
 #endif

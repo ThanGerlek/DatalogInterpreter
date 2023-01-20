@@ -27,7 +27,6 @@ public:
     MaybeToken scanForIdToken();        // ID token
     MaybeToken scanForStringToken();    // STRING token
     MaybeToken scanForCommentToken();   // COMMENT token
-    MaybeToken scanForUndefinedToken(); // UNDEFINED token
 };
 
 #endif
