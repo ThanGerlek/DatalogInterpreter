@@ -275,18 +275,73 @@ MaybeToken Scanner::scanForQueriesToken()
 }
 
 /**
- * Scan for ID token.
- */
-MaybeToken Scanner::scanForIdToken() // ID token
-{
-    return MaybeToken();
-    // TODO
-}
-
-/**
  * Scan for STRING token.
  */
 MaybeToken Scanner::scanForStringToken() // STRING token
+{
+
+    if (input.at(0) != '\'')
+    {
+        return MaybeToken();
+    }
+
+    std::stringstream valSS;
+    valSS << "'";
+    
+    bool finishedScan = false;
+    int line = currentLine;
+    int index = 1;
+    MaybeToken mt;
+
+    while (!finishedScan)
+    {
+        if (index >= static_cast<int>(input.length())) // Fail: Unterminated string
+        {
+            Token token = Token(UNDEFINED, valSS.str(), line);
+            mt = MaybeToken(token);
+            finishedScan = true;
+        }
+
+        else if (input.at(index) == '\'') // Found single quote
+        {
+            if (static_cast<int>(input.length()) > index + 1 && input.at(index + 1) == '\'')
+            {
+                // Escaped single quote
+                valSS << "''";
+                index += 2;
+            }
+            else
+            {
+                // End of string
+                valSS << "'";
+                index++;
+                Token token = Token(STRING, valSS.str(), line);
+                mt = MaybeToken(token);
+                finishedScan = true;
+            }
+        }
+
+        // Other character
+        else
+        {
+            if (input.at(index) == '\n')
+            {
+                currentLine++;
+            }
+
+            valSS << input.at(index);
+            index++;
+        }
+    }
+
+    input = input.substr(index);
+    return mt;
+}
+
+/**
+ * Scan for ID token.
+ */
+MaybeToken Scanner::scanForIdToken() // ID token
 {
     return MaybeToken();
     // TODO
