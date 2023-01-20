@@ -95,8 +95,11 @@ Token Scanner::scanToken()
 
 MaybeToken Scanner::scanForEOFToken() // END_OF_FILE token
 {
+    if (input.length() == 0 /*|| input.at(0) == 'EOF'*/)
+    {
+        return MaybeToken(Token(END_OF_FILE, "", currentLine));
+    }
     return MaybeToken();
-    //
 }
 
 MaybeToken Scanner::scanForCharTokens()
@@ -150,8 +153,6 @@ MaybeToken Scanner::scanForCharTokens()
     return mToken;
 }
 
-
-
 // TODO
 //     COLON,
 //     COLON_DASH,
@@ -169,8 +170,22 @@ MaybeToken Scanner::scanForCharTokens()
 
 MaybeToken Scanner::scanForColonTokens() // COLON and COLON_DASH tokens
 {
-    return MaybeToken();
-    //
+    if (input.at(0) != ':')
+    {
+        return MaybeToken();
+    }
+
+    TokenType type = COLON;
+    std::string value = ":";
+
+    if (input.at(1) == '-')
+    {
+        type = COLON_DASH;
+        value = ":-";
+    }
+
+    Token t = Token(type, value, currentLine);
+    return MaybeToken(t);
 }
 
 MaybeToken Scanner::scanForSchemesToken() // SCHEMES token
