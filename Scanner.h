@@ -13,9 +13,19 @@ private:
 
 public:
     int currentLine;
-    Scanner(const std::string &input) : input(input), currentLine(1){};
+    Scanner(const std::string &input) : input(input), currentLine(0){};
     Token scanToken();
-    MaybeToken scanForCharToken();
+    MaybeToken scanForEOFToken();       // END_OF_FILE token
+    MaybeToken scanForCharTokens();     // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
+    MaybeToken scanForColonTokens();    // COLON and COLON_DASH tokens
+    MaybeToken scanForSchemesToken();   // SCHEMES token
+    MaybeToken scanForFactsToken();     // FACTS token
+    MaybeToken scanForRulesToken();     // RULES token
+    MaybeToken scanForQueriesToken();   // QUERIES token
+    MaybeToken scanForIdToken();        // ID token
+    MaybeToken scanForStringToken();    // STRING token
+    MaybeToken scanForCommentToken();   // COMMENT token
+    MaybeToken scanForUndefinedToken(); // UNDEFINED token
 };
 
 #endif
