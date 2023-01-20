@@ -1,6 +1,7 @@
 #ifndef PROJECT1_T2K_TOKEN_H
 #define PROJECT1_T2K_TOKEN_H
 
+#include <iostream>
 #include <string>
 #include <sstream>
 
@@ -76,11 +77,13 @@ private:
             return "EOF";
         }
 
-        throw "Unrecognized token type.";
+        std::cout << "ERROR: Unrecognized token type." << std::endl;
+        throw;
     }
 
 public:
     Token(TokenType type, std::string value, int line) : type(type), value(value), line(line){};
+    Token() : type(UNDEFINED), value(""), line(-1){};
 
     std::string toString() const
     {
@@ -89,6 +92,44 @@ public:
             << "\"" << value << "\""
             << "," << line << ")";
         return out.str();
+    }
+};
+
+////
+////
+////
+////
+
+// Token wrapper with an additional "hasToken = false" state
+struct MaybeToken
+{
+private:
+    Token token;
+    bool isToken;
+
+public:
+    MaybeToken(Token token) : token(token), isToken(true){};
+    MaybeToken() : isToken(false){};
+
+    bool hasToken()
+    {
+        return isToken;
+    }
+
+    Token getToken()
+    {
+        if (!hasToken())
+        {
+            std::cout << "ERROR: Tried to call getToken() on a MaybeToken with no token." << std::endl;
+            throw;
+        }
+        return token;
+    }
+
+    void setToken(Token token)
+    {
+        this->token = token;
+        isToken = true;
     }
 };
 
