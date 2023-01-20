@@ -31,9 +31,9 @@ enum TokenType
 class Token
 {
 private:
-    TokenType type;
-    std::string value;
-    int line;
+    const TokenType type;
+    const std::string value;
+    const int line;
 
     std::string typeName(TokenType type) const
     {
@@ -85,6 +85,21 @@ public:
     Token(TokenType type, std::string value, int line) : type(type), value(value), line(line){};
     Token() : type(UNDEFINED), value(""), line(-1){};
 
+    TokenType getType() const
+    {
+        return type;
+    }
+
+    std::string getValue() const
+    {
+        return value;
+    }
+
+    int getLine() const
+    {
+        return line;
+    }
+
     std::string toString() const
     {
         std::stringstream out;
@@ -100,20 +115,30 @@ public:
 ////
 ////
 
-// Token wrapper with an additional "hasToken = false" state
+// Token wrapper with an additional "hasToken() == false" state
 struct MaybeToken
 {
 private:
-    Token token;
-    bool isToken;
+    Token *tokenPtr;
 
 public:
-    MaybeToken(Token token) : token(token), isToken(true){};
-    MaybeToken() : isToken(false){};
+    MaybeToken() : tokenPtr(NULL){};
+    MaybeToken(Token token)
+    {
+        setToken(token);
+    };
+
+    ~MaybeToken()
+    {
+        if (tokenPtr)
+        {
+            delete tokenPtr;
+        }
+    }
 
     bool hasToken()
     {
-        return isToken;
+        return tokenPtr != NULL;
     }
 
     Token getToken()
@@ -123,13 +148,12 @@ public:
             std::cout << "ERROR: Tried to call getToken() on a MaybeToken with no token." << std::endl;
             throw;
         }
-        return token;
+        return *tokenPtr;
     }
 
     void setToken(Token token)
     {
-        this->token = token;
-        isToken = true;
+        tokenPtr = new Token(token.getType(), token.getValue(), token.getLine());
     }
 };
 
