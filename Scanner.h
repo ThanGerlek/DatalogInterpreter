@@ -10,11 +10,12 @@ class Scanner
 private:
     std::string input;
     std::vector<Token> tokens;
-    int currentLine;
 
 public:
+    int currentLine;
     Scanner(const std::string &input) : input(input), currentLine(1){};
     Token scanToken();
+    MaybeToken scanForCharToken();
 };
 
 #endif
