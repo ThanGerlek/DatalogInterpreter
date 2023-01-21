@@ -432,10 +432,25 @@ MaybeToken Scanner::scanBlockComment()
 /**
  * Scan for ID token.
  */
-MaybeToken Scanner::scanForIdToken() // ID token
+MaybeToken Scanner::scanForIdToken()
 {
-    return MaybeToken();
-    // TODO
+    if (!std::isalpha(input.at(0)))
+    {
+        return MaybeToken();
+    }
+
+    std::stringstream ss;
+
+    int index = 0;
+    for (; index < static_cast<int>(input.length()) && std::isalnum(input.at(index)); index++)
+    {
+        ss << input.at(index);
+    }
+
+    input = input.substr(index);
+    std::string value = ss.str();
+    Token token = Token(ID, value, currentLine);
+    return MaybeToken(token);
 }
 
 #endif
