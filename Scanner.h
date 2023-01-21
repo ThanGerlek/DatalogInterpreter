@@ -9,11 +9,12 @@ class Scanner
 {
 private:
     std::string input;
+    bool reachedEOF;
     std::vector<Token> tokens;
 
 public:
     int currentLine;
-    Scanner(const std::string &input) : input(input), currentLine(0){};
+    Scanner(const std::string &input) : input(input), reachedEOF(false), currentLine(0){};
     Token scanToken();
     void removeWhitespace();
     bool hasNext();

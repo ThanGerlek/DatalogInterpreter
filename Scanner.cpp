@@ -24,7 +24,7 @@ void Scanner::removeWhitespace()
 bool Scanner::hasNext()
 {
     removeWhitespace();
-    return input.length() > 0;
+    return !reachedEOF;
 }
 
 /**
@@ -41,6 +41,7 @@ Token Scanner::scanToken()
     {
         std::cout << "Found EOF token: ";
         Token t = mToken.getToken();
+        reachedEOF = true;
         return t;
     }
 
