@@ -11,9 +11,18 @@ private:
     std::string input;
     bool reachedEOF;
     std::vector<Token> tokens;
+    int currentLine;
+    MaybeToken scanForWordTokens(); // ID, SCHEMES, FACTS, RULES, and QUERIES tokens
+
+    MaybeToken scanForCharTokens();  // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
+    MaybeToken scanForColonTokens(); // COLON and COLON_DASH tokens
+
+    MaybeToken scanForEOFToken();     // END_OF_FILE token
+    MaybeToken scanForStringToken();  // STRING token
+    MaybeToken scanForCommentToken(); // COMMENT token
+    MaybeToken scanBlockComment();
 
 public:
-    int currentLine;
     Scanner(const std::string &input) : input(input), reachedEOF(false), currentLine(0){};
     Token scanToken();
     void removeWhitespace();
@@ -27,16 +36,6 @@ public:
     // MaybeToken scanForFactsToken();   // FACTS token
     // MaybeToken scanForRulesToken();   // RULES token
     // MaybeToken scanForQueriesToken(); // QUERIES token
-
-    MaybeToken scanForWordTokens(); // ID, SCHEMES, FACTS, RULES, and QUERIES tokens
-
-    MaybeToken scanForCharTokens();  // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
-    MaybeToken scanForColonTokens(); // COLON and COLON_DASH tokens
-
-    MaybeToken scanForEOFToken();     // END_OF_FILE token
-    MaybeToken scanForStringToken();  // STRING token
-    MaybeToken scanForCommentToken(); // COMMENT token
-    MaybeToken scanBlockComment();
 };
 
 #endif
