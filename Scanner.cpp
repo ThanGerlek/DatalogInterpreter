@@ -3,6 +3,24 @@
 
 #include "Scanner.h"
 
+Token Scanner::peek()
+{
+    Token t = tokens.front();
+    return t;
+}
+
+Token Scanner::pop()
+{
+    Token t = tokens.front();
+    tokens.pop();
+    return t;
+}
+
+bool Scanner::hasNextToken()
+{
+    return !tokens.empty();
+}
+
 /**
  * Scan the input string into tokens.
  */
@@ -11,7 +29,7 @@ void Scanner::tokenize()
     while (hasNext())
     {
         Token t = scanToken();
-        tokens.push_back(t);
+        tokens.push(t);
     }
 }
 

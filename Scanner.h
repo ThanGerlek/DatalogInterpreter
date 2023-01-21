@@ -2,6 +2,7 @@
 #define PROJECT1_T2K_SCANNER_H
 
 #include <cctype>
+#include <queue>
 #include <vector>
 #include "Token.h"
 
@@ -12,11 +13,14 @@ public:
     {
         tokenize();
     };
+    Token peek();
+    Token pop();
+    bool hasNextToken();
 
 private:
     std::string input;
     bool reachedEOF;
-    std::vector<Token> tokens;
+    std::queue<Token> tokens;
     int currentLine;
     MaybeToken scanForWordTokens(); // ID, SCHEMES, FACTS, RULES, and QUERIES tokens
 
