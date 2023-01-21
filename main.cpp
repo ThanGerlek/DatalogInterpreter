@@ -14,7 +14,6 @@ int main(int argc, char *argv[])
     }
 
     std::string filename = argv[1];
-    filename = "input.txt"; // TODO Un-hardcode input file
     std::ifstream ifs = std::ifstream(filename);
     if (!ifs.is_open())
     {
