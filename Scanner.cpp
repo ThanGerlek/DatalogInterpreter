@@ -223,7 +223,7 @@ MaybeToken Scanner::scanForColonTokens()
  * Scan for a token whose value is the given string.
  * Called by SCHEMES, FACTS, RULES, and QUERIES token scanners.
  */
-MaybeToken Scanner::scanForKeywordTokens(TokenType type, std::string value)
+MaybeToken Scanner::scanForKeywordTokens(TokenType type, std::string &value)
 {
     // Fail if input doesn't begin with value
     if (input.length() < value.length() || input.substr(0, value.length()) != value)
@@ -247,7 +247,8 @@ MaybeToken Scanner::scanForKeywordTokens(TokenType type, std::string value)
  */
 MaybeToken Scanner::scanForSchemesToken()
 {
-    return scanForKeywordTokens(SCHEMES, "Schemes");
+    std::string value = "Schemes";
+    return scanForKeywordTokens(SCHEMES, value);
 }
 
 /**
@@ -255,7 +256,8 @@ MaybeToken Scanner::scanForSchemesToken()
  */
 MaybeToken Scanner::scanForFactsToken()
 {
-    return scanForKeywordTokens(FACTS, "Facts");
+    std::string value = "Facts";
+    return scanForKeywordTokens(FACTS, value);
 }
 
 /**
@@ -263,7 +265,8 @@ MaybeToken Scanner::scanForFactsToken()
  */
 MaybeToken Scanner::scanForRulesToken()
 {
-    return scanForKeywordTokens(RULES, "Rules");
+    std::string value = "Rules";
+    return scanForKeywordTokens(RULES, value);
 }
 
 /**
@@ -271,23 +274,23 @@ MaybeToken Scanner::scanForRulesToken()
  */
 MaybeToken Scanner::scanForQueriesToken()
 {
-    return scanForKeywordTokens(QUERIES, "Queries");
+    std::string value = "Queries";
+    return scanForKeywordTokens(QUERIES, value);
 }
 
 /**
  * Scan for STRING token.
  */
-MaybeToken Scanner::scanForStringToken() // STRING token
+MaybeToken Scanner::scanForStringToken()
 {
-
     if (input.at(0) != '\'')
     {
         return MaybeToken();
     }
 
-    std::stringstream valSS;
-    valSS << "'";
-    
+    std::stringstream ss;
+    ss << "'";
+
     bool finishedScan = false;
     int line = currentLine;
     int index = 1;
@@ -297,7 +300,7 @@ MaybeToken Scanner::scanForStringToken() // STRING token
     {
         if (index >= static_cast<int>(input.length())) // Fail: Unterminated string
         {
-            Token token = Token(UNDEFINED, valSS.str(), line);
+            Token token = Token(UNDEFINED, ss.str(), line);
             mt = MaybeToken(token);
             finishedScan = true;
         }
@@ -307,15 +310,15 @@ MaybeToken Scanner::scanForStringToken() // STRING token
             if (static_cast<int>(input.length()) > index + 1 && input.at(index + 1) == '\'')
             {
                 // Escaped single quote
-                valSS << "''";
+                ss << "''";
                 index += 2;
             }
             else
             {
                 // End of string
-                valSS << "'";
+                ss << "'";
                 index++;
-                Token token = Token(STRING, valSS.str(), line);
+                Token token = Token(STRING, ss.str(), line);
                 mt = MaybeToken(token);
                 finishedScan = true;
             }
@@ -329,7 +332,7 @@ MaybeToken Scanner::scanForStringToken() // STRING token
                 currentLine++;
             }
 
-            valSS << input.at(index);
+            ss << input.at(index);
             index++;
         }
     }

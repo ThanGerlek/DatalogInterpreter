@@ -18,7 +18,7 @@ public:
     void removeWhitespace();
     bool hasNext();
 
-    MaybeToken scanForKeywordTokens(TokenType type, std::string value); // Used for SCHEMES, FACTS, RULES, and QUERIES tokens
+    MaybeToken scanForKeywordTokens(TokenType type, std::string &value); // Used for SCHEMES, FACTS, RULES, and QUERIES tokens
 
     MaybeToken scanForSchemesToken(); // SCHEMES token
     MaybeToken scanForFactsToken();   // FACTS token
