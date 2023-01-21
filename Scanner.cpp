@@ -402,7 +402,7 @@ MaybeToken Scanner::scanBlockComment()
                 // End of comment
                 ss << "|#";
                 index += 2;
-                Token token = Token(STRING, ss.str(), line);
+                Token token = Token(COMMENT, ss.str(), line);
                 mt = MaybeToken(token);
                 finishedScan = true;
             }
