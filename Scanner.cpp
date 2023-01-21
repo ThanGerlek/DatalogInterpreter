@@ -23,7 +23,6 @@ void Scanner::removeWhitespace()
  */
 bool Scanner::hasNext()
 {
-    removeWhitespace();
     return !reachedEOF;
 }
 
@@ -39,7 +38,6 @@ Token Scanner::scanToken()
     MaybeToken mToken = scanForEOFToken(); // END_OF_FILE token
     if (mToken.hasToken())
     {
-        std::cout << "Found EOF token: ";
         Token t = mToken.getToken();
         reachedEOF = true;
         return t;
@@ -48,7 +46,6 @@ Token Scanner::scanToken()
     mToken = scanForCharTokens(); // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
     if (mToken.hasToken())
     {
-        std::cout << "Found char token: ";
         Token t = mToken.getToken();
         return t;
     }
@@ -56,7 +53,6 @@ Token Scanner::scanToken()
     mToken = scanForColonTokens(); // COLON and COLON_DASH tokens
     if (mToken.hasToken())
     {
-        std::cout << "Found colon or colon_dash token: ";
         Token t = mToken.getToken();
         return t;
     }
@@ -64,7 +60,6 @@ Token Scanner::scanToken()
     // mToken = scanForSchemesToken(); // SCHEMES token
     // if (mToken.hasToken())
     // {
-    //     std::cout << "Found schemes token: ";
     //     Token t = mToken.getToken();
     //     return t;
     // }
@@ -72,7 +67,6 @@ Token Scanner::scanToken()
     // mToken = scanForFactsToken(); // FACTS token
     // if (mToken.hasToken())
     // {
-    //     std::cout << "Found facts token: ";
     //     Token t = mToken.getToken();
     //     return t;
     // }
@@ -80,7 +74,6 @@ Token Scanner::scanToken()
     // mToken = scanForRulesToken(); // RULES token
     // if (mToken.hasToken())
     // {
-    //     std::cout << "Found rules token: ";
     //     Token t = mToken.getToken();
     //     return t;
     // }
@@ -88,7 +81,6 @@ Token Scanner::scanToken()
     // mToken = scanForQueriesToken(); // QUERIES token
     // if (mToken.hasToken())
     // {
-    //     std::cout << "Found queries token: ";
     //     Token t = mToken.getToken();
     //     return t;
     // }
@@ -96,7 +88,6 @@ Token Scanner::scanToken()
     mToken = scanForWordTokens();
     if (mToken.hasToken())
     {
-        std::cout << "Found word token: ";
         Token t = mToken.getToken();
         return t;
     }
@@ -104,7 +95,6 @@ Token Scanner::scanToken()
     mToken = scanForStringToken(); // STRING token
     if (mToken.hasToken())
     {
-        std::cout << "Found string token: ";
         Token t = mToken.getToken();
         return t;
     }
@@ -112,7 +102,6 @@ Token Scanner::scanToken()
     mToken = scanForCommentToken(); // COMMENT token
     if (mToken.hasToken())
     {
-        std::cout << "Found comment token: ";
         Token t = mToken.getToken();
         return t;
     }
