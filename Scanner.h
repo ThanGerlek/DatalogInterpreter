@@ -9,7 +9,7 @@
 class Scanner
 {
 public:
-    Scanner(const std::string &input) : input(input), reachedEOF(false), currentLine(0){};
+    Scanner(const std::string &input) : input(input), reachedEOF(false), currentLine(1){};
     Token scanToken();
     bool hasNext();
 
