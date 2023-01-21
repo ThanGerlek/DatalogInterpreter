@@ -34,11 +34,15 @@ int main(int argc, char *argv[])
     Scanner scanner = Scanner(input.str());
 
     Token token;
+    int numTokens = 0;
     while (scanner.hasNext())
     {
         token = scanner.scanToken();
         std::cout << token.toString() << std::endl;
+        numTokens++;
     }
+
+    std::cout << "Total Tokens = " << numTokens << std::endl;
 
     return 0;
 }
