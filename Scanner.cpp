@@ -342,18 +342,97 @@ MaybeToken Scanner::scanForStringToken()
 }
 
 /**
- * Scan for ID token.
+ * Scan for COMMENT token.
  */
-MaybeToken Scanner::scanForIdToken() // ID token
+MaybeToken Scanner::scanForCommentToken()
 {
-    return MaybeToken();
-    // TODO
+    if (input.at(0) != '#')
+    {
+        return MaybeToken();
+    }
+
+
+    if (static_cast<int>(input.length()) > 1 && input.at(1) == '|')
+    {
+        // Block comment
+        return scanBlockComment();
+    }
+    else
+    {
+        // Line comment
+        std::stringstream ss;
+
+        int index = 0;
+        for (; index < static_cast<int>(input.length()) && input.at(index) != '\n'; index++)
+        {
+            ss << input.at(index);
+        }
+
+        input = input.substr(index);
+        Token token = Token(COMMENT, ss.str(), currentLine);
+        return MaybeToken(token);
+    }
+}
+
+MaybeToken Scanner::scanBlockComment()
+{
+    std::stringstream ss;
+    ss << "#|";
+
+    bool finishedScan = false;
+    int line = currentLine;
+    int index = 2;
+    MaybeToken mt;
+
+    while (!finishedScan)
+    {
+        if (index >= static_cast<int>(input.length())) // Fail: Unterminated block comment
+        {
+            Token token = Token(UNDEFINED, ss.str(), line);
+            mt = MaybeToken(token);
+            finishedScan = true;
+        }
+
+        else if (input.at(index) == '|') // Found pipe symbol
+        {
+            if (static_cast<int>(input.length()) > index + 1 && input.at(index + 1) == '#')
+            {
+                // End of comment
+                ss << "|#";
+                index += 2;
+                Token token = Token(STRING, ss.str(), line);
+                mt = MaybeToken(token);
+                finishedScan = true;
+            }
+            else
+            {
+                // Actual hash char
+                ss << "#";
+                index += 2;
+            }
+        }
+
+        // Other character
+        else
+        {
+            if (input.at(index) == '\n')
+            {
+                currentLine++;
+            }
+
+            ss << input.at(index);
+            index++;
+        }
+    }
+
+    input = input.substr(index);
+    return mt;
 }
 
 /**
- * Scan for COMMENT token.
+ * Scan for ID token.
  */
-MaybeToken Scanner::scanForCommentToken() // COMMENT token
+MaybeToken Scanner::scanForIdToken() // ID token
 {
     return MaybeToken();
     // TODO

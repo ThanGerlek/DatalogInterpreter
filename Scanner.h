@@ -29,9 +29,11 @@ public:
     MaybeToken scanForCharTokens();  // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
     MaybeToken scanForColonTokens(); // COLON and COLON_DASH tokens
 
-    MaybeToken scanForIdToken();      // ID token
+    MaybeToken scanForIdToken(); // ID token
+
     MaybeToken scanForStringToken();  // STRING token
     MaybeToken scanForCommentToken(); // COMMENT token
+    MaybeToken scanBlockComment();
 };
 
 #endif
