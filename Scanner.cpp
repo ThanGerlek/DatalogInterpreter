@@ -351,7 +351,6 @@ MaybeToken Scanner::scanForCommentToken()
         return MaybeToken();
     }
 
-
     if (static_cast<int>(input.length()) > 1 && input.at(1) == '|')
     {
         // Block comment
@@ -374,6 +373,9 @@ MaybeToken Scanner::scanForCommentToken()
     }
 }
 
+/**
+ * Scan for a block comment token.
+ */
 MaybeToken Scanner::scanBlockComment()
 {
     std::stringstream ss;
@@ -406,8 +408,8 @@ MaybeToken Scanner::scanBlockComment()
             }
             else
             {
-                // Actual hash char
-                ss << "#";
+                // Actual '|' char
+                ss << "|";
                 index += 2;
             }
         }
@@ -449,7 +451,6 @@ MaybeToken Scanner::scanForWordTokens()
 
     input = input.substr(index);
     std::string value = ss.str();
-    Token token;
 
     TokenType type;
     if (value == "Schemes")
