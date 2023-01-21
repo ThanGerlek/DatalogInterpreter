@@ -60,42 +60,42 @@ Token Scanner::scanToken()
         return t;
     }
 
-    mToken = scanForSchemesToken(); // SCHEMES token
-    if (mToken.hasToken())
-    {
-        std::cout << "Found schemes token: ";
-        Token t = mToken.getToken();
-        return t;
-    }
+    // mToken = scanForSchemesToken(); // SCHEMES token
+    // if (mToken.hasToken())
+    // {
+    //     std::cout << "Found schemes token: ";
+    //     Token t = mToken.getToken();
+    //     return t;
+    // }
 
-    mToken = scanForFactsToken(); // FACTS token
-    if (mToken.hasToken())
-    {
-        std::cout << "Found facts token: ";
-        Token t = mToken.getToken();
-        return t;
-    }
+    // mToken = scanForFactsToken(); // FACTS token
+    // if (mToken.hasToken())
+    // {
+    //     std::cout << "Found facts token: ";
+    //     Token t = mToken.getToken();
+    //     return t;
+    // }
 
-    mToken = scanForRulesToken(); // RULES token
-    if (mToken.hasToken())
-    {
-        std::cout << "Found rules token: ";
-        Token t = mToken.getToken();
-        return t;
-    }
+    // mToken = scanForRulesToken(); // RULES token
+    // if (mToken.hasToken())
+    // {
+    //     std::cout << "Found rules token: ";
+    //     Token t = mToken.getToken();
+    //     return t;
+    // }
 
-    mToken = scanForQueriesToken(); // QUERIES token
-    if (mToken.hasToken())
-    {
-        std::cout << "Found queries token: ";
-        Token t = mToken.getToken();
-        return t;
-    }
+    // mToken = scanForQueriesToken(); // QUERIES token
+    // if (mToken.hasToken())
+    // {
+    //     std::cout << "Found queries token: ";
+    //     Token t = mToken.getToken();
+    //     return t;
+    // }
 
-    mToken = scanForIdToken(); // ID token
+    mToken = scanForWordTokens();
     if (mToken.hasToken())
     {
-        std::cout << "Found id token: ";
+        std::cout << "Found word token: ";
         Token t = mToken.getToken();
         return t;
     }
@@ -219,64 +219,64 @@ MaybeToken Scanner::scanForColonTokens()
     }
 }
 
-/**
- * Scan for a token whose value is the given string.
- * Called by SCHEMES, FACTS, RULES, and QUERIES token scanners.
- */
-MaybeToken Scanner::scanForKeywordTokens(TokenType type, std::string &value)
-{
-    // Fail if input doesn't begin with value
-    if (input.length() < value.length() || input.substr(0, value.length()) != value)
-    {
-        return MaybeToken();
-    }
+// /**
+//  * Scan for a token whose value is the given string.
+//  * Called by SCHEMES, FACTS, RULES, and QUERIES token scanners.
+//  */
+// MaybeToken Scanner::scanForKeywordTokens(TokenType type, std::string &value)
+// {
+//     // Fail if input doesn't begin with value
+//     if (input.length() < value.length() || input.substr(0, value.length()) != value)
+//     {
+//         return MaybeToken();
+//     }
 
-    // Fail if the first character following value is not a whitespace
-    if (input.length() > value.length() && !std::isspace(input.at(value.length())))
-    {
-        return MaybeToken();
-    }
+//     // Fail if the first character following value is not a whitespace
+//     if (input.length() > value.length() && !std::isspace(input.at(value.length())))
+//     {
+//         return MaybeToken();
+//     }
 
-    input = input.substr(value.length());
-    Token token = Token(type, value, currentLine);
-    return MaybeToken(token);
-}
+//     input = input.substr(value.length());
+//     Token token = Token(type, value, currentLine);
+//     return MaybeToken(token);
+// }
 
-/**
- * Scan for SCHEMES token.
- */
-MaybeToken Scanner::scanForSchemesToken()
-{
-    std::string value = "Schemes";
-    return scanForKeywordTokens(SCHEMES, value);
-}
+// /**
+//  * Scan for SCHEMES token.
+//  */
+// MaybeToken Scanner::scanForSchemesToken()
+// {
+//     std::string value = "Schemes";
+//     return scanForKeywordTokens(SCHEMES, value);
+// }
 
-/**
- * Scan for FACTS token.
- */
-MaybeToken Scanner::scanForFactsToken()
-{
-    std::string value = "Facts";
-    return scanForKeywordTokens(FACTS, value);
-}
+// /**
+//  * Scan for FACTS token.
+//  */
+// MaybeToken Scanner::scanForFactsToken()
+// {
+//     std::string value = "Facts";
+//     return scanForKeywordTokens(FACTS, value);
+// }
 
-/**
- * Scan for RULES token.
- */
-MaybeToken Scanner::scanForRulesToken()
-{
-    std::string value = "Rules";
-    return scanForKeywordTokens(RULES, value);
-}
+// /**
+//  * Scan for RULES token.
+//  */
+// MaybeToken Scanner::scanForRulesToken()
+// {
+//     std::string value = "Rules";
+//     return scanForKeywordTokens(RULES, value);
+// }
 
-/**
- * Scan for QUERIES token.
- */
-MaybeToken Scanner::scanForQueriesToken()
-{
-    std::string value = "Queries";
-    return scanForKeywordTokens(QUERIES, value);
-}
+// /**
+//  * Scan for QUERIES token.
+//  */
+// MaybeToken Scanner::scanForQueriesToken()
+// {
+//     std::string value = "Queries";
+//     return scanForKeywordTokens(QUERIES, value);
+// }
 
 /**
  * Scan for STRING token.
@@ -430,9 +430,9 @@ MaybeToken Scanner::scanBlockComment()
 }
 
 /**
- * Scan for ID token.
+ * Scan for tokens consisting of a single word: ID, SCHEMES, FACTS, RULES, and QUERIES.
  */
-MaybeToken Scanner::scanForIdToken()
+MaybeToken Scanner::scanForWordTokens()
 {
     if (!std::isalpha(input.at(0)))
     {
@@ -449,7 +449,31 @@ MaybeToken Scanner::scanForIdToken()
 
     input = input.substr(index);
     std::string value = ss.str();
-    Token token = Token(ID, value, currentLine);
+    Token token;
+
+    TokenType type;
+    if (value == "Schemes")
+    {
+        type = SCHEMES;
+    }
+    else if (value == "Facts")
+    {
+        type = FACTS;
+    }
+    else if (value == "Rules")
+    {
+        type = RULES;
+    }
+    else if (value == "Queries")
+    {
+        type = QUERIES;
+    }
+    else
+    {
+        type = ID;
+    }
+
+    Token token = Token(type, value, currentLine);
     return MaybeToken(token);
 }
 

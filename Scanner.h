@@ -18,19 +18,21 @@ public:
     void removeWhitespace();
     bool hasNext();
 
-    MaybeToken scanForKeywordTokens(TokenType type, std::string &value); // Used for SCHEMES, FACTS, RULES, and QUERIES tokens
+    // MaybeToken scanForIdToken(); // ID token
 
-    MaybeToken scanForSchemesToken(); // SCHEMES token
-    MaybeToken scanForFactsToken();   // FACTS token
-    MaybeToken scanForRulesToken();   // RULES token
-    MaybeToken scanForQueriesToken(); // QUERIES token
+    // MaybeToken scanForKeywordTokens(TokenType type, std::string &value); // Used for SCHEMES, FACTS, RULES, and QUERIES tokens
 
-    MaybeToken scanForEOFToken();    // END_OF_FILE token
+    // MaybeToken scanForSchemesToken(); // SCHEMES token
+    // MaybeToken scanForFactsToken();   // FACTS token
+    // MaybeToken scanForRulesToken();   // RULES token
+    // MaybeToken scanForQueriesToken(); // QUERIES token
+
+    MaybeToken scanForWordTokens(); // ID, SCHEMES, FACTS, RULES, and QUERIES tokens
+
     MaybeToken scanForCharTokens();  // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
     MaybeToken scanForColonTokens(); // COLON and COLON_DASH tokens
 
-    MaybeToken scanForIdToken(); // ID token
-
+    MaybeToken scanForEOFToken();     // END_OF_FILE token
     MaybeToken scanForStringToken();  // STRING token
     MaybeToken scanForCommentToken(); // COMMENT token
     MaybeToken scanBlockComment();
