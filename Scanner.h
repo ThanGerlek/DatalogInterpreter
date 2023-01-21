@@ -7,6 +7,12 @@
 
 class Scanner
 {
+public:
+    Scanner(const std::string &input) : input(input), reachedEOF(false), currentLine(0)
+    {
+        tokenize();
+    };
+
 private:
     std::string input;
     bool reachedEOF;
@@ -22,8 +28,7 @@ private:
     MaybeToken scanForCommentToken(); // COMMENT token
     MaybeToken scanBlockComment();
 
-public:
-    Scanner(const std::string &input) : input(input), reachedEOF(false), currentLine(0){};
+    void tokenize();
     Token scanToken();
     void removeWhitespace();
     bool hasNext();

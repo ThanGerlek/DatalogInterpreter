@@ -4,6 +4,18 @@
 #include "Scanner.h"
 
 /**
+ * Scan the input string into tokens.
+ */
+void Scanner::tokenize()
+{
+    while (hasNext())
+    {
+        Token t = scanToken();
+        tokens.push_back(t);
+    }
+}
+
+/**
  * Remove any leading whitespace from the input string.
  */
 void Scanner::removeWhitespace()
