@@ -9,18 +9,13 @@
 class Scanner
 {
 public:
-    Scanner(const std::string &input) : input(input), reachedEOF(false), currentLine(0)
-    {
-        tokenize();
-    };
-    Token peek();
-    Token pop();
-    bool hasNextToken();
+    Scanner(const std::string &input) : input(input), reachedEOF(false), currentLine(0){};
+    Token scanToken();
+    bool hasNext();
 
 private:
     std::string input;
     bool reachedEOF;
-    std::queue<Token> tokens;
     int currentLine;
     MaybeToken scanForWordTokens(); // ID, SCHEMES, FACTS, RULES, and QUERIES tokens
 
@@ -32,10 +27,7 @@ private:
     MaybeToken scanForCommentToken(); // COMMENT token
     MaybeToken scanBlockComment();
 
-    void tokenize();
-    Token scanToken();
     void removeWhitespace();
-    bool hasNext();
 
     // MaybeToken scanForIdToken(); // ID token
 
