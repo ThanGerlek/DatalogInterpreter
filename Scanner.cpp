@@ -172,6 +172,8 @@ MaybeToken Scanner::scanForCharTokens()
         type = ADD;
         value = "+";
         break;
+    default:
+        break;
     }
 
     if (type == UNDEFINED)

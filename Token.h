@@ -35,9 +35,9 @@ private:
     std::string value;
     int line;
 
-    std::string typeName(TokenType type) const
+    std::string typeName(TokenType _type) const
     {
-        switch (type)
+        switch (_type)
         {
         case COMMA:
             return "COMMA";
@@ -75,14 +75,14 @@ private:
             return "UNDEFINED";
         case END_OF_FILE:
             return "EOF";
+        default:
+            std::cout << "ERROR: Unrecognized token type." << std::endl;
+            throw;
         }
-
-        std::cout << "ERROR: Unrecognized token type." << std::endl;
-        throw;
     }
 
 public:
-    Token(TokenType type, std::string value, int line) : type(type), value(value), line(line){};
+    Token(TokenType _type, std::string _value, int _line) : type(_type), value(_value), line(_line){};
     Token() : type(UNDEFINED), value(""), line(-1){};
 
     TokenType getType() const
@@ -124,9 +124,9 @@ private:
 
 public:
     MaybeToken() : isToken(false){};
-    MaybeToken(Token token)
+    MaybeToken(Token _token)
     {
-        setToken(token);
+        setToken(_token);
     };
 
     bool hasToken()
@@ -144,9 +144,9 @@ public:
         return token;
     }
 
-    void setToken(Token token)
+    void setToken(Token _token)
     {
-        this->token = Token(token.getType(), token.getValue(), token.getLine());
+        token = Token(_token.getType(), _token.getValue(), _token.getLine());
         isToken = true;
     }
 };
