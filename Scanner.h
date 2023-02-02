@@ -33,14 +33,6 @@ private:
 
     void removeWhitespace();
 
-    // MaybeToken scanForIdToken(); // ID token
-
-    // MaybeToken scanForKeywordTokens(TokenType type, std::string &value); // Used for SCHEMES, FACTS, RULES, and QUERIES tokens
-
-    // MaybeToken scanForSchemesToken(); // SCHEMES token
-    // MaybeToken scanForFactsToken();   // FACTS token
-    // MaybeToken scanForRulesToken();   // RULES token
-    // MaybeToken scanForQueriesToken(); // QUERIES token
 };
 
 #endif

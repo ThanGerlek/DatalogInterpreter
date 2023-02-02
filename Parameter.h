@@ -10,12 +10,10 @@ public:
     ~Parameter(){};
     bool isVariable() const { return isVar; };
     std::string getText() const { return text; };
-    //
 
 private:
     std::string text;
     bool isVar;
-    //
 };
 
 #endif
