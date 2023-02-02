@@ -47,6 +47,8 @@ std::string DatalogProgram::toString()
 
     ss << "[WIP] Domain" << std::endl;
     // TODO: Domain toString
+
+    return ss.str();
 }
 
 #endif

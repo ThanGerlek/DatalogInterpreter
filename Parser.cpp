@@ -115,96 +115,112 @@ bool Parser::datalogProgram() const
                         EOF
     */
     // TODO
+    return false;
 }
 
 bool Parser::schemeList() const
 {
     // schemeList -> scheme schemeList | lambda
     // TODO
+    return false;
 }
 
 bool Parser::factList() const
 {
     // factList -> fact factList | lambda
     // TODO
+    return false;
 }
 
 bool Parser::ruleList() const
 {
     // ruleList -> rule ruleList | lambda
     // TODO
+    return false;
 }
 
 bool Parser::queryList() const
 {
     // queryList -> query queryList | lambda
     // TODO
+    return false;
 }
 
 bool Parser::scheme() const
 {
     // scheme -> ID LEFT_PAREN ID idList RIGHT_PAREN
     // TODO
+    return false;
 }
 
 bool Parser::fact() const
 {
     // fact -> ID LEFT_PAREN STRING stringList RIGHT_PAREN PERIOD
     // TODO
+    return false;
 }
 
 bool Parser::rule() const
 {
     // rule -> headPredicate COLON_DASH predicate predicateList PERIOD
     // TODO
+    return false;
 }
 
 bool Parser::query() const
 {
     // query -> predicate Q_MARK
     // TODO
+    return false;
 }
 
 bool Parser::headPredicate() const
 {
     // headPredicate -> ID LEFT_PAREN ID idList RIGHT_PAREN
     // TODO
+    return false;
 }
 
 bool Parser::predicate() const
 {
     // predicate -> ID LEFT_PAREN parameter parameterList RIGHT_PAREN
     // TODO
+    return false;
 }
 
 bool Parser::predicateList() const
 {
     // predicateList -> COMMA predicate predicateList | lambda
     // TODO
+    return false;
 }
 
 bool Parser::parameterList() const
 {
     // parameterList -> COMMA parameter parameterList | lambda
     // TODO
+    return false;
 }
 
 bool Parser::stringList() const
 {
     // stringList -> COMMA STRING stringList | lambda
     // TODO
+    return false;
 }
 
 bool Parser::idList() const
 {
     // idList -> COMMA ID idList | lambda
     // TODO
+    return false;
 }
 
 bool Parser::parameter() const
 {
     // parameter -> STRING | ID
     // TODO
+    return false;
 }
 
 #endif
