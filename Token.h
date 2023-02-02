@@ -35,7 +35,7 @@ private:
     std::string value;
     int line;
 
-    std::string typeName(TokenType _type) const
+    static std::string typeName(TokenType _type)
     {
         switch (_type)
         {
