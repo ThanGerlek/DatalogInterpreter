@@ -4,18 +4,19 @@
 #include <vector>
 #include "Predicate.h"
 
-// TODO Implement
+// TODO Implement toString
+// TODO Set to return const vector
 
 class Rule
 {
 public:
-    Rule(Predicate _head) : head(_head) {};
+    Rule(Predicate _head) : head(_head){};
     ~Rule(){};
-    void addPredicate(Predicate p);
-    Predicate getHead() const;
-    Predicate getPredicate(int index) const;
-    int numPredicates() const;
-    std::string toString();
+    void addPredicate(Predicate p) { body.push_back(p); }
+    Predicate getHead() const { return head; }
+    Predicate getPredicate(int index) const { return body.at(index); }
+    int numPredicates() const { return body.size(); }
+    std::string toString() { return ""; }
 
 private:
     const Predicate head;

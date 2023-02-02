@@ -60,10 +60,10 @@ void Parser::parse()
     bool accepted = datalogProgram();
     if (accepted)
     {
-        std::vector<Predicate> *schemes = program->getSchemes();
-        std::vector<Predicate> *facts = program->getFacts();
-        std::vector<Predicate> *queries = program->getQueries();
-        std::vector<Rule> *rules = program->getRules();
+        const std::vector<Predicate> *schemes = program->getSchemes();
+        const std::vector<Predicate> *facts = program->getFacts();
+        const std::vector<Predicate> *queries = program->getQueries();
+        const std::vector<Rule> *rules = program->getRules();
 
         std::cout << "Success!" << std::endl;
         std::cout << program->toString();
