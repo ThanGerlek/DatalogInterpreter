@@ -16,6 +16,25 @@ Scanner::Scanner(std::ifstream &ifs)
 }
 
 /**
+ * Scan all tokens into the given vector.
+ * Throws an error if the vector is nonempty.
+ */
+void Scanner::scan(std::vector<Token> &tokens)
+{
+    if (!tokens.empty())
+    {
+        std::string msg = "Error: tried to scan into a nonempty vector.";
+        std::cout << msg << std::endl;
+        throw std::invalid_argument(msg);
+    }
+
+    while (hasNext())
+    {
+        tokens.push_back(scanToken());
+    }
+}
+
+/**
  * Remove any leading whitespace from the input string.
  */
 void Scanner::removeWhitespace()

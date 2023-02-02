@@ -13,6 +13,9 @@ int main(int argc, char *argv[])
         throw;
     }
 
+
+    // Scan file
+
     std::string filename = argv[1];
     std::ifstream ifs = std::ifstream(filename);
     if (!ifs.is_open())
@@ -24,16 +27,14 @@ int main(int argc, char *argv[])
     Scanner scanner = Scanner(ifs);
     ifs.close();
 
-    Token token;
-    int numTokens = 0;
-    while (scanner.hasNext())
-    {
-        token = scanner.scanToken();
-        std::cout << token.toString() << std::endl;
-        numTokens++;
-    }
+    std::vector<Token> tokens;
+    scanner.scan(tokens);
 
-    std::cout << "Total Tokens = " << numTokens << std::endl;
+#ifdef DEBUG
+    std::cout << "Finished scanning, total tokens = " << tokens.size() << std::endl;
+#endif
+
+    // Parse tokens
 
     return 0;
 }

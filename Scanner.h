@@ -12,6 +12,7 @@ class Scanner
 public:
     Scanner(const std::string &_input) : input(_input), reachedEOF(false), currentLine(1){};
     Scanner(std::ifstream &ifs);
+    void scan(std::vector<Token> &tokens); // Scan all tokens into the given vector
     Token scanToken();
     bool hasNext();
 
@@ -19,6 +20,7 @@ private:
     std::string input;
     bool reachedEOF;
     int currentLine;
+
     MaybeToken scanForWordTokens(); // ID, SCHEMES, FACTS, RULES, and QUERIES tokens
 
     MaybeToken scanForCharTokens();  // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
