@@ -35,6 +35,10 @@ private:
     std::string value;
     int line;
 
+public:
+    Token(TokenType _type, std::string _value, int _line) : type(_type), value(_value), line(_line){};
+    Token() : type(UNDEFINED), value(""), line(-1){};
+
     static std::string typeName(TokenType _type)
     {
         switch (_type)
@@ -80,10 +84,6 @@ private:
             throw;
         }
     }
-
-public:
-    Token(TokenType _type, std::string _value, int _line) : type(_type), value(_value), line(_line){};
-    Token() : type(UNDEFINED), value(""), line(-1){};
 
     TokenType getType() const
     {
