@@ -15,10 +15,10 @@ public:
     void addQuery(Predicate query) { queries.push_back(query); };
     void addRule(Rule rule) { rules.push_back(rule); };
 
-    const std::vector<Predicate> *getSchemes() { return &schemes; };
-    const std::vector<Predicate> *getFacts() { return &facts; };
-    const std::vector<Predicate> *getQueries() { return &queries; };
-    const std::vector<Rule> *getRules() { return &rules; };
+    std::vector<Predicate> *getSchemes() { return &schemes; };
+    std::vector<Predicate> *getFacts() { return &facts; };
+    std::vector<Predicate> *getQueries() { return &queries; };
+    std::vector<Rule> *getRules() { return &rules; };
 
 private:
     std::vector<Predicate> schemes;
