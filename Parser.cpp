@@ -5,21 +5,43 @@
 
 void Parser::saveLoc()
 {
-    // TODO
+    savedLocs.push(location);
 }
 
 void Parser::restoreLoc()
 {
-    // TODO
+    if (savedLocs.empty())
+    {
+        std::string msg = "Error: tried to restoreLoc, but with no saved locations.";
+        std::cout << msg << std::endl;
+        throw;
+    }
+    location = savedLocs.top();
+    savedLocs.pop();
 }
 
 /**
  * Parse this Parser's DatalogProgram using recursive descent.
- * Throws an error if the program is invalid.
  */
 void Parser::parse()
 {
     // TODO
+
+    bool accepted = datalogProgram();
+    if (accepted)
+    {
+        std::vector<Predicate> *schemes = program->getSchemes();
+        std::vector<Predicate> *facts = program->getFacts();
+        std::vector<Predicate> *queries = program->getQueries();
+        std::vector<Rule> *rules = program->getRules();
+
+        std::cout << "Success!" << std::endl;
+        std::cout << program->toString();
+    }
+    else
+    {
+        // TODO print failure msg
+    }
 }
 
 // Recursive descent grammar functions
