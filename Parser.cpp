@@ -20,6 +20,36 @@ void Parser::restoreLoc()
     savedLocs.pop();
 }
 
+TokenType Parser::tokenType()
+{
+    return tokens->at(location).getType();
+}
+
+void Parser::advanceToken()
+{
+    location++;
+}
+
+void Parser::throwError()
+{
+    std::cout << "Error: invalid Datalog syntax on token " << tokens->at(location).toString() << std::endl;
+    throw;
+}
+
+void Parser::match(TokenType t)
+{
+    if (tokenType() == t)
+    {
+        advanceToken();
+    }
+    else
+    {
+        std::cout << "Error: mismatched token types. Expected " << Token::typeName(t)
+                  << " but found " << tokens->at(location).toString() << std::endl;
+        throw;
+    }
+}
+
 /**
  * Parse this Parser's DatalogProgram using recursive descent.
  */

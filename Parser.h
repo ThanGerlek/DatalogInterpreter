@@ -18,6 +18,11 @@ private:
     int location; // Index of the next token
     std::stack<int> savedLocs;
 
+    TokenType tokenType();
+    void advanceToken();
+    void throwError();
+    void match(TokenType t);
+
     void saveLoc();
     void restoreLoc();
 
