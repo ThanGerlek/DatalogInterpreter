@@ -1,0 +1,21 @@
+#ifndef T2K_236PROJECT_PARAMETER_H
+#define T2K_236PROJECT_PARAMETER_H
+
+#include <string>
+
+class Parameter
+{
+public:
+    Parameter(std::string _text, bool _isVariable) : text(_text), isVar(_isVariable){};
+    ~Parameter(){};
+    bool isVariable() const { return isVar; };
+    std::string getText() const { return text; };
+    //
+
+private:
+    std::string text;
+    bool isVar;
+    //
+};
+
+#endif
