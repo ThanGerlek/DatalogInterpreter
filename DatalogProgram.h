@@ -11,15 +11,15 @@ public:
     ~DatalogProgram(){};
     std::string toString();
 
-    void addScheme(Predicate scheme) { schemes.push_back(scheme); };
-    void addFact(Predicate fact) { facts.push_back(fact); };
-    void addQuery(Predicate query) { queries.push_back(query); };
-    void addRule(Rule rule) { rules.push_back(rule); };
+    void addScheme(Predicate scheme);
+    void addFact(Predicate fact);
+    void addQuery(Predicate query);
+    void addRule(Rule rule);
 
-    std::vector<Predicate> *getSchemes() { return &schemes; };
-    std::vector<Predicate> *getFacts() { return &facts; };
-    std::vector<Predicate> *getQueries() { return &queries; };
-    std::vector<Rule> *getRules() { return &rules; };
+    std::vector<Predicate> *getSchemes();
+    std::vector<Predicate> *getFacts();
+    std::vector<Predicate> *getQueries();
+    std::vector<Rule> *getRules();
 
 private:
     std::vector<Predicate> schemes;
