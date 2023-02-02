@@ -9,10 +9,10 @@ void DatalogProgram::addFact(Predicate fact) { facts.push_back(fact); }
 void DatalogProgram::addQuery(Predicate query) { queries.push_back(query); }
 void DatalogProgram::addRule(Rule rule) { rules.push_back(rule); }
 
-std::vector<Predicate> *DatalogProgram::getSchemes() { return &schemes; }
-std::vector<Predicate> *DatalogProgram::getFacts() { return &facts; }
-std::vector<Predicate> *DatalogProgram::getQueries() { return &queries; }
-std::vector<Rule> *DatalogProgram::getRules() { return &rules; }
+const std::vector<Predicate> *DatalogProgram::getSchemes() const { return &schemes; }
+const std::vector<Predicate> *DatalogProgram::getFacts() const { return &facts; }
+const std::vector<Predicate> *DatalogProgram::getQueries() const { return &queries; }
+const std::vector<Rule> *DatalogProgram::getRules() const { return &rules; }
 
 std::string DatalogProgram::toString()
 {
