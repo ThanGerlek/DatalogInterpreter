@@ -105,7 +105,7 @@ idList  	-> 	COMMA ID idList | lambda
 parameter	->	STRING | ID
 */
 
-bool Parser::datalogProgram() const
+bool Parser::datalogProgram()
 {
     /*
     datalogProgram	->	SCHEMES COLON scheme schemeList
@@ -118,105 +118,105 @@ bool Parser::datalogProgram() const
     return false;
 }
 
-bool Parser::schemeList() const
+bool Parser::schemeList()
 {
     // schemeList -> scheme schemeList | lambda
     // TODO
     return false;
 }
 
-bool Parser::factList() const
+bool Parser::factList()
 {
     // factList -> fact factList | lambda
     // TODO
     return false;
 }
 
-bool Parser::ruleList() const
+bool Parser::ruleList()
 {
     // ruleList -> rule ruleList | lambda
     // TODO
     return false;
 }
 
-bool Parser::queryList() const
+bool Parser::queryList()
 {
     // queryList -> query queryList | lambda
     // TODO
     return false;
 }
 
-bool Parser::scheme() const
+bool Parser::scheme()
 {
     // scheme -> ID LEFT_PAREN ID idList RIGHT_PAREN
     // TODO
     return false;
 }
 
-bool Parser::fact() const
+bool Parser::fact()
 {
     // fact -> ID LEFT_PAREN STRING stringList RIGHT_PAREN PERIOD
     // TODO
     return false;
 }
 
-bool Parser::rule() const
+bool Parser::rule()
 {
     // rule -> headPredicate COLON_DASH predicate predicateList PERIOD
     // TODO
     return false;
 }
 
-bool Parser::query() const
+bool Parser::query()
 {
     // query -> predicate Q_MARK
     // TODO
     return false;
 }
 
-bool Parser::headPredicate() const
+bool Parser::headPredicate()
 {
     // headPredicate -> ID LEFT_PAREN ID idList RIGHT_PAREN
     // TODO
     return false;
 }
 
-bool Parser::predicate() const
+bool Parser::predicate()
 {
     // predicate -> ID LEFT_PAREN parameter parameterList RIGHT_PAREN
     // TODO
     return false;
 }
 
-bool Parser::predicateList() const
+bool Parser::predicateList()
 {
     // predicateList -> COMMA predicate predicateList | lambda
     // TODO
     return false;
 }
 
-bool Parser::parameterList() const
+bool Parser::parameterList()
 {
     // parameterList -> COMMA parameter parameterList | lambda
     // TODO
     return false;
 }
 
-bool Parser::stringList() const
+bool Parser::stringList()
 {
     // stringList -> COMMA STRING stringList | lambda
     // TODO
     return false;
 }
 
-bool Parser::idList() const
+bool Parser::idList()
 {
     // idList -> COMMA ID idList | lambda
     // TODO
     return false;
 }
 
-bool Parser::parameter() const
+bool Parser::parameter()
 {
     // parameter -> STRING | ID
     // TODO
