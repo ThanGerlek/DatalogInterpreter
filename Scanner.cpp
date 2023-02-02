@@ -3,6 +3,18 @@
 
 #include "Scanner.h"
 
+Scanner::Scanner(std::ifstream &ifs)
+{
+    reachedEOF = false;
+    currentLine = 1;
+
+    // Convert ifstream to string
+    ifs.seekg(0, std::ios_base::end);  // offset 0 from end
+    input.resize(ifs.tellg());         // resize string
+    ifs.seekg(0, std::ios_base::beg);  // offset 0 from beginning
+    ifs.read(&input[0], input.size()); // read data
+}
+
 /**
  * Remove any leading whitespace from the input string.
  */

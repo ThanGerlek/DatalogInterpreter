@@ -4,12 +4,14 @@
 #include <cctype>
 #include <queue>
 #include <vector>
+#include <fstream>
 #include "Token.h"
 
 class Scanner
 {
 public:
     Scanner(const std::string &_input) : input(_input), reachedEOF(false), currentLine(1){};
+    Scanner(std::ifstream &ifs);
     Token scanToken();
     bool hasNext();
 

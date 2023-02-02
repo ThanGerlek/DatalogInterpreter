@@ -21,15 +21,8 @@ int main(int argc, char *argv[])
         throw;
     }
 
-    // Get data from file into string
-    std::string input;
-    ifs.seekg(0, std::ios_base::end);  // offset 0 from end
-    input.resize(ifs.tellg());         // resize string
-    ifs.seekg(0, std::ios_base::beg);  // offset 0 from beginning
-    ifs.read(&input[0], input.size()); // read data
+    Scanner scanner = Scanner(ifs);
     ifs.close();
-
-    Scanner scanner = Scanner(input);
 
     Token token;
     int numTokens = 0;
