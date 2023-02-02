@@ -10,10 +10,10 @@ public:
     DatalogProgram(){};
     ~DatalogProgram(){};
 
-    void addScheme(Predicate scheme);
-    void addFact(Predicate fact);
-    void addQuery(Predicate query);
-    void addRule(Rule rule);
+    void addScheme(Predicate scheme) { schemes.push_back(scheme); };
+    void addFact(Predicate fact) { facts.push_back(fact); };
+    void addQuery(Predicate query) { queries.push_back(query); };
+    void addRule(Rule rule) { rules.push_back(rule); };
 
     const std::vector<Predicate> *getSchemes() { return &schemes; };
     const std::vector<Predicate> *getFacts() { return &facts; };
