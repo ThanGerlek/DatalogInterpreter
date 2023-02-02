@@ -4,6 +4,8 @@
 #include <vector>
 #include "Predicate.h"
 
+// TODO Implement
+
 class Rule
 {
 public:
@@ -12,6 +14,8 @@ public:
     void addPredicate(Predicate p);
     Predicate getHead() const;
     Predicate getPredicate(int index) const;
+    int numPredicates() const;
+    std::string toString();
 
 private:
     const Predicate head;

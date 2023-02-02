@@ -9,6 +9,7 @@ class DatalogProgram
 public:
     DatalogProgram(){};
     ~DatalogProgram(){};
+    std::string toString();
 
     void addScheme(Predicate scheme) { schemes.push_back(scheme); };
     void addFact(Predicate fact) { facts.push_back(fact); };

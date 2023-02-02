@@ -8,7 +8,7 @@
 class Parser
 {
 public:
-    Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program){};
+    Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program), location(0){};
     ~Parser(){};
     void parse();
 
