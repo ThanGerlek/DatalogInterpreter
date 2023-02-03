@@ -212,8 +212,13 @@ bool Parser::stringList()
 bool Parser::idList()
 {
     // idList -> COMMA ID idList | lambda
-    // TODO
-    return false;
+    if (tokenType() == COMMA)
+    {
+        match(COMMA);
+        match(ID);
+        return idList();
+    }
+    return true; // lambda
 }
 
 bool Parser::parameter()
