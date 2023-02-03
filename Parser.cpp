@@ -139,6 +139,11 @@ void Parser::scheme()
 {
     // scheme -> ID LEFT_PAREN ID idList RIGHT_PAREN
     // TODO
+    match(ID);
+    match(LEFT_PAREN);
+    match(ID);
+    idList();
+    match(RIGHT_PAREN);
 }
 
 void Parser::fact()
