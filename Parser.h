@@ -11,8 +11,8 @@ public:
     Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program), location(0){};
     ~Parser(){};
     void parse();
-
-private:
+// TODO set to private
+// private:
     const std::vector<Token> *tokens;
     DatalogProgram *program;
     int location; // Index of the next token
