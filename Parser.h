@@ -11,8 +11,8 @@ public:
     Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program), location(0){};
     ~Parser(){};
     void parse();
-// TODO set to private
-// private:
+    // TODO set to private
+    // private:
     const std::vector<Token> *tokens;
     DatalogProgram *program;
     int location; // Index of the next token
@@ -27,22 +27,22 @@ public:
     void restoreLoc();
 
     // Recursive descent grammar functions
-    bool datalogProgram();
-    bool schemeList();
-    bool factList();
-    bool ruleList();
-    bool queryList();
-    bool scheme();
-    bool fact();
-    bool rule();
-    bool query();
-    bool headPredicate();
-    bool predicate();
-    bool predicateList();
-    bool parameterList();
-    bool stringList();
-    bool idList();
-    bool parameter();
+    void datalogProgram();
+    void schemeList();
+    void factList();
+    void ruleList();
+    void queryList();
+    void scheme();
+    void fact();
+    void rule();
+    void query();
+    void headPredicate();
+    void predicate();
+    void predicateList();
+    void parameterList();
+    void stringList();
+    void idList();
+    void parameter();
 };
 
 #endif

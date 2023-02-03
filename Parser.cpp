@@ -57,21 +57,15 @@ void Parser::parse()
 {
     // TODO
 
-    bool accepted = datalogProgram();
-    if (accepted)
-    {
-        const std::vector<Predicate> *schemes = program->getSchemes();
-        const std::vector<Predicate> *facts = program->getFacts();
-        const std::vector<Predicate> *queries = program->getQueries();
-        const std::vector<Rule> *rules = program->getRules();
+    datalogProgram(); // TODO try/catch and print failure msg
 
-        std::cout << "Success!" << std::endl;
-        std::cout << program->toString();
-    }
-    else
-    {
-        // TODO print failure msg
-    }
+    const std::vector<Predicate> *schemes = program->getSchemes();
+    const std::vector<Predicate> *facts = program->getFacts();
+    const std::vector<Predicate> *queries = program->getQueries();
+    const std::vector<Rule> *rules = program->getRules();
+
+    std::cout << "Success!" << std::endl;
+    std::cout << program->toString();
 }
 
 // Recursive descent grammar functions
@@ -105,7 +99,7 @@ idList  	-> 	COMMA ID idList | lambda
 parameter	->	STRING | ID
 */
 
-bool Parser::datalogProgram()
+void Parser::datalogProgram()
 {
     /*
     datalogProgram	->	SCHEMES COLON scheme schemeList
@@ -115,101 +109,87 @@ bool Parser::datalogProgram()
                         EOF
     */
     // TODO
-    return false;
 }
 
-bool Parser::schemeList()
+void Parser::schemeList()
 {
     // schemeList -> scheme schemeList | lambda
     // TODO
-    return false;
 }
 
-bool Parser::factList()
+void Parser::factList()
 {
     // factList -> fact factList | lambda
     // TODO
-    return false;
 }
 
-bool Parser::ruleList()
+void Parser::ruleList()
 {
     // ruleList -> rule ruleList | lambda
     // TODO
-    return false;
 }
 
-bool Parser::queryList()
+void Parser::queryList()
 {
     // queryList -> query queryList | lambda
     // TODO
-    return false;
 }
 
-bool Parser::scheme()
+void Parser::scheme()
 {
     // scheme -> ID LEFT_PAREN ID idList RIGHT_PAREN
     // TODO
-    return false;
 }
 
-bool Parser::fact()
+void Parser::fact()
 {
     // fact -> ID LEFT_PAREN STRING stringList RIGHT_PAREN PERIOD
     // TODO
-    return false;
 }
 
-bool Parser::rule()
+void Parser::rule()
 {
     // rule -> headPredicate COLON_DASH predicate predicateList PERIOD
     // TODO
-    return false;
 }
 
-bool Parser::query()
+void Parser::query()
 {
     // query -> predicate Q_MARK
     // TODO
-    return false;
 }
 
-bool Parser::headPredicate()
+void Parser::headPredicate()
 {
     // headPredicate -> ID LEFT_PAREN ID idList RIGHT_PAREN
     // TODO
-    return false;
 }
 
-bool Parser::predicate()
+void Parser::predicate()
 {
     // predicate -> ID LEFT_PAREN parameter parameterList RIGHT_PAREN
     // TODO
-    return false;
 }
 
-bool Parser::predicateList()
+void Parser::predicateList()
 {
     // predicateList -> COMMA predicate predicateList | lambda
     // TODO
-    return false;
 }
 
-bool Parser::parameterList()
+void Parser::parameterList()
 {
     // parameterList -> COMMA parameter parameterList | lambda
     // TODO
-    return false;
 }
 
-bool Parser::stringList()
+void Parser::stringList()
 {
     // stringList -> COMMA STRING stringList | lambda
     // TODO
-    return false;
 }
 
-bool Parser::idList()
+void Parser::idList()
 {
     // idList -> COMMA ID idList | lambda
     if (tokenType() == COMMA)
@@ -218,14 +198,13 @@ bool Parser::idList()
         match(ID);
         return idList();
     }
-    return true; // lambda
+    // else lambda
 }
 
-bool Parser::parameter()
+void Parser::parameter()
 {
     // parameter -> STRING | ID
     // TODO
-    return false;
 }
 
 #endif
