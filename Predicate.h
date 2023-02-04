@@ -5,7 +5,7 @@
 #include <vector>
 #include "Parameter.h"
 
-// TODO Implement
+//TODO test toString
 
 class Predicate
 {
@@ -19,12 +19,18 @@ public:
 
     std::string toString() const
     {
-        std::string out = id + "(" + params.at(0).toString();
-        for (std::vector<Parameter>::const_iterator i = params.begin(); i != params.end(); i++)
+        if (params.size() == 0)
         {
-            // TODO
+            return id + "()";
         }
-        return "";
+
+        std::string out = id + "(" + params.at(0).toString();
+        std::vector<Parameter>::const_iterator i = params.begin();
+        for (i++; i != params.end(); i++)
+        {
+            out += "," + i->toString();
+        }
+        return out + ")";
     }
 
 private:
