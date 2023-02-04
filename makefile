@@ -4,6 +4,8 @@ CXXFLAGS = $(WARNINGS) -std=c++17 -g -DDEBUG
 
 main: main.cpp Scanner.cpp Parser.cpp DatalogProgram.cpp
 
+test: test.cpp Scanner.cpp Parser.cpp DatalogProgram.cpp
+
 clean:
 	rm -f main
 	rm -f test
