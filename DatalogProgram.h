@@ -4,6 +4,8 @@
 #include <vector>
 #include "Rule.h"
 
+// TODO domain list
+
 class DatalogProgram
 {
 public:
