@@ -28,6 +28,7 @@ private:
     std::vector<Predicate> facts;
     std::vector<Predicate> queries;
     std::vector<Rule> rules;
+    std::vector<std::string> domain;
 };
 
 #endif
