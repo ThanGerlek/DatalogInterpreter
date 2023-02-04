@@ -3,6 +3,8 @@
 
 #include <string>
 
+// TODO Implement isVariable
+
 class Parameter
 {
 public:
