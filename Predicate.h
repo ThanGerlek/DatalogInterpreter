@@ -5,14 +5,15 @@
 #include <vector>
 #include "Parameter.h"
 
+// TODO Implement getStrings()
+
 class Predicate
 {
 public:
     Predicate(std::string _id) : id(_id){};
     ~Predicate(){};
     void addParam(Parameter param) { params.push_back(param); }
-    int numParams() const { return static_cast<int>(params.size()); }
-    Parameter getParam(unsigned uindex) const { return params.at(uindex); }
+    const std::vector<Parameter> &getParams() const { return params; }
     std::string getId() const { return id; }
 
     std::string toString() const
