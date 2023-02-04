@@ -55,7 +55,6 @@ void Parser::match(TokenType t)
  */
 void Parser::parse()
 {
-    // TODO
 
     datalogProgram(); // TODO try/catch and print failure msg
 
@@ -138,7 +137,7 @@ void Parser::queryList()
 void Parser::scheme()
 {
     // scheme -> ID LEFT_PAREN ID idList RIGHT_PAREN
-    // TODO
+    // TODO test scheme()
     match(ID);
     match(LEFT_PAREN);
     match(ID);

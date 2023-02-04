@@ -5,7 +5,6 @@
 #include <vector>
 #include "Predicate.h"
 
-// TODO Test toString
 // TODO Set to return const vector
 
 class Rule

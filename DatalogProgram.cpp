@@ -16,7 +16,6 @@ const std::vector<Rule> *DatalogProgram::getRules() const { return &rules; }
 
 std::string DatalogProgram::toString()
 {
-    // TODO
     std::stringstream ss;
     std::vector<Predicate>::iterator ip;
     std::vector<Rule>::iterator ir;

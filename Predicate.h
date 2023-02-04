@@ -5,8 +5,6 @@
 #include <vector>
 #include "Parameter.h"
 
-//TODO test toString
-
 class Predicate
 {
 public:
