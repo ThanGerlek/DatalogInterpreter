@@ -13,8 +13,8 @@ public:
     Predicate(std::string _id) : id(_id){};
     ~Predicate(){};
     void addParam(Parameter param) { params.push_back(param); }
-    int numParams() const { return params.size(); }
-    Parameter getParam(int index) const { return params.at(index); }
+    int numParams() const { return static_cast<int>(params.size()); }
+    Parameter getParam(unsigned uindex) const { return params.at(uindex); }
     std::string getId() const { return id; }
 
     std::string toString() const

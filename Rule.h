@@ -14,8 +14,8 @@ public:
     ~Rule(){};
     void addPredicate(Predicate p) { body.push_back(p); }
     Predicate getHead() const { return head; }
-    Predicate getPredicate(int index) const { return body.at(index); }
-    int numPredicates() const { return body.size(); }
+    Predicate getPredicate(unsigned uindex) const { return body.at(uindex); }
+    int numPredicates() const { return static_cast<int>(body.size()); }
     std::string toString() { return ""; }
 
 private:

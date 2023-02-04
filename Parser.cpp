@@ -5,7 +5,7 @@
 
 void Parser::saveLoc()
 {
-    savedLocs.push(location);
+    savedLocs.push(u_location);
 }
 
 void Parser::restoreLoc()
@@ -16,23 +16,23 @@ void Parser::restoreLoc()
         std::cout << msg << std::endl;
         throw;
     }
-    location = savedLocs.top();
+    u_location = savedLocs.top();
     savedLocs.pop();
 }
 
 TokenType Parser::tokenType()
 {
-    return tokens->at(location).getType();
+    return tokens->at(u_location).getType();
 }
 
 void Parser::advanceToken()
 {
-    location++;
+    u_location++;
 }
 
 void Parser::throwError()
 {
-    std::cout << "Error: invalid Datalog syntax on token " << tokens->at(location).toString() << std::endl;
+    std::cout << "Error: invalid Datalog syntax on token " << tokens->at(u_location).toString() << std::endl;
     throw;
 }
 
@@ -45,7 +45,7 @@ void Parser::match(TokenType t)
     else
     {
         std::cout << "Error: mismatched token types. Expected " << Token::typeName(t)
-                  << " but found " << tokens->at(location).toString() << std::endl;
+                  << " but found " << tokens->at(u_location).toString() << std::endl;
         throw;
     }
 }
@@ -59,10 +59,10 @@ void Parser::parse()
 
     datalogProgram(); // TODO try/catch and print failure msg
 
-    const std::vector<Predicate> *schemes = program->getSchemes();
-    const std::vector<Predicate> *facts = program->getFacts();
-    const std::vector<Predicate> *queries = program->getQueries();
-    const std::vector<Rule> *rules = program->getRules();
+    // const std::vector<Predicate> *schemes = program->getSchemes();
+    // const std::vector<Predicate> *facts = program->getFacts();
+    // const std::vector<Predicate> *queries = program->getQueries();
+    // const std::vector<Rule> *rules = program->getRules();
 
     std::cout << "Success!" << std::endl;
     std::cout << program->toString();

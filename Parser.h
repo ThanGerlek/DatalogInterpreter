@@ -8,15 +8,15 @@
 class Parser
 {
 public:
-    Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program), location(0){};
+    Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program), u_location(0){};
     ~Parser(){};
     void parse();
     // TODO set to private
     // private:
     const std::vector<Token> *tokens;
     DatalogProgram *program;
-    int location; // Index of the next token
-    std::stack<int> savedLocs;
+    unsigned u_location; // Index of the next token
+    std::stack<unsigned> savedLocs;
 
     TokenType tokenType();
     void advanceToken();
