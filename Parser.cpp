@@ -55,15 +55,18 @@ void Parser::match(TokenType t)
 void Parser::parse()
 {
 
-    datalogProgram(); // TODO try/catch and print failure msg
+    try
+    {
+        datalogProgram();
 
-    // const std::vector<Predicate> *schemes = program->getSchemes();
-    // const std::vector<Predicate> *facts = program->getFacts();
-    // const std::vector<Predicate> *queries = program->getQueries();
-    // const std::vector<Rule> *rules = program->getRules();
-
-    std::cout << "Success!" << std::endl;
-    std::cout << program->toString();
+        std::cout << "Success!" << std::endl;
+        std::cout << program->toString();
+    }
+    catch (Token token)
+    {
+        std::cout << "Failure!" << std::endl
+                  << "  " << token.toString();
+    }
 }
 
 // Recursive descent grammar functions
