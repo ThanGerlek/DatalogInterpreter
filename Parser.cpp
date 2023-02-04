@@ -12,8 +12,7 @@ void Parser::restoreLoc()
 {
     if (savedLocs.empty())
     {
-        std::string msg = "Error: tried to restoreLoc, but with no saved locations.";
-        std::cout << msg << std::endl;
+        std::cerr << "Error: tried to call restoreLoc(), but with no saved locations." << std::endl;
         throw;
     }
     u_location = savedLocs.top();
@@ -32,7 +31,7 @@ void Parser::advanceToken()
 
 void Parser::throwError()
 {
-    std::cout << "Error: invalid Datalog syntax on token " << tokens->at(u_location).toString() << std::endl;
+    std::cerr << "Error: invalid Datalog syntax on token " << tokens->at(u_location).toString() << std::endl;
     throw;
 }
 
@@ -44,7 +43,7 @@ void Parser::match(TokenType t)
     }
     else
     {
-        std::cout << "Error: mismatched token types. Expected " << Token::typeName(t)
+        std::cerr << "Error: mismatched token types. Expected " << Token::typeName(t)
                   << " but found " << tokens->at(u_location).toString() << std::endl;
         throw;
     }

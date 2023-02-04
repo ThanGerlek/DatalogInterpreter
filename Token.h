@@ -80,7 +80,7 @@ public:
         case END_OF_FILE:
             return "EOF";
         default:
-            std::cout << "ERROR: Unrecognized token type." << std::endl;
+            std::cerr << "Error: unrecognized token type '" << _type <<"'" << std::endl;
             throw;
         }
     }
@@ -138,7 +138,7 @@ public:
     {
         if (!hasToken())
         {
-            std::cout << "ERROR: Tried to call getToken() on a MaybeToken with no token." << std::endl;
+            std::cerr << "Error: Tried to call getToken() on a MaybeToken with no token." << std::endl;
             throw;
         }
         return token;

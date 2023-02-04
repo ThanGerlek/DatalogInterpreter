@@ -6,8 +6,6 @@
 #include "Scanner.h"
 #include "Parser.h"
 
-// TODO convert to use std::cerr
-
 int main(int argc, char *argv[])
 {
     if (argc < 2)
