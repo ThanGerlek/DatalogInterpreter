@@ -4,6 +4,9 @@
 #include <fstream>
 #include <iostream>
 #include "Scanner.h"
+#include "Parser.h"
+
+// TODO convert to use std::cerr
 
 int main(int argc, char *argv[])
 {
@@ -13,10 +16,13 @@ int main(int argc, char *argv[])
         throw;
     }
 
-
     // Scan file
 
     std::string filename = argv[1];
+#ifdef DEBUG
+    std::cout << "Scanning file '" << filename << "'" << std::endl;
+#endif
+
     std::ifstream ifs = std::ifstream(filename);
     if (!ifs.is_open())
     {
@@ -31,10 +37,19 @@ int main(int argc, char *argv[])
     scanner.scan(tokens);
 
 #ifdef DEBUG
-    std::cout << "Finished scanning, total tokens = " << tokens.size() << std::endl;
+    std::cout << "Finished scanning, total tokens = " << tokens.size() << ". Attempting to parse..." << std::endl;
 #endif
 
     // Parse tokens
+
+    DatalogProgram dlp;
+    Parser p(&tokens, &dlp);
+
+    p.parse();
+
+#ifdef DEBUG
+    std::cout << "Finished parsing." << std::endl;
+#endif
 
     return 0;
 }
