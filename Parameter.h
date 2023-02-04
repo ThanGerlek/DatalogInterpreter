@@ -3,8 +3,6 @@
 
 #include <string>
 
-// TODO Implement
-
 class Parameter
 {
 public:
