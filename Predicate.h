@@ -5,8 +5,6 @@
 #include <vector>
 #include "Parameter.h"
 
-// TODO Implement getStrings()
-
 class Predicate
 {
 public:
