@@ -22,25 +22,33 @@ std::string DatalogProgram::toString()
 
     ss << "Schemes(" << schemes.size() << "):" << std::endl;
     for (Predicate p : schemes)
+    for (Predicate p : schemes)
     {
+        ss << "  " << p.toString() << std::endl;
         ss << "  " << p.toString() << std::endl;
     }
 
     ss << "Facts(" << facts.size() << "):" << std::endl;
     for (Predicate p : facts)
+    for (Predicate p : facts)
     {
+        ss << "  " << p.toString() << std::endl;
         ss << "  " << p.toString() << std::endl;
     }
 
     ss << "Rules(" << rules.size() << "):" << std::endl;
     for (Rule r : rules)
+    for (Rule r : rules)
     {
+        ss << "  " << r.toString() << std::endl;
         ss << "  " << r.toString() << std::endl;
     }
 
     ss << "Queries(" << queries.size() << "):" << std::endl;
     for (Predicate p : queries)
+    for (Predicate p : queries)
     {
+        ss << "  " << p.toString() << std::endl;
         ss << "  " << p.toString() << std::endl;
     }
 
