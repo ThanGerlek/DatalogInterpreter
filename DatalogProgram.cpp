@@ -36,34 +36,34 @@ std::string DatalogProgram::toString()
     ss << "Schemes(" << schemes.size() << "):" << std::endl;
     for (ip = schemes.begin(); ip != schemes.end(); ip++)
     {
-        ss << ip->toString() << std::endl;
+        ss << "  " << ip->toString() << std::endl;
     }
 
     ss << "Facts(" << facts.size() << "):" << std::endl;
     for (ip = facts.begin(); ip != facts.end(); ip++)
     {
-        ss << ip->toString() << std::endl;
+        ss << "  " << ip->toString() << "." << std::endl;
     }
 
     ss << "Rules(" << rules.size() << "):" << std::endl;
     for (ir = rules.begin(); ir != rules.end(); ir++)
     {
-        ss << ir->toString() << std::endl;
+        ss << "  " << ir->toString() << "." << std::endl;
     }
 
     ss << "Queries(" << queries.size() << "):" << std::endl;
     for (ip = queries.begin(); ip != queries.end(); ip++)
     {
-        ss << ip->toString() << std::endl;
+        ss << "  " << ip->toString() << "?" << std::endl;
     }
 
     ss << "Domain(" << domain.size() << "):" << std::endl;
     for (is = domain.begin(); is != domain.end(); is++)
     {
-        ss << &is << std::endl;
+        ss << "  " << &is << std::endl;
     }
 
-    // TODO: Test domain toString
+    // TODO: Domain toString
 
     return ss.str();
 }

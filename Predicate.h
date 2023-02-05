@@ -11,7 +11,7 @@ public:
     Predicate(){};
     Predicate(std::string _id) : id(_id){};
     ~Predicate(){};
-    std::string getId() const { return id; }
+    std::string getId() const { return id; } // TODO? Remove
     const std::vector<Parameter> &getParams() const { return params; }
     void setId(Parameter param) { id = param.toString(); }
     void addParam(Parameter param) { params.push_back(param); }

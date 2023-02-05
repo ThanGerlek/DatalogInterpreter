@@ -16,12 +16,12 @@ public:
     void addQuery(Predicate query);
     void addRule(Rule rule);
 
+private:
     const std::vector<Predicate> *getSchemes() const;
     const std::vector<Predicate> *getFacts() const;
     const std::vector<Predicate> *getQueries() const;
     const std::vector<Rule> *getRules() const;
 
-private:
     std::vector<Predicate> schemes;
     std::vector<Predicate> facts;
     std::vector<Predicate> queries;

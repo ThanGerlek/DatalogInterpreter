@@ -34,6 +34,13 @@ int main(int argc, char *argv[])
     std::vector<Token> tokens;
     scanner.scan(tokens);
 
+    // DEBUG
+    for (std::vector<Token>::iterator i = tokens.begin(); i != tokens.end(); i++)
+    {
+        std::cout << i->toString() << "  ";
+    }
+    std::cout << std::endl;
+
 #ifdef DEBUG
     std::cout << "Finished scanning, total tokens = " << tokens.size() << ". Attempting to parse..." << std::endl;
 #endif
