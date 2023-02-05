@@ -37,22 +37,18 @@ void Parser::advanceToken()
 
 void Parser::throwError()
 {
-    std::cerr << "Error: invalid Datalog syntax on token " << tokens->at(u_location).toString() << std::endl;
-    throw;
+    throw tokens->at(u_location);
 }
 
 void Parser::match(TokenType type)
 {
     if (tokenType() == type)
     {
-        std::cout << "[" << Token::typeName(type) << "] ";
         advanceToken();
     }
     else
     {
-        std::cerr << "Error: mismatched token types. Expected " << Token::typeName(type)
-                  << " but found " << tokens->at(u_location).toString() << std::endl;
-        throw tokens->at(u_location);
+        throwError();
     }
 }
 
