@@ -4,17 +4,32 @@
 #include <sstream>
 #include "DatalogProgram.h"
 
+const std::vector<Predicate> *DatalogProgram::getSchemes() const { return &schemes; }
+const std::vector<Predicate> *DatalogProgram::getFacts() const { return &facts; }
+const std::vector<Predicate> *DatalogProgram::getQueries() const { return &queries; }
+const std::vector<Rule> *DatalogProgram::getRules() const { return &rules; }
+const std::set<Parameter> *DatalogProgram::getDomain() const { return &domain; }
+
 void DatalogProgram::addScheme(Predicate scheme) { schemes.push_back(scheme); }
 void DatalogProgram::addQuery(Predicate query) { queries.push_back(query); }
 void DatalogProgram::addRule(Rule rule) { rules.push_back(rule); }
 void DatalogProgram::addFact(Predicate fact) { facts.push_back(fact); }
+void DatalogProgram::addToDomain(Parameter param)
+{
+    if (param.isVariable())
+    {
+        std::cerr << "Error: tried to add a Parameter with isVariable set to true.";
+        throw;
+    }
+    // domain.insert(param);
+}
 
 std::string DatalogProgram::toString()
 {
     std::stringstream ss;
     std::vector<Predicate>::iterator ip;
     std::vector<Rule>::iterator ir;
-    std::vector<std::string>::iterator is;
+    std::set<Parameter>::iterator ipa;
 
     ss << "Schemes(" << schemes.size() << "):" << std::endl;
     for (ip = schemes.begin(); ip != schemes.end(); ip++)
@@ -41,9 +56,9 @@ std::string DatalogProgram::toString()
     }
 
     ss << "Domain(" << domain.size() << "):" << std::endl;
-    for (is = domain.begin(); is != domain.end(); is++)
+    for (ipa = domain.begin(); ipa != domain.end(); ipa++)
     {
-        ss << "  " << &is << std::endl;
+        ss << "  " << ipa->toString() << std::endl;
     }
 
     // TODO: Domain toString

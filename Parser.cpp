@@ -116,7 +116,7 @@ void Parser::datalogProgram()
                         QUERIES COLON query queryList
                         EOF
     */
-    // TODO test
+    // TODO test with project tests
 
     match(SCHEMES);
     match(COLON);
@@ -234,6 +234,7 @@ void Parser::fact()
     Parameter param1(tokenStr(), false); // First parameter
     currentFact.addParam(param1);
     match(STRING);
+    // program->addToDomain(param1);
 
     stringList(currentFact); // Remaining parameters
 
@@ -276,8 +277,7 @@ Predicate Parser::headPredicate()
     match(ID);
 
     match(LEFT_PAREN);
-    // TODO Check if variables
-    Parameter param1(tokenStr(), true); // First parameter
+    Parameter param1(tokenStr(), tokenType() != STRING); // First parameter
     match(ID);
     currentPred.addParam(param1);
 
@@ -358,6 +358,7 @@ void Parser::stringList(Predicate &currentPredicate)
         Parameter param(tokenStr(), false);
         match(STRING);
         currentPredicate.addParam(param);
+        // program->addToDomain(param);
 
         stringList(currentPredicate);
     }
