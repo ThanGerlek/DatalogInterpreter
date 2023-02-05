@@ -118,8 +118,6 @@ void Parser::datalogProgram()
     */
     // TODO test
 
-    std::cout << "dlp ";
-
     match(SCHEMES);
     match(COLON);
     scheme();
@@ -137,10 +135,9 @@ void Parser::datalogProgram()
     match(END_OF_FILE);
 }
 
-void Parser::schemeList() //? Done
+void Parser::schemeList()
 {
     // schemeList -> scheme schemeList | lambda
-    std::cout << "schemelist ";
 
     saveLoc();
     try
@@ -155,10 +152,9 @@ void Parser::schemeList() //? Done
     }
 }
 
-void Parser::factList() //? Done
+void Parser::factList()
 {
     // factList -> fact factList | lambda
-    std::cout << "factlist ";
 
     saveLoc();
     try
@@ -173,10 +169,9 @@ void Parser::factList() //? Done
     }
 }
 
-void Parser::ruleList() //? Done
+void Parser::ruleList()
 {
     // ruleList -> rule ruleList | lambda
-    std::cout << "rulelist ";
 
     saveLoc();
     try
@@ -191,10 +186,9 @@ void Parser::ruleList() //? Done
     }
 }
 
-void Parser::queryList() //? Done
+void Parser::queryList()
 {
     // queryList -> query queryList | lambda
-    std::cout << "querylist ";
 
     saveLoc();
     try
@@ -209,9 +203,8 @@ void Parser::queryList() //? Done
     }
 }
 
-void Parser::scheme() //? Done
+void Parser::scheme()
 {
-    std::cout << "scheme ";
     // scheme -> ID LEFT_PAREN ID idList RIGHT_PAREN
 
     Predicate currentScheme(tokenStr()); // Predicate ID
@@ -229,10 +222,9 @@ void Parser::scheme() //? Done
     program->addScheme(currentScheme);
 }
 
-void Parser::fact() //? Done
+void Parser::fact()
 {
     // fact -> ID LEFT_PAREN STRING stringList RIGHT_PAREN PERIOD
-    std::cout << "fact ";
 
     Predicate currentFact(tokenStr()); // Predicate ID
     match(ID);
@@ -250,10 +242,9 @@ void Parser::fact() //? Done
     program->addFact(currentFact);
 }
 
-void Parser::rule() //? Done
+void Parser::rule()
 {
     // rule -> headPredicate COLON_DASH predicate predicateList PERIOD
-    std::cout << "rule ";
 
     Rule currentRule(headPredicate()); // Rule head
 
@@ -268,27 +259,25 @@ void Parser::rule() //? Done
     program->addRule(currentRule);
 }
 
-void Parser::query() // Done.
+void Parser::query()
 {
     // query -> predicate Q_MARK
-    std::cout << "query ";
 
     Predicate currentQuery = predicate();
     match(Q_MARK);
     program->addQuery(currentQuery);
 }
 
-Predicate Parser::headPredicate() //? Done
+Predicate Parser::headPredicate()
 {
     // headPredicate -> ID LEFT_PAREN ID idList RIGHT_PAREN
-    std::cout << "headPredicate ";
 
     Predicate currentPred(tokenStr()); // Predicate id
     match(ID);
 
     match(LEFT_PAREN);
-
-    Parameter param1(tokenStr()); // First parameter
+    // TODO Check if variables
+    Parameter param1(tokenStr(), true); // First parameter
     match(ID);
     currentPred.addParam(param1);
 
@@ -298,10 +287,9 @@ Predicate Parser::headPredicate() //? Done
     return currentPred;
 }
 
-Predicate Parser::predicate() //? Done
+Predicate Parser::predicate()
 {
     // predicate -> ID LEFT_PAREN parameter parameterList RIGHT_PAREN
-    std::cout << "predicate ";
 
     Predicate currentPred(tokenStr()); // Predicate id
     match(ID);
@@ -317,30 +305,18 @@ Predicate Parser::predicate() //? Done
     return currentPred;
 }
 
-void Parser::predicateList(Rule &currentRule) //? Done
+void Parser::predicateList(Rule &currentRule)
 {
     // predicateList -> COMMA predicate predicateList | lambda
-    std::cout << "predicatelist ";
 
     saveLoc();
-
     try
     {
         match(COMMA);
 
         Predicate pred = predicate();
-        currentRule.addPredicate(pred); // Add predicate
-
-        // try
-        // {
+        currentRule.addPredicate(pred);
         predicateList(currentRule);
-        // }
-        // catch (Token t)
-        // {
-        //     Should be unreachable, because predicateList can go to lambda
-        //     currentRule.erasePredicate();
-        //     throw t;
-        // }
     }
     catch (Token)
     {
@@ -349,10 +325,9 @@ void Parser::predicateList(Rule &currentRule) //? Done
     }
 }
 
-void Parser::parameterList(Predicate &currentPredicate) //? Done
+void Parser::parameterList(Predicate &currentPredicate)
 {
     // parameterList -> COMMA parameter parameterList | lambda
-    std::cout << "parameterlist ";
 
     saveLoc();
     try
@@ -371,10 +346,9 @@ void Parser::parameterList(Predicate &currentPredicate) //? Done
     }
 }
 
-void Parser::stringList(Predicate &currentPredicate) //? Done
+void Parser::stringList(Predicate &currentPredicate)
 {
     // stringList -> COMMA STRING stringList | lambda
-    std::cout << "strlist ";
 
     saveLoc();
     try
@@ -394,10 +368,8 @@ void Parser::stringList(Predicate &currentPredicate) //? Done
     }
 }
 
-void Parser::idList(Predicate &currentPredicate) //? Done
+void Parser::idList(Predicate &currentPredicate)
 {
-    std::cout << "idlist ";
-
     // idList -> COMMA ID idList | lambda
 
     saveLoc();
@@ -418,12 +390,11 @@ void Parser::idList(Predicate &currentPredicate) //? Done
     }
 }
 
-Parameter Parser::parameter() //? Done
+Parameter Parser::parameter()
 {
     // parameter -> STRING | ID
-    std::cout << "parameter ";
 
-    Parameter param(tokenStr());
+    Parameter param(tokenStr(), true);
     if (tokenType() == STRING)
     {
         match(STRING);
@@ -432,7 +403,6 @@ Parameter Parser::parameter() //? Done
     else
     {
         match(ID);
-        param.setIsVariable(true);
     }
     return param;
 }

@@ -11,12 +11,12 @@ public:
     Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program), u_location(0){};
     ~Parser(){};
     void parse();
-    // TODO set to private
-    // private:
+
+private:
     const std::vector<Token> *tokens;
     DatalogProgram *program;
     unsigned u_location; // Index of the next token
-    unsigned u_max_location;
+    unsigned u_max_location; // Index of the farthest token reached (used for failure reporting)
     std::stack<unsigned> savedLocs;
 
     TokenType tokenType();

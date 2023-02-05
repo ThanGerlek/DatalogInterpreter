@@ -6,7 +6,6 @@
 class Parameter
 {
 public:
-    Parameter(std::string _text) : text(_text), isVar(false) {}
     Parameter(std::string _text, bool _isVariable) : text(_text), isVar(_isVariable){};
     ~Parameter(){};
     bool isVariable() const { return isVar; };

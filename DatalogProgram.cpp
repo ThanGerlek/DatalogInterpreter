@@ -7,24 +7,7 @@
 void DatalogProgram::addScheme(Predicate scheme) { schemes.push_back(scheme); }
 void DatalogProgram::addQuery(Predicate query) { queries.push_back(query); }
 void DatalogProgram::addRule(Rule rule) { rules.push_back(rule); }
-void DatalogProgram::addFact(Predicate fact)
-{
-    facts.push_back(fact);
-
-    // Update domain
-    for (std::vector<Parameter>::const_iterator i = fact.getParams().begin(); i != fact.getParams().end(); i++)
-    {
-        if (!i->isVariable())
-        {
-            domain.push_back(i->toString());
-        }
-    }
-}
-
-const std::vector<Predicate> *DatalogProgram::getSchemes() const { return &schemes; }
-const std::vector<Predicate> *DatalogProgram::getFacts() const { return &facts; }
-const std::vector<Predicate> *DatalogProgram::getQueries() const { return &queries; }
-const std::vector<Rule> *DatalogProgram::getRules() const { return &rules; }
+void DatalogProgram::addFact(Predicate fact) { facts.push_back(fact); }
 
 std::string DatalogProgram::toString()
 {
