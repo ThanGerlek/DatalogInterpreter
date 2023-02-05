@@ -65,7 +65,7 @@ void Parser::parse()
     catch (Token token)
     {
         std::cout << "Failure!" << std::endl
-                  << "  " << token.toString();
+                  << "  " << token.toString() << std::endl;
     }
 }
 
@@ -74,10 +74,10 @@ void Parser::parse()
 /* Datalog Grammar:
 
 datalogProgram	->	SCHEMES COLON scheme schemeList
-                FACTS COLON factList
-                RULES COLON ruleList
-                QUERIES COLON query queryList
-            EOF
+                    FACTS COLON factList
+                    RULES COLON ruleList
+                    QUERIES COLON query queryList
+                    EOF
 
 schemeList	->	scheme schemeList | lambda
 factList	->	fact factList | lambda
@@ -212,7 +212,7 @@ void Parser::scheme()
     std::cout << "scheme ";
 
     // scheme -> ID LEFT_PAREN ID idList RIGHT_PAREN
-    // TODO
+
     match(ID);
     match(LEFT_PAREN);
     match(ID);

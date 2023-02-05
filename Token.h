@@ -80,7 +80,7 @@ public:
         case END_OF_FILE:
             return "EOF";
         default:
-            std::cerr << "Error: unrecognized token type '" << _type <<"'" << std::endl;
+            std::cerr << "Error: unrecognized token type '" << static_cast<int>(_type) <<"'" << std::endl;
             throw;
         }
     }
