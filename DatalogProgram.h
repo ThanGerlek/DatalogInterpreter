@@ -16,20 +16,20 @@ public:
     void addFact(Predicate fact);
     void addQuery(Predicate query);
     void addRule(Rule rule);
-    void addToDomain(Parameter param);
+    void addToDomain(std::string str);
 
 private:
     const std::vector<Predicate> *getSchemes() const;
     const std::vector<Predicate> *getFacts() const;
     const std::vector<Predicate> *getQueries() const;
     const std::vector<Rule> *getRules() const;
-    const std::set<Parameter> *getDomain() const;
+    const std::set<std::string> *getDomain() const;
 
     std::vector<Predicate> schemes;
     std::vector<Predicate> facts;
     std::vector<Predicate> queries;
     std::vector<Rule> rules;
-    std::set<Parameter> domain;
+    std::set<std::string> domain;
 };
 
 #endif

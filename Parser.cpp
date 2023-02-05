@@ -234,7 +234,7 @@ void Parser::fact()
     Parameter param1(tokenStr(), false); // First parameter
     currentFact.addParam(param1);
     match(STRING);
-    // program->addToDomain(param1);
+    program->addToDomain(param1.toString());
 
     stringList(currentFact); // Remaining parameters
 
@@ -358,7 +358,7 @@ void Parser::stringList(Predicate &currentPredicate)
         Parameter param(tokenStr(), false);
         match(STRING);
         currentPredicate.addParam(param);
-        // program->addToDomain(param);
+        program->addToDomain(param.toString());
 
         stringList(currentPredicate);
     }

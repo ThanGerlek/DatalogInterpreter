@@ -8,21 +8,13 @@ const std::vector<Predicate> *DatalogProgram::getSchemes() const { return &schem
 const std::vector<Predicate> *DatalogProgram::getFacts() const { return &facts; }
 const std::vector<Predicate> *DatalogProgram::getQueries() const { return &queries; }
 const std::vector<Rule> *DatalogProgram::getRules() const { return &rules; }
-const std::set<Parameter> *DatalogProgram::getDomain() const { return &domain; }
+const std::set<std::string> *DatalogProgram::getDomain() const { return &domain; }
 
 void DatalogProgram::addScheme(Predicate scheme) { schemes.push_back(scheme); }
 void DatalogProgram::addQuery(Predicate query) { queries.push_back(query); }
 void DatalogProgram::addRule(Rule rule) { rules.push_back(rule); }
 void DatalogProgram::addFact(Predicate fact) { facts.push_back(fact); }
-void DatalogProgram::addToDomain(Parameter param)
-{
-    if (param.isVariable())
-    {
-        std::cerr << "Error: tried to add a Parameter with isVariable set to true.";
-        throw;
-    }
-    // domain.insert(param);
-}
+void DatalogProgram::addToDomain(std::string str) { domain.insert(str); }
 
 std::string DatalogProgram::toString()
 {
@@ -53,9 +45,9 @@ std::string DatalogProgram::toString()
     }
 
     ss << "Domain(" << domain.size() << "):" << std::endl;
-    for (Parameter param : domain)
+    for (std::string str : domain)
     {
-        ss << "  " << param.toString() << std::endl;
+        ss << "  " << str << std::endl;
     }
 
     return ss.str();
