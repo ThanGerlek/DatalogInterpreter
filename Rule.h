@@ -15,6 +15,7 @@ public:
     Predicate getHead() const { return head; }
     const std::vector<Predicate> &getPredicates() const { return body; }
     void addPredicate(Predicate p) { body.push_back(p); }
+    void erasePredicate() { body.pop_back(); }
 
     std::string toString()
     {

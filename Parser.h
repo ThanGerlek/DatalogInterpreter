@@ -16,9 +16,11 @@ public:
     const std::vector<Token> *tokens;
     DatalogProgram *program;
     unsigned u_location; // Index of the next token
+    unsigned u_max_location;
     std::stack<unsigned> savedLocs;
 
     TokenType tokenType();
+    std::string tokenStr();
     void advanceToken();
     void throwError();
     void match(TokenType t);
@@ -36,13 +38,13 @@ public:
     void fact();
     void rule();
     void query();
-    void headPredicate();
-    void predicate();
-    void predicateList();
-    void parameterList();
-    void stringList();
-    void idList();
-    void parameter();
+    Predicate headPredicate();
+    Predicate predicate();
+    void predicateList(Rule &currentRule);
+    void parameterList(Predicate &currentPredicate);
+    void stringList(Predicate &currentPredicate);
+    void idList(Predicate &currentPredicate);
+    Parameter parameter();
 };
 
 #endif
