@@ -8,11 +8,13 @@
 class Predicate
 {
 public:
+    Predicate(){};
     Predicate(std::string _id) : id(_id){};
     ~Predicate(){};
-    void addParam(Parameter param) { params.push_back(param); }
-    const std::vector<Parameter> &getParams() const { return params; }
     std::string getId() const { return id; }
+    const std::vector<Parameter> &getParams() const { return params; }
+    void setId(Parameter param) { id = param.toString(); }
+    void addParam(Parameter param) { params.push_back(param); }
 
     std::string toString() const
     {

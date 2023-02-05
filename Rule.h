@@ -11,9 +11,10 @@ public:
     Rule(Predicate _head) : head(_head){};
     ~Rule(){};
 
-    void addPredicate(Predicate p) { body.push_back(p); }
     Predicate getHead() const { return head; }
     const std::vector<Predicate> &getPredicates() const { return body; }
+    void setHead(Predicate _head) { head = _head; }
+    void addPredicate(Predicate p) { body.push_back(p); }
 
     std::string toString()
     {
@@ -33,7 +34,7 @@ public:
     }
 
 private:
-    const Predicate head;
+    Predicate head;
     std::vector<Predicate> body;
 };
 
