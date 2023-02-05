@@ -15,3 +15,4 @@ errorless:
 clean:
 	rm -f main
 	rm -f test
+	rm -f project2
