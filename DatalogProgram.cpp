@@ -27,41 +27,36 @@ void DatalogProgram::addToDomain(Parameter param)
 std::string DatalogProgram::toString()
 {
     std::stringstream ss;
-    std::vector<Predicate>::iterator ip;
-    std::vector<Rule>::iterator ir;
-    std::set<Parameter>::iterator ipa;
 
     ss << "Schemes(" << schemes.size() << "):" << std::endl;
-    for (ip = schemes.begin(); ip != schemes.end(); ip++)
+    for (Predicate p : schemes)
     {
-        ss << "  " << ip->toString() << std::endl;
+        ss << "  " << p.toString() << std::endl;
     }
 
     ss << "Facts(" << facts.size() << "):" << std::endl;
-    for (ip = facts.begin(); ip != facts.end(); ip++)
+    for (Predicate p : facts)
     {
-        ss << "  " << ip->toString() << "." << std::endl;
+        ss << "  " << p.toString() << std::endl;
     }
 
     ss << "Rules(" << rules.size() << "):" << std::endl;
-    for (ir = rules.begin(); ir != rules.end(); ir++)
+    for (Rule r : rules)
     {
-        ss << "  " << ir->toString() << "." << std::endl;
+        ss << "  " << r.toString() << std::endl;
     }
 
     ss << "Queries(" << queries.size() << "):" << std::endl;
-    for (ip = queries.begin(); ip != queries.end(); ip++)
+    for (Predicate p : queries)
     {
-        ss << "  " << ip->toString() << "?" << std::endl;
+        ss << "  " << p.toString() << std::endl;
     }
 
     ss << "Domain(" << domain.size() << "):" << std::endl;
-    for (ipa = domain.begin(); ipa != domain.end(); ipa++)
+    for (Parameter param : domain)
     {
-        ss << "  " << ipa->toString() << std::endl;
+        ss << "  " << param.toString() << std::endl;
     }
-
-    // TODO: Domain toString
 
     return ss.str();
 }
