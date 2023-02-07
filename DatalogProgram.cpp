@@ -8,60 +8,47 @@ const std::vector<Predicate> *DatalogProgram::getSchemes() const { return &schem
 const std::vector<Predicate> *DatalogProgram::getFacts() const { return &facts; }
 const std::vector<Predicate> *DatalogProgram::getQueries() const { return &queries; }
 const std::vector<Rule> *DatalogProgram::getRules() const { return &rules; }
-const std::set<Parameter> *DatalogProgram::getDomain() const { return &domain; }
+const std::set<std::string> *DatalogProgram::getDomain() const { return &domain; }
 
 void DatalogProgram::addScheme(Predicate scheme) { schemes.push_back(scheme); }
 void DatalogProgram::addQuery(Predicate query) { queries.push_back(query); }
 void DatalogProgram::addRule(Rule rule) { rules.push_back(rule); }
 void DatalogProgram::addFact(Predicate fact) { facts.push_back(fact); }
-void DatalogProgram::addToDomain(Parameter param)
-{
-    if (param.isVariable())
-    {
-        std::cerr << "Error: tried to add a Parameter with isVariable set to true.";
-        throw;
-    }
-    // domain.insert(param);
-}
+void DatalogProgram::addToDomain(std::string str) { domain.insert(str); }
 
 std::string DatalogProgram::toString()
 {
     std::stringstream ss;
-    std::vector<Predicate>::iterator ip;
-    std::vector<Rule>::iterator ir;
-    std::set<Parameter>::iterator ipa;
 
     ss << "Schemes(" << schemes.size() << "):" << std::endl;
-    for (ip = schemes.begin(); ip != schemes.end(); ip++)
+    for (Predicate p : schemes)
     {
-        ss << "  " << ip->toString() << std::endl;
+        ss << "  " << p.toString() << std::endl;
     }
 
     ss << "Facts(" << facts.size() << "):" << std::endl;
-    for (ip = facts.begin(); ip != facts.end(); ip++)
+    for (Predicate p : facts)
     {
-        ss << "  " << ip->toString() << "." << std::endl;
+        ss << "  " << p.toString() << "." << std::endl;
     }
 
     ss << "Rules(" << rules.size() << "):" << std::endl;
-    for (ir = rules.begin(); ir != rules.end(); ir++)
+    for (Rule r : rules)
     {
-        ss << "  " << ir->toString() << "." << std::endl;
+        ss << "  " << r.toString() << "." << std::endl;
     }
 
     ss << "Queries(" << queries.size() << "):" << std::endl;
-    for (ip = queries.begin(); ip != queries.end(); ip++)
+    for (Predicate p : queries)
     {
-        ss << "  " << ip->toString() << "?" << std::endl;
+        ss << "  " << p.toString() << "?" << std::endl;
     }
 
     ss << "Domain(" << domain.size() << "):" << std::endl;
-    for (ipa = domain.begin(); ipa != domain.end(); ipa++)
+    for (std::string str : domain)
     {
-        ss << "  " << ipa->toString() << std::endl;
+        ss << "  " << str << std::endl;
     }
-
-    // TODO: Domain toString
 
     return ss.str();
 }
