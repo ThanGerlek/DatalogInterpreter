@@ -29,7 +29,11 @@ void Scanner::scan(std::vector<Token> &tokens)
 
     while (hasNext())
     {
-        tokens.push_back(scanToken());
+        Token token = scanToken();
+        if (token.getType() != COMMENT)
+        {
+            tokens.push_back(token);
+        }
     }
 }
 
