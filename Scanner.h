@@ -1,5 +1,5 @@
-#ifndef PROJECT1_T2K_SCANNER_H
-#define PROJECT1_T2K_SCANNER_H
+#ifndef CS236_PROJECT1_T2K_SCANNER_H
+#define CS236_PROJECT1_T2K_SCANNER_H
 
 #include <cctype>
 #include <queue>
@@ -32,7 +32,6 @@ private:
     MaybeToken scanBlockComment();
 
     void removeWhitespace();
-
 };
 
 #endif
