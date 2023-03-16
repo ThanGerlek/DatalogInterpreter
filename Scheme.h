@@ -7,9 +7,7 @@
 class Scheme : public std::vector<std::string>
 {
 public:
-    Scheme(vector<std::string> names) : vector<std::string>(names) 
-
-private:
+    Scheme(vector<std::string> names) : vector<std::string>(names){};
 };
 
 #endif
