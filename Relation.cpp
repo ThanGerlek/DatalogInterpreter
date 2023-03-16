@@ -27,12 +27,12 @@ std::string Relation::toString() const
 ////
 ////
 
-Relation Relation::selectForConstant(int index, const std::string &value) const
+Relation Relation::selectForConstant(unsigned int u_index, const std::string &value) const
 {
     Relation result(name, scheme);
     for (Tuple tuple : tuples)
     {
-        if (tuple.at(static_cast<unsigned int>(index)) == value)
+        if (tuple.at(u_index) == value)
         {
             result.addTuple(tuple);
         }
@@ -40,13 +40,13 @@ Relation Relation::selectForConstant(int index, const std::string &value) const
     return result;
 }
 
-Relation Relation::selectForEqualVariables(int index1, int index2) const
+Relation Relation::selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const
 {
     Relation result(name, scheme);
     for (Tuple tuple : tuples)
     {
-        std::string v1 = tuple.at(static_cast<unsigned int>(index1));
-        std::string v2 = tuple.at(static_cast<unsigned int>(index2));
+        std::string v1 = tuple.at(u_index1);
+        std::string v2 = tuple.at(u_index2);
         if (v1 == v2)
         {
             result.addTuple(tuple);
@@ -55,21 +55,21 @@ Relation Relation::selectForEqualVariables(int index1, int index2) const
     return result;
 }
 
-Relation Relation::project(std::vector<int> &indices) const
+Relation Relation::project(std::vector<unsigned int> &u_indices) const
 {
-    Scheme projectedScheme = scheme.project(indices);
+    Scheme projectedScheme = scheme.project(u_indices);
     Relation result(name, projectedScheme);
     for (Tuple tuple : tuples)
     {
-        Tuple projectedTuple = tuple.project(indices);
+        Tuple projectedTuple = tuple.project(u_indices);
         result.addTuple(projectedTuple);
     }
     return result;
 }
 
-Relation Relation::rename(int index, const std::string &newName) const
+Relation Relation::rename(unsigned int u_index, const std::string &newName) const
 {
-    Scheme renamedScheme = scheme.rename(index, newName);
+    Scheme renamedScheme = scheme.rename(u_index, newName);
     Relation result(name, renamedScheme);
     for (Tuple tuple : tuples)
     {

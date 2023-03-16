@@ -25,27 +25,27 @@ public:
     /**
      * @brief Return a new Scheme which includes only the selected attributes in the given order.
      *
-     * @param attributeIndices The indices of the attributes to include.
+     * @param u_indices The (unsigned) indices of the attributes to include.
      * @return Scheme
      */
-    Scheme project(std::vector<int> &indices) const
+    Scheme project(std::vector<unsigned int> &u_indices) const
     {
         std::vector<std::string> names;
-        for (int index : indices)
+        for (unsigned int u_index : u_indices)
         {
-            std::string name = this->at(static_cast<unsigned int>(index));
+            std::string name = this->at(u_index);
             names.push_back(name);
         }
         Scheme projectedScheme(names);
         return projectedScheme;
     }
 
-    Scheme rename(int index, const std::string &newName) const
+    Scheme rename(unsigned int u_index, const std::string &newName) const
     {
         std::vector<std::string> names;
         for (unsigned int ui = 0; ui < this->size(); ui++)
         {
-            if (static_cast<int>(ui) == index)
+            if (ui == u_index)
             {
                 names.push_back(newName);
             }
