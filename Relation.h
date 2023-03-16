@@ -6,7 +6,6 @@
 
 class Relation
 {
-
 private:
     std::string name;
     Scheme scheme;
@@ -18,6 +17,9 @@ public:
 
     void addTuple(const Tuple &tuple);
     std::string toString() const;
+
+    Relation selectForConstant(int index, const std::string &value) const;
+    Relation selectForEqualVariables(int index1, int index2) const;
 };
 
 #endif
