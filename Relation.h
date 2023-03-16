@@ -20,6 +20,8 @@ public:
 
     Relation selectForConstant(int index, const std::string &value) const;
     Relation selectForEqualVariables(int index1, int index2) const;
+    Relation project(std::vector<int> &indices) const;
+    Relation rename(int index, const std::string &newName) const;
 };
 
 #endif

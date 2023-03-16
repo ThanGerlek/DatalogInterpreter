@@ -7,7 +7,43 @@
 class Scheme : public std::vector<std::string>
 {
 public:
-    Scheme(vector<std::string> names) : vector<std::string>(names){};
+    Scheme(vector<std::string> attributeNames) : vector<std::string>(attributeNames){};
+
+    /**
+     * @brief Return a new Scheme which includes only the selected attributes in the given order.
+     *
+     * @param attributeIndices The indices of the attributes to include.
+     * @return Scheme
+     */
+    Scheme project(std::vector<int> &indices) const
+    {
+        std::vector<std::string> names;
+        for (int index : indices)
+        {
+            std::string name = this->at(static_cast<unsigned int>(index));
+            names.push_back(name);
+        }
+        Scheme projectedScheme(names);
+        return projectedScheme;
+    }
+
+    Scheme rename(int index, const std::string &newName) const
+    {
+        std::vector<std::string> names;
+        for (unsigned int ui = 0; ui < this->size(); ui++)
+        {
+            if (static_cast<int>(ui) == index)
+            {
+                names.push_back(newName);
+            }
+            else
+            {
+                names.push_back(this->at(ui));
+            }
+        }
+        Scheme renamedScheme(names);
+        return renamedScheme;
+    }
 };
 
 #endif

@@ -34,7 +34,41 @@ public:
         return out.str();
     }
 
-private:
+    /**
+     * @brief Return a new Scheme which includes only the selected attributes in the given order.
+     *
+     * @param attributeIndices The indices of the attributes to include.
+     * @return Tuple
+     */
+    Tuple project(std::vector<int> &attributeIndices) const
+    {
+        std::vector<std::string> values;
+        for (unsigned int ui = 0; ui < attributeIndices.size(); ui++) // TODO? Clean up
+        {
+            int attributeIndex = attributeIndices.at(ui);
+
+            std::string value = this->at(static_cast<unsigned int>(attributeIndex));
+            values.push_back(value);
+        }
+        Tuple projectedTuple(values);
+        return projectedTuple;
+    }
+
+    /**
+     * @brief Return a copy of this Tuple.
+     * @return Tuple
+     */
+    Tuple copy() const
+    {
+        std::vector<std::string> values;
+        for (unsigned int ui = 0; ui < this->size(); ui++)
+        {
+            std::string value = this->at(ui);
+            values.push_back(value);
+        }
+        Tuple result(values);
+        return result;
+    }
 };
 
 #endif

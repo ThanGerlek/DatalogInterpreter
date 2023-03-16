@@ -55,4 +55,27 @@ Relation Relation::selectForEqualVariables(int index1, int index2) const
     return result;
 }
 
+Relation Relation::project(std::vector<int> &indices) const
+{
+    Scheme projectedScheme = scheme.project(indices);
+    Relation result(name, projectedScheme);
+    for (Tuple tuple : tuples)
+    {
+        Tuple projectedTuple = tuple.project(indices);
+        result.addTuple(projectedTuple);
+    }
+    return result;
+}
+
+Relation Relation::rename(int index, const std::string &newName) const
+{
+    Scheme renamedScheme = scheme.rename(index, newName);
+    Relation result(name, renamedScheme);
+    for (Tuple tuple : tuples)
+    {
+        result.addTuple(tuple.copy());
+    }
+    return result;
+}
+
 #endif
