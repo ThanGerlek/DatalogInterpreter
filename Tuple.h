@@ -23,13 +23,13 @@ public:
         }
 
         std::stringstream out;
-        for (int i = 0; i < tuple.size(); i++)
+        for (unsigned int ui = 0; ui < tuple.size(); ui++)
         {
-            if (i != 0)
+            if (ui != 0)
             {
                 out << ", ";
             }
-            out << scheme.at(i) << "=" << tuple.at(i);
+            out << scheme.at(ui) << "=" << tuple.at(ui);
         }
         return out.str();
     }
