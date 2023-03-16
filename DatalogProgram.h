@@ -18,13 +18,13 @@ public:
     void addRule(Rule rule);
     void addToDomain(std::string str);
 
-private:
     const std::vector<Predicate> *getSchemes() const;
     const std::vector<Predicate> *getFacts() const;
     const std::vector<Predicate> *getQueries() const;
     const std::vector<Rule> *getRules() const;
     const std::set<std::string> *getDomain() const;
 
+private:
     std::vector<Predicate> schemes;
     std::vector<Predicate> facts;
     std::vector<Predicate> queries;
