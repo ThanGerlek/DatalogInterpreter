@@ -13,27 +13,11 @@ private:
     std::set<Tuple> tuples;
 
 public:
-    Relation(const std::string &name, const Scheme &scheme)
-        : name(name), scheme(scheme) {}
+    Relation(const std::string &_name, const Scheme &_scheme)
+        : name(_name), scheme(_scheme){};
 
-    void addTuple(const Tuple &tuple)
-    {
-        if (tuple.size() != scheme.size())
-        {
-            std::cerr << "Tried to add tuple to a relation with a scheme of a different size" << std::endl;
-            throw;
-        }
-
-        tuples.insert(tuple);
-    }
-
-    std::string toString() const
-    {
-        std::stringstream out;
-        for (auto &tuple : tuples)
-            out << tuple.toString(scheme) << std::endl;
-        return out.str();
-    }
+    void addTuple(const Tuple &tuple);
+    std::string toString() const;
 };
 
 #endif
