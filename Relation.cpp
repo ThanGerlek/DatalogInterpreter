@@ -30,11 +30,11 @@ std::string Relation::toString() const
 Relation Relation::selectForConstant(int index, const std::string &value) const
 {
     Relation result(name, scheme);
-    for (std::set<Tuple>::iterator iter = tuples.begin(); iter != tuples.end(); iter++)
+    for (Tuple tuple : tuples)
     {
-        if (iter->at(static_cast<unsigned int>(index)) == value)
+        if (tuple.at(static_cast<unsigned int>(index)) == value)
         {
-            result.addTuple(*iter);
+            result.addTuple(tuple);
         }
     }
     return result;
@@ -43,13 +43,13 @@ Relation Relation::selectForConstant(int index, const std::string &value) const
 Relation Relation::selectForEqualVariables(int index1, int index2) const
 {
     Relation result(name, scheme);
-    for (std::set<Tuple>::iterator iter = tuples.begin(); iter != tuples.end(); iter++)
+    for (Tuple tuple : tuples)
     {
-        std::string v1 = iter->at(static_cast<unsigned int>(index1));
-        std::string v2 = iter->at(static_cast<unsigned int>(index2));
+        std::string v1 = tuple.at(static_cast<unsigned int>(index1));
+        std::string v2 = tuple.at(static_cast<unsigned int>(index2));
         if (v1 == v2)
         {
-            result.addTuple(*iter);
+            result.addTuple(tuple);
         }
     }
     return result;

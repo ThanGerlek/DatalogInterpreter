@@ -10,26 +10,25 @@
 class Tuple : public std::vector<std::string>
 {
 public:
-    Tuple(vector<std::string> values) : vector<std::string>(values){}; // TODO? Is this calling the base class's construstor?
+    // TODO? Check what this line is doing (calling the base class's construstor?)
+    Tuple(vector<std::string> values) : vector<std::string>(values){};
 
     std::string toString(const Scheme &scheme) const
     {
-        const Tuple &tuple = *this; // TODO? When is this needed?
-
-        if (scheme.size() != tuple.size())
+        if (scheme.size() != this->size())
         {
             std::cerr << "Called toString() with a scheme and tuple of different sizes" << std::endl;
             throw;
         }
 
         std::stringstream out;
-        for (unsigned int ui = 0; ui < tuple.size(); ui++)
+        for (unsigned int ui = 0; ui < this->size(); ui++)
         {
             if (ui != 0)
             {
                 out << ", ";
             }
-            out << scheme.at(ui) << "=" << tuple.at(ui);
+            out << scheme.at(ui) << "=" << this->at(ui);
         }
         return out.str();
     }
