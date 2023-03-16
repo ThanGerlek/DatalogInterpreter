@@ -3,11 +3,24 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 
 class Scheme : public std::vector<std::string>
 {
 public:
     Scheme(vector<std::string> attributeNames) : vector<std::string>(attributeNames){};
+
+    std::string toString()
+    {
+        std::stringstream out;
+        out << "( ";
+        for (std::string name : *this)
+        {
+            out << name << " ";
+        }
+        out << ")";
+        return out.str();
+    }
 
     /**
      * @brief Return a new Scheme which includes only the selected attributes in the given order.

@@ -22,6 +22,8 @@ public:
     Relation selectForEqualVariables(int index1, int index2) const;
     Relation project(std::vector<int> &indices) const;
     Relation rename(int index, const std::string &newName) const;
+
+    Scheme getScheme() { return scheme; }
 };
 
 #endif
