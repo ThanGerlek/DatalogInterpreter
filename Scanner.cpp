@@ -23,7 +23,7 @@ void Scanner::scan(std::vector<Token> &tokens)
 {
     if (!tokens.empty())
     {
-        std::cerr << "Error: tried to scan into a nonempty vector." << std::endl;
+        std::cerr << "[ERROR] Tried to scan into a nonempty vector." << std::endl;
         throw;
     }
 

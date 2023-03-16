@@ -19,7 +19,7 @@ public:
     {
         if (body.size() == 0)
         {
-            std::cerr << "Error: tried to access a Rule with no body." << std::endl;
+            std::cerr << "[ERROR] Tried to access a Rule with no body." << std::endl;
             throw;
         }
 

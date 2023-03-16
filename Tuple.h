@@ -17,7 +17,7 @@ public:
     {
         if (scheme.size() != this->size())
         {
-            std::cerr << "Called toString() with a scheme and tuple of different sizes" << std::endl;
+            std::cerr << "[ERROR] Called toString() with a scheme and a tuple of different sizes." << std::endl;
             throw;
         }
 

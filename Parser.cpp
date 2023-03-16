@@ -12,7 +12,7 @@ void Parser::restoreLoc()
 {
     if (savedLocs.empty())
     {
-        std::cerr << "Error: tried to call restoreLoc(), but with no saved locations." << std::endl;
+        std::cerr << "[ERROR] Tried to call restoreLoc(), but with no saved locations." << std::endl;
         throw;
     }
     u_location = savedLocs.top();

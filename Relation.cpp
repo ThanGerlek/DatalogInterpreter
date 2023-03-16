@@ -7,7 +7,7 @@ void Relation::addTuple(const Tuple &tuple)
 {
     if (tuple.size() != scheme.size())
     {
-        std::cerr << "Tried to add tuple to a relation with a scheme of a different size" << std::endl;
+        std::cerr << "[ERROR] Tried to add tuple to a relation with a scheme of a different size." << std::endl;
         throw;
     }
 
