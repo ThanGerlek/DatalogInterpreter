@@ -23,7 +23,8 @@ public:
     Relation project(std::vector<unsigned int> &u_indices) const;
     Relation rename(unsigned int u_index, const std::string &newName) const;
 
-    Scheme getScheme() { return scheme; }
+    Scheme getScheme() const { return scheme; }
+    std::string getName() const { return name; }
 };
 
 #endif

@@ -10,7 +10,8 @@ public:
     ~Parameter(){};
     bool isVariable() const { return isVar; };
     void setIsVariable(bool _isVar) { isVar = _isVar; }
-    std::string toString() const { return text; };
+    std::string toString() const { return getValue(); };
+    std::string getValue() const { return text; }
 
 private:
     std::string text;
