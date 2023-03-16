@@ -112,7 +112,6 @@ void Parser::datalogProgram()
                         QUERIES COLON query queryList
                         EOF
     */
-    // TODO test with project tests
 
     match(SCHEMES);
     match(COLON);
