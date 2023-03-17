@@ -4,8 +4,6 @@
 #include "Relation.h"
 #include "Predicate.h"
 
-// TODO
-
 class QueryResult
 {
 private:
@@ -17,7 +15,6 @@ public:
 
     std::string toString()
     {
-        // TODO
         std::stringstream ss;
         ss << predicate.toString() << "? ";
 
@@ -32,7 +29,7 @@ public:
             // Print Tuples
             for (Tuple tuple : relation.getTuples())
             {
-                // TODO Handle no variables?
+                // TODO! Handle no variables?
                 ss << "  " << tuple.toString(relation.getScheme()) << std::endl;
             }
         }
