@@ -174,7 +174,7 @@ const Relation DatalogDatabase::projectForQuery(Relation relation, const std::ve
  * @param params The Parameter list of the current query.
  * @return const Relation
  */
-const Relation DatalogDatabase::renameForQuery(const Relation relation, const std::vector<Parameter> *params) const
+const Relation DatalogDatabase::renameForQuery(Relation relation, const std::vector<Parameter> *params) const
 {
     Scheme scheme = relation.getScheme();
 
@@ -188,7 +188,7 @@ const Relation DatalogDatabase::renameForQuery(const Relation relation, const st
             std::string newName = params->at(u_originalIndex).getValue();
             if (oldName != newName)
             {
-                relation.rename(oldName, newName);
+                relation = relation.rename(oldName, newName);
             }
             u_projectedIndex++;
         }
