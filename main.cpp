@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Scanner.h"
 #include "Parser.h"
+#include "DatalogDatabase.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,8 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    ////
+    ////
     // Scan file
 
     std::string filename = argv[1];
@@ -31,12 +34,27 @@ int main(int argc, char *argv[])
     std::vector<Token> tokens;
     scanner.scan(tokens);
 
+    ////
+    ////
     // Parse tokens
 
-    DatalogProgram dlp;
-    Parser p(&tokens, &dlp);
+    DatalogProgram dlProgram;
+    Parser parser(&tokens, &dlProgram);
 
-    p.parse();
+    parser.parse();
+
+    ////
+    ////
+    // Load Database
+
+    std::cout << std::endl
+              << std::endl
+              << std::endl;
+
+    DatalogDatabase datalogdb(&dlProgram);
+
+    datalogdb.evaluate();
+    datalogdb.printQueries();
 
     return 0;
 }
