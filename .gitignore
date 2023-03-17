@@ -2,10 +2,7 @@
 input.txt
 main
 test
+project3
 test.cpp
-project2
-run-tests.sh
-project2-passoff/*
-project2-tests/*
 *.zip
-actual.txt
+out.txt
