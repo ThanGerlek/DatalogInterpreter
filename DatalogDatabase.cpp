@@ -8,7 +8,6 @@
  */
 void DatalogDatabase::evaluateSchemes()
 {
-    // TODO Test
     for (Predicate predicate : *(dlProgram->getSchemes()))
     {
         std::vector<std::string> attributeNames = predicate.getParamStrings();
@@ -24,7 +23,6 @@ void DatalogDatabase::evaluateSchemes()
  */
 void DatalogDatabase::evaluateFacts()
 {
-    // TODO
     // TODO? Check if facts ever contain variables (I'm assuming they don't)
     for (Predicate predicate : *(dlProgram->getFacts()))
     {
@@ -40,16 +38,13 @@ void DatalogDatabase::evaluateFacts()
  */
 void DatalogDatabase::evaluateQueries()
 {
-    // TODO Return? Print?
-    // Evaluating Queries
-
     // For each query in the Datalog program:
-    for (Predicate predicate : *(dlProgram->getQueries()))
+    for (Predicate queryPredicate : *(dlProgram->getQueries()))
     {
         // Get the Relation from the Database with the same name as the predicate name in the query.
 
-        std::vector<Parameter> *params = predicate.getParams();
-        std::string relationName = predicate.getId();
+        std::vector<Parameter> *params = queryPredicate.getParams();
+        std::string relationName = queryPredicate.getId();
 
         int index = getIndex(relationName);
         if (index < 0)
@@ -66,6 +61,13 @@ void DatalogDatabase::evaluateQueries()
     }
 }
 
+////
+////
+////
+////
+////
+////
+
 /**
  * @brief Apply SELECT operations to select the tuples from the given Relation that match the query.
  *
@@ -75,18 +77,20 @@ void DatalogDatabase::evaluateQueries()
  */
 const Relation DatalogDatabase::selectForQuery(Relation relation, const std::vector<Parameter> *params) const
 {
-    // Use one or more select operations to select the tuples from the Relation that match the query. Iterate over the parameters of the query: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the query, select the tuples from the Relation that have the same value in both positions where the variable name appears.
-    //TODO Error if params and relation.scheme don't match in size?
+    // Iterate over the parameters of the query: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the query, select the tuples from the Relation that have the same value in both positions where the variable name appears.
+    // TODO Error if params and relation.scheme don't match in size?
+
     for (unsigned int ui = 0; ui < params->size(); ui++)
     {
         Parameter param = params->at(ui);
         if (param.isVariable())
         {
-            // Check if it's elsewhere
+            // Check if this variable is also used in another Parameter later in the query
             for (unsigned int uj = ui; uj < params->size(); uj++)
             {
                 if (params->at(uj).isVariable() && params->at(uj).getValue() == param.getValue())
                 {
+                    // If so, SELECT the Relation for equal values of the two Parameters
                     relation = relation.selectForEqualVariables(ui, uj);
                 }
             }
@@ -118,16 +122,16 @@ const Relation DatalogDatabase::projectForQuery(Relation relation, const std::ve
         Parameter param = params->at(ui);
         if (param.isVariable())
         {
-            // Make sure this attribute wasn't already added at a different index
-            bool contains = false;
+            // Skip this variable if it was already added at a different index
+            bool alreadyContains = false;
             for (unsigned int uj = 0; uj < ui; uj++)
             {
                 if (params->at(uj).getValue() == param.getValue())
                 {
-                    contains = true;
+                    alreadyContains = true;
                 }
             }
-            if (!contains)
+            if (!alreadyContains)
             {
                 u_attributeIndices.push_back(ui);
             }
@@ -147,7 +151,7 @@ const Relation DatalogDatabase::renameForQuery(const Relation relation, const st
 {
     Scheme scheme = relation.getScheme();
 
-    unsigned int u_originalIndex = 0;  // Index of current parameter
+    unsigned int u_originalIndex = 0;  // Original index of current parameter
     unsigned int u_projectedIndex = 0; // Index of current parameter after projection
     while (u_originalIndex < params->size() && u_projectedIndex < scheme.size())
     {
@@ -155,11 +159,15 @@ const Relation DatalogDatabase::renameForQuery(const Relation relation, const st
         {
             std::string oldName = scheme.at(u_projectedIndex);
             std::string newName = params->at(u_originalIndex).getValue();
-            relation.rename(oldName, newName);
+            if (oldName != newName)
+            {
+                relation.rename(oldName, newName);
+            }
             u_projectedIndex++;
         }
         u_originalIndex++;
     }
+
     return relation;
 }
 
