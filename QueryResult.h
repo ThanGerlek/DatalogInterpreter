@@ -29,8 +29,10 @@ public:
             // Print Tuples
             for (Tuple tuple : relation.getTuples())
             {
-                // TODO! Handle no variables?
-                ss << "  " << tuple.toString(relation.getScheme()) << std::endl;
+                if (tuple.size() > 0)
+                {
+                    ss << "  " << tuple.toString(relation.getScheme()) << std::endl;
+                }
             }
         }
         return ss.str();
