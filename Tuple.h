@@ -58,9 +58,8 @@ public:
     const Tuple copy() const
     {
         std::vector<std::string> values;
-        for (unsigned int ui = 0; ui < this->size(); ui++)
+        for (std::string value : *this)
         {
-            std::string value = this->at(ui);
             values.push_back(value);
         }
         Tuple result(values);
