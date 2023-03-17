@@ -78,7 +78,7 @@ void DatalogDatabase::evaluateQueries()
 
         // Use a sequence of select, project, and rename operations on the Database to evaluate the query.
         relation = selectForQuery(relation, params);
-        std::vector<unsigned int> projectedIndices = getProjectedIndices(relation, params);
+        std::vector<unsigned int> projectedIndices = getProjectedIndices(params);
         relation = projectForQuery(relation, projectedIndices);
         relation = renameForQuery(relation, params, projectedIndices);
 
@@ -133,17 +133,17 @@ const Relation DatalogDatabase::selectForQuery(Relation relation, const std::vec
 }
 
 /**
- * @brief Apply PROJECT operations to keep only attributes that correspond to the positions of the variables in the query.
+ * @brief Calculate the indices of the attributes of the current query that will be left after projecting.
+ * @details
+ * A list of unsigned ints representing Parameter indices is returned. In effect, it takes attribute indices
+ * from after the projection, and maps them to to their corresponding indices from before the projection.
+ * Only Parameters that are variables will be kept and only one of each variable.
  *
- * @param relation The relation to apply PROJECT to.
  * @param params The Parameter list of the current query.
- * @return const Relation
+ * @return std::vector<unsigned int> The list of indices.
  */
-
-std::vector<unsigned int> DatalogDatabase::getProjectedIndices(Relation relation, const std::vector<Parameter> *params) const
+std::vector<unsigned int> DatalogDatabase::getProjectedIndices(const std::vector<Parameter> *params) const
 {
-    // After selecting the matching tuples, use the project operation to keep only the columns from the Relation that correspond to the positions of the variables in the query. Make sure that each variable name appears only once in the resulting relation. If the same name appears more than once, keep the first column where the name appears and remove any later columns where the same name appears. (This makes a difference when there are other columns in between the ones with the same name.)
-
     std::vector<unsigned int> projectedIndices;
 
     for (unsigned int i = 0; i < params->size(); i++)
@@ -169,6 +169,13 @@ std::vector<unsigned int> DatalogDatabase::getProjectedIndices(Relation relation
     return projectedIndices;
 }
 
+/**
+ * @brief Apply PROJECT operations to keep only attributes that correspond to the positions of the variables in the query in the given order.
+ *
+ * @param relation The relation to apply PROJECT to.
+ * @param projectedIndices The indices of the attributes to keep after the projection.
+ * @return const Relation
+ */
 const Relation DatalogDatabase::projectForQuery(Relation relation, std::vector<unsigned int> projectedIndices) const
 {
     return relation.project(projectedIndices);
@@ -179,21 +186,12 @@ const Relation DatalogDatabase::projectForQuery(Relation relation, std::vector<u
  *
  * @param relation The relation to apply RENAME to.
  * @param params The Parameter list of the current query.
+ * @param projectedIndices The indices of the attributes kept after projection.
  * @return const Relation
  */
-////
-////
 const Relation DatalogDatabase::renameForQuery(Relation relation, const std::vector<Parameter> *params,
                                                std::vector<unsigned int> projectedIndices) const
 {
-    // TODO Redo docs
-
-    // scheme (proj): one of each variable, variables only, names from schemes/facts
-    // params (OG): multiple variables, constants, names from queries
-    // projected indices: map between the two - key from proj, val from OG
-
-    // want: one of each variable, variables only, names from queries
-
     std::vector<std::string> newNames;
 
     for (unsigned int finalIndex = 0; finalIndex < projectedIndices.size(); finalIndex++)

@@ -18,7 +18,7 @@ private:
     void evaluateQueries();
 
     const Relation selectForQuery(Relation relation, const std::vector<Parameter> *params) const;
-    std::vector<unsigned int> getProjectedIndices(Relation relation, const std::vector<Parameter> *params) const;
+    std::vector<unsigned int> getProjectedIndices(const std::vector<Parameter> *params) const;
     const Relation projectForQuery(Relation relation, std::vector<unsigned int> projectedIndices) const;
     const Relation renameForQuery(Relation relation, const std::vector<Parameter> *params, std::vector<unsigned int> projectedIndices) const;
 
