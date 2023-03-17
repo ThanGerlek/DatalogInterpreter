@@ -39,6 +39,9 @@ public:
     Token(TokenType _type, std::string _value, int _line) : type(_type), value(_value), line(_line){};
     Token() : type(UNDEFINED), value(""), line(-1){};
 
+    /**
+     * @brief Get a string representation of a TokenType.
+     */
     static std::string typeName(TokenType _type)
     {
         switch (_type)

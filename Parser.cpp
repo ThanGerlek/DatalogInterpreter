@@ -3,11 +3,17 @@
 
 #include "Parser.h"
 
+/**
+ * @brief Save to the stack the current location in the input.
+ */
 void Parser::saveLoc()
 {
     savedLocs.push(u_location);
 }
 
+/**
+ * @brief Pop from the stack a location in the input.
+ */
 void Parser::restoreLoc()
 {
     if (savedLocs.empty())
@@ -19,16 +25,29 @@ void Parser::restoreLoc()
     savedLocs.pop();
 }
 
+/**
+ * @brief Get the TokenType of the current Token.
+ * 
+ * @return TokenType 
+ */
 TokenType Parser::tokenType()
 {
     return tokens->at(u_location).getType();
 }
 
+/**
+ * @brief Get the string value of the current Token.
+ * 
+ * @return std::string 
+ */
 std::string Parser::tokenStr()
 {
     return tokens->at(u_location).getValue();
 }
 
+/**
+ * @brief Advance the location in the input to the next Token.
+ */
 void Parser::advanceToken()
 {
     u_location++;
@@ -40,6 +59,11 @@ void Parser::throwError()
     throw tokens->at(u_location);
 }
 
+/**
+ * @brief Advance the input if the current Token matches the given type; otherwise throw an error.
+ *
+ * @param type
+ */
 void Parser::match(TokenType type)
 {
     if (tokenType() == type)

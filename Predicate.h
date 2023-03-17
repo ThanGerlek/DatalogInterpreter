@@ -13,11 +13,21 @@ public:
     void addParam(Parameter param) { params.push_back(param); }
     std::string getId() const { return id; }
 
+    /**
+     * @brief Get a pointer to the Params object.
+     * 
+     * @return std::vector<Parameter>*
+     */
     std::vector<Parameter> *getParams()
     {
         return &params;
     }
 
+/**
+ * @brief Get the Param object with Parameters converted to strings.
+ * 
+ * @return std::vector<std::string> 
+ */
     std::vector<std::string> getParamStrings() const
     {
         std::vector<std::string> strs;

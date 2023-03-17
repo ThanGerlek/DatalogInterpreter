@@ -3,6 +3,9 @@
 
 #include "DatalogDatabase.h"
 
+/**
+ * @brief Update the internal Database with the data from the Scheme list of the DatalogProgram.
+ */
 void DatalogDatabase::evaluateSchemes()
 {
     // TODO Test
@@ -16,6 +19,9 @@ void DatalogDatabase::evaluateSchemes()
     }
 }
 
+/**
+ * @brief Update the internal Database with the data from the Fact list of the DatalogProgram.
+ */
 void DatalogDatabase::evaluateFacts()
 {
     // TODO
@@ -29,9 +35,12 @@ void DatalogDatabase::evaluateFacts()
     }
 }
 
+/**
+ * @brief Update the internal Database with the data from the Query list of the DatalogProgram.
+ */
 void DatalogDatabase::evaluateQueries()
 {
-    // TODO
+    // TODO Return? Print?
     // Evaluating Queries
 
     // For each query in the Datalog program:
@@ -57,9 +66,17 @@ void DatalogDatabase::evaluateQueries()
     }
 }
 
+/**
+ * @brief Apply SELECT operations to select the tuples from the given Relation that match the query.
+ *
+ * @param relation The relation to apply SELECT to.
+ * @param params The Parameter list of the current query.
+ * @return const Relation
+ */
 const Relation DatalogDatabase::selectForQuery(Relation relation, const std::vector<Parameter> *params) const
 {
     // Use one or more select operations to select the tuples from the Relation that match the query. Iterate over the parameters of the query: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the query, select the tuples from the Relation that have the same value in both positions where the variable name appears.
+    //TODO Error if params and relation.scheme don't match in size?
     for (unsigned int ui = 0; ui < params->size(); ui++)
     {
         Parameter param = params->at(ui);
@@ -83,6 +100,13 @@ const Relation DatalogDatabase::selectForQuery(Relation relation, const std::vec
     return relation;
 }
 
+/**
+ * @brief Apply PROJECT operations to keep only attributes that correspond to the positions of the variables in the query.
+ *
+ * @param relation The relation to apply PROJECT to.
+ * @param params The Parameter list of the current query.
+ * @return const Relation
+ */
 const Relation DatalogDatabase::projectForQuery(Relation relation, const std::vector<Parameter> *params) const
 {
     // After selecting the matching tuples, use the project operation to keep only the columns from the Relation that correspond to the positions of the variables in the query. Make sure that each variable name appears only once in the resulting relation. If the same name appears more than once, keep the first column where the name appears and remove any later columns where the same name appears. (This makes a difference when there are other columns in between the ones with the same name.)
@@ -112,6 +136,13 @@ const Relation DatalogDatabase::projectForQuery(Relation relation, const std::ve
     return relation.project(u_attributeIndices);
 }
 
+/**
+ * @brief Apply RENAME operations to rename the scheme of the Relation to the names of the variables found in the query.
+ *
+ * @param relation The relation to apply RENAME to.
+ * @param params The Parameter list of the current query.
+ * @return const Relation
+ */
 const Relation DatalogDatabase::renameForQuery(const Relation relation, const std::vector<Parameter> *params) const
 {
     Scheme scheme = relation.getScheme();

@@ -16,7 +16,7 @@ Scanner::Scanner(std::ifstream &ifs)
 }
 
 /**
- * Scan all tokens into the given vector.
+ * @brief Scan all tokens into the given vector.
  * Throws an error if the vector is nonempty.
  */
 void Scanner::scan(std::vector<Token> &tokens)
@@ -38,7 +38,7 @@ void Scanner::scan(std::vector<Token> &tokens)
 }
 
 /**
- * Remove any leading whitespace from the input string.
+ * @brief Remove any leading whitespace from the input string.
  */
 void Scanner::removeWhitespace()
 {
@@ -53,7 +53,7 @@ void Scanner::removeWhitespace()
 }
 
 /**
- * Return true iff there is more text in the input string to scan.
+ * @brief Return true iff there is more text in the input string to scan.
  */
 bool Scanner::hasNext()
 {
@@ -61,7 +61,7 @@ bool Scanner::hasNext()
 }
 
 /**
- * Scan a single token, removing it from the input string.
+ * @brief Scan a single token, removing it from the input string.
  */
 Token Scanner::scanToken()
 {
@@ -126,7 +126,7 @@ Token Scanner::scanToken()
 ////
 
 /**
- * Scan for END_OF_FILE token.
+ * @brief Scan for END_OF_FILE token.
  */
 MaybeToken Scanner::scanForEOFToken() // END_OF_FILE token
 {
@@ -138,7 +138,7 @@ MaybeToken Scanner::scanForEOFToken() // END_OF_FILE token
 }
 
 /**
- * Scan for COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, MULTIPLY, and ADD tokens.
+ * @brief Scan for COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, MULTIPLY, and ADD tokens.
  */
 MaybeToken Scanner::scanForCharTokens()
 {
@@ -194,7 +194,7 @@ MaybeToken Scanner::scanForCharTokens()
 }
 
 /**
- * Scan for COLON and COLON_DASH tokens.
+ * @brief Scan for COLON and COLON_DASH tokens.
  */
 MaybeToken Scanner::scanForColonTokens()
 {
@@ -218,7 +218,7 @@ MaybeToken Scanner::scanForColonTokens()
 }
 
 /**
- * Scan for STRING token.
+ * @brief Scan for STRING token.
  */
 MaybeToken Scanner::scanForStringToken()
 {
@@ -281,7 +281,7 @@ MaybeToken Scanner::scanForStringToken()
 }
 
 /**
- * Scan for COMMENT token.
+ * @brief Scan for COMMENT token.
  */
 MaybeToken Scanner::scanForCommentToken()
 {
@@ -313,7 +313,7 @@ MaybeToken Scanner::scanForCommentToken()
 }
 
 /**
- * Scan for a block comment token.
+ * @brief Scan for a block comment token.
  */
 MaybeToken Scanner::scanBlockComment()
 {
@@ -371,7 +371,7 @@ MaybeToken Scanner::scanBlockComment()
 }
 
 /**
- * Scan for tokens consisting of a single word: ID, SCHEMES, FACTS, RULES, and QUERIES.
+ * @brief Scan for tokens consisting of a single word: ID, SCHEMES, FACTS, RULES, and QUERIES.
  */
 MaybeToken Scanner::scanForWordTokens()
 {

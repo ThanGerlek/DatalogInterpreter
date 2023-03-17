@@ -29,7 +29,7 @@ public:
      * @brief Return a new Scheme which includes only the selected attributes in the given order.
      *
      * @param u_indices The (unsigned) indices of the attributes to include.
-     * @return Scheme
+     * @return const Scheme
      */
     const Scheme project(const std::vector<unsigned int> &u_indices) const
     {
@@ -43,6 +43,13 @@ public:
         return projectedScheme;
     }
 
+    /**
+     * @brief Return a new Scheme with the given attribute renamed.
+     *
+     * @param oldName The attribute to rename.
+     * @param newName The new name.
+     * @return const Scheme
+     */
     const Scheme rename(const std::string &oldName, const std::string &newName) const
     {
         std::vector<std::string> newNames;
