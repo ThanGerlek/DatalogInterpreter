@@ -42,10 +42,8 @@ public:
     const Tuple project(const std::vector<unsigned int> &u_attributeIndices) const
     {
         std::vector<std::string> values;
-        for (unsigned int ui = 0; ui < u_attributeIndices.size(); ui++) // TODO? Clean up
+        for (unsigned int u_attributeIndex : u_attributeIndices)
         {
-            unsigned int u_attributeIndex = u_attributeIndices.at(ui);
-
             std::string value = this->at(u_attributeIndex);
             values.push_back(value);
         }
