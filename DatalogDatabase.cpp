@@ -115,15 +115,22 @@ const Relation DatalogDatabase::projectForQuery(Relation relation, const std::ve
 
 const Relation DatalogDatabase::renameForQuery(const Relation relation, const std::vector<Parameter> *params) const
 {
-    // After projecting, use the rename operation to rename the scheme of the Relation to the names of the variables found in the query.
-    // for (unsigned int ui = 0; ui < params->size(); ui++)
-    // {
-    //     if (relation.getScheme().at(ui) != params->at(ui).getValue())
-    //     {
-    //         relation = relation.rename(ui, params->at(ui).getValue());
-    //     }
-    // }
-    // return relation;
+    Scheme scheme = relation.getScheme();
+
+    unsigned int u_originalIndex = 0;  // Index of current parameter
+    unsigned int u_projectedIndex = 0; // Index of current parameter after projection
+    while (u_originalIndex < params->size() && u_projectedIndex < scheme.size())
+    {
+        if (params->at(u_originalIndex).isVariable())
+        {
+            std::string oldName = scheme.at(u_projectedIndex);
+            std::string newName = params->at(u_originalIndex).getValue();
+            relation.rename(oldName, newName);
+            u_projectedIndex++;
+        }
+        u_originalIndex++;
+    }
+    return relation;
 }
 
 std::string DatalogDatabase::toString() const

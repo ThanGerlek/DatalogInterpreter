@@ -40,21 +40,21 @@ public:
         return projectedScheme;
     }
 
-    const Scheme rename(unsigned int u_index, const std::string &newName) const
+    const Scheme rename(const std::string &oldName, const std::string &newName) const
     {
-        std::vector<std::string> names;
-        for (unsigned int ui = 0; ui < this->size(); ui++)
+        std::vector<std::string> newNames;
+        for (std::string name : *this)
         {
-            if (ui == u_index)
+            if (name == oldName)
             {
-                names.push_back(newName);
+                newNames.push_back(newName);
             }
             else
             {
-                names.push_back(this->at(ui));
+                newNames.push_back(name);
             }
         }
-        Scheme renamedScheme(names);
+        Scheme renamedScheme(newNames);
         return renamedScheme;
     }
 };
