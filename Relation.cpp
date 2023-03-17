@@ -27,7 +27,7 @@ std::string Relation::toString() const
 ////
 ////
 
-Relation Relation::selectForConstant(unsigned int u_index, const std::string &value) const
+const Relation Relation::selectForConstant(unsigned int u_index, const std::string &value) const
 {
     Relation result(name, scheme);
     for (Tuple tuple : tuples)
@@ -40,7 +40,7 @@ Relation Relation::selectForConstant(unsigned int u_index, const std::string &va
     return result;
 }
 
-Relation Relation::selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const
+const Relation Relation::selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const
 {
     Relation result(name, scheme);
     for (Tuple tuple : tuples)
@@ -55,7 +55,7 @@ Relation Relation::selectForEqualVariables(unsigned int u_index1, unsigned int u
     return result;
 }
 
-Relation Relation::project(std::vector<unsigned int> &u_indices) const
+const Relation Relation::project(const std::vector<unsigned int> &u_indices) const
 {
     Scheme projectedScheme = scheme.project(u_indices);
     Relation result(name, projectedScheme);
@@ -67,9 +67,9 @@ Relation Relation::project(std::vector<unsigned int> &u_indices) const
     return result;
 }
 
-Relation Relation::rename(unsigned int u_index, const std::string &newName) const
+const Relation Relation::rename(const std::string &oldName, const std::string &newName) const
 {
-    Scheme renamedScheme = scheme.rename(u_index, newName);
+    Scheme renamedScheme = scheme.rename(oldName, newName);
     Relation result(name, renamedScheme);
     for (Tuple tuple : tuples)
     {

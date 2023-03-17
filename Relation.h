@@ -18,10 +18,10 @@ public:
     void addTuple(const Tuple &tuple);
     std::string toString() const;
 
-    Relation selectForConstant(unsigned int u_index, const std::string &value) const;
-    Relation selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const;
-    Relation project(std::vector<unsigned int> &u_indices) const;
-    Relation rename(unsigned int u_index, const std::string &newName) const;
+    const Relation selectForConstant(unsigned int u_index, const std::string &value) const;
+    const Relation selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const;
+    const Relation project(const std::vector<unsigned int> &u_indices) const;
+    const Relation rename(const std::string &oldName, const std::string &newName) const;
 
     Scheme getScheme() const { return scheme; }
     std::string getName() const { return name; }

@@ -28,7 +28,7 @@ public:
      * @param u_indices The (unsigned) indices of the attributes to include.
      * @return Scheme
      */
-    Scheme project(std::vector<unsigned int> &u_indices) const
+    const Scheme project(const std::vector<unsigned int> &u_indices) const
     {
         std::vector<std::string> names;
         for (unsigned int u_index : u_indices)
@@ -40,7 +40,7 @@ public:
         return projectedScheme;
     }
 
-    Scheme rename(unsigned int u_index, const std::string &newName) const
+    const Scheme rename(unsigned int u_index, const std::string &newName) const
     {
         std::vector<std::string> names;
         for (unsigned int ui = 0; ui < this->size(); ui++)

@@ -39,7 +39,7 @@ public:
      * @param u_attributeIndices The (unsigned) indices of the attributes to include.
      * @return Tuple
      */
-    Tuple project(std::vector<unsigned int> &u_attributeIndices) const
+    const Tuple project(const std::vector<unsigned int> &u_attributeIndices) const
     {
         std::vector<std::string> values;
         for (unsigned int ui = 0; ui < u_attributeIndices.size(); ui++) // TODO? Clean up
@@ -57,7 +57,7 @@ public:
      * @brief Return a copy of this Tuple.
      * @return Tuple
      */
-    Tuple copy() const
+    const Tuple copy() const
     {
         std::vector<std::string> values;
         for (unsigned int ui = 0; ui < this->size(); ui++)

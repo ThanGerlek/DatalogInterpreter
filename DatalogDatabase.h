@@ -8,16 +8,16 @@ class DatalogDatabase : public Database
 {
 private:
     DatalogProgram *dlProgram;
-    Relation selectForQuery(Relation relation, const std::vector<Parameter> *params);
-    Relation projectForQuery(Relation relation, const std::vector<Parameter> *params);
-    Relation renameForQuery(Relation relation, const std::vector<Parameter> *params);
+    const Relation selectForQuery(Relation relation, const std::vector<Parameter> *params) const;
+    const Relation projectForQuery(Relation relation, const std::vector<Parameter> *params) const;
+    const Relation renameForQuery(Relation relation, const std::vector<Parameter> *params) const;
 
 public:
     DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram){};
     void evaluateFacts();
     void evaluateSchemes();
     void evaluateQueries();
-    std::string toString();
+    std::string toString() const;
 };
 
 #endif
