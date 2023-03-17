@@ -47,10 +47,6 @@ int main(int argc, char *argv[])
     ////
     // Load Database
 
-    std::cout << std::endl
-              << std::endl
-              << std::endl;
-
     DatalogDatabase datalogdb(&dlProgram);
 
     datalogdb.evaluate();
