@@ -50,24 +50,12 @@ public:
      * @param newName The new name.
      * @return const Scheme
      */
-    const Scheme rename(const std::string &oldName, const std::string &newName) const
+    const Scheme rename(std::vector<std::string> &newNames) const
     {
-        std::vector<std::string> newNames;
-        for (std::string name : *this)
+        if (newNames.size() != this->size())
         {
-            if (name == newName)
-            {
-                std::cerr << "[ERROR] Tried to rename an attribute to an already existing name." << std::endl;
-                throw;
-            }
-            else if (name == oldName)
-            {
-                newNames.push_back(newName);
-            }
-            else
-            {
-                newNames.push_back(name);
-            }
+            std::cerr << "[ERROR] Renamed a Scheme to a different size." << std::endl;
+            throw;
         }
         Scheme renamedScheme(newNames);
         return renamedScheme;

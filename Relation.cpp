@@ -97,9 +97,9 @@ const Relation Relation::project(const std::vector<unsigned int> &u_indices) con
  * @param newName The new name.
  * @return const Relation
  */
-const Relation Relation::rename(const std::string &oldName, const std::string &newName) const
+const Relation Relation::rename(std::vector<std::string> &newNames) const
 {
-    Scheme renamedScheme = scheme.rename(oldName, newName);
+    Scheme renamedScheme = scheme.rename(newNames);
     Relation result(name, renamedScheme);
     for (Tuple tuple : tuples)
     {
