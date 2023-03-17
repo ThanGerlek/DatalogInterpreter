@@ -181,29 +181,30 @@ const Relation DatalogDatabase::projectForQuery(Relation relation, std::vector<u
  * @param params The Parameter list of the current query.
  * @return const Relation
  */
+////
+////
 const Relation DatalogDatabase::renameForQuery(Relation relation, const std::vector<Parameter> *params,
                                                std::vector<unsigned int> projectedIndices) const
 {
-    // Scheme scheme = relation.getScheme();
+    // TODO Redo docs
 
-    // unsigned int u_originalIndex = 0;  // Original index of current parameter
-    // unsigned int u_projectedIndex = 0; // Index of current parameter after projection
-    // while (u_originalIndex < params->size() && u_projectedIndex < scheme.size())
-    // {
-    //     if (params->at(u_originalIndex).isVariable())
-    //     {
-    //         std::string oldName = scheme.at(u_projectedIndex);
-    //         std::string newName = params->at(u_originalIndex).getValue();
-    //         if (oldName != newName)
-    //         {
-    //             relation = relation.rename(oldName, newName);
-    //         }
-    //         u_projectedIndex++;
-    //     }
-    //     u_originalIndex++;
-    // }
+    // scheme (proj): one of each variable, variables only, names from schemes/facts
+    // params (OG): multiple variables, constants, names from queries
+    // projected indices: map between the two - key from proj, val from OG
 
-    // return relation;
+    // want: one of each variable, variables only, names from queries
+
+    std::vector<std::string> newNames;
+
+    for (unsigned int finalIndex = 0; finalIndex < projectedIndices.size(); finalIndex++)
+    {
+        unsigned int originalIndex = projectedIndices.at(finalIndex);
+        std::string newName = params->at(originalIndex).getValue();
+        newNames.push_back(newName);
+    }
+
+    Relation renamedRelation = relation.rename(newNames);
+    return renamedRelation;
 }
 
 std::string DatalogDatabase::toString() const
