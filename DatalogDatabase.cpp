@@ -4,6 +4,28 @@
 #include "DatalogDatabase.h"
 
 /**
+ * @brief (WIP) Evaluate and load the results of the DatalogProgram's queries.
+ * WIP: does not yet evaluate Rules.
+ */
+void DatalogDatabase::evaluate()
+{
+    evaluateSchemes();
+    evaluateFacts();
+    evaluateQueries();
+}
+
+/**
+ * @brief Print the results of the DatalogProgram's queries.
+ */
+void DatalogDatabase::printQueries() const
+{
+    for (QueryResult queryResult : queryResults)
+    {
+        std::cout << queryResult.toString();
+    }
+}
+
+/**
  * @brief Update the internal Database with the data from the Scheme list of the DatalogProgram.
  */
 void DatalogDatabase::evaluateSchemes()
@@ -58,7 +80,12 @@ void DatalogDatabase::evaluateQueries()
         relation = selectForQuery(relation, params);
         relation = projectForQuery(relation, params);
         relation = renameForQuery(relation, params);
+
+        QueryResult qResult(queryPredicate, relation);
+        queryResults.push_back(qResult);
     }
+
+    hasEvaluatedQueries = true;
 }
 
 ////
