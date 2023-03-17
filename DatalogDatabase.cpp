@@ -43,7 +43,7 @@ void DatalogDatabase::evaluateQueries()
         std::string relationName = predicate.getId();
 
         int index = getIndex(relationName);
-        if (index == -1)
+        if (index < 0)
         {
             std::cerr << "[ERROR] Invalid query: no such relation." << std::endl;
             throw;
@@ -87,7 +87,7 @@ const Relation DatalogDatabase::projectForQuery(Relation relation, const std::ve
 {
     // After selecting the matching tuples, use the project operation to keep only the columns from the Relation that correspond to the positions of the variables in the query. Make sure that each variable name appears only once in the resulting relation. If the same name appears more than once, keep the first column where the name appears and remove any later columns where the same name appears. (This makes a difference when there are other columns in between the ones with the same name.)
 
-    std::vector<unsigned int> u_variableIndices;
+    std::vector<unsigned int> u_attributeIndices;
 
     for (unsigned int ui = 0; ui < params->size(); ui++)
     {
@@ -105,12 +105,11 @@ const Relation DatalogDatabase::projectForQuery(Relation relation, const std::ve
             }
             if (!contains)
             {
-                u_variableIndices.push_back(ui);
+                u_attributeIndices.push_back(ui);
             }
         }
     }
-
-    return relation.project(u_variableIndices);
+    return relation.project(u_attributeIndices);
 }
 
 const Relation DatalogDatabase::renameForQuery(const Relation relation, const std::vector<Parameter> *params) const
@@ -136,10 +135,11 @@ const Relation DatalogDatabase::renameForQuery(const Relation relation, const st
 std::string DatalogDatabase::toString() const
 {
     std::stringstream ss;
-    ss << "-- Datalog Database --" << std::endl << std::endl;
+    ss << "-- Datalog Database --" << std::endl
+       << std::endl;
     for (Relation relation : this->relations)
     {
-        ss << "Relation:" << std::endl;
+        ss << "Relation '" << relation.getName() << "'" << std::endl;
         ss << relation.toString() << std::endl;
     }
     return ss.str();
