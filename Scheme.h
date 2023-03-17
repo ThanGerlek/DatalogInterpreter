@@ -8,7 +8,10 @@
 class Scheme : public std::vector<std::string>
 {
 public:
-    Scheme(vector<std::string> attributeNames) : vector<std::string>(attributeNames){};
+    Scheme(vector<std::string> attributeNames) : vector<std::string>(attributeNames)
+    {
+        checkForDuplicateNames();
+    };
 
     std::string toString()
     {
@@ -45,7 +48,12 @@ public:
         std::vector<std::string> newNames;
         for (std::string name : *this)
         {
-            if (name == oldName)
+            if (name == newName)
+            {
+                std::cerr << "[ERROR] Tried to rename an attribute to an already existing name." << std::endl;
+                throw;
+            }
+            else if (name == oldName)
             {
                 newNames.push_back(newName);
             }
@@ -56,6 +64,24 @@ public:
         }
         Scheme renamedScheme(newNames);
         return renamedScheme;
+    }
+
+private:
+    /**
+     * @brief Throw an error if this Scheme contains duplicate attribute names.
+     */
+    void checkForDuplicateNames()
+    {
+        std::set<std::string> nameSet;
+        for (std::string name : *this)
+        {
+            nameSet.insert(name);
+        }
+        if (nameSet.size() != this->size())
+        {
+            std::cerr << "[ERROR] Created Scheme with duplicate attribute names." << std::endl;
+            throw;
+        }
     }
 };
 
