@@ -25,6 +25,8 @@ public:
 
     Scheme getScheme() const { return scheme; }
     std::string getName() const { return name; }
+    int size() const { return static_cast<int>(tuples.size()); }
+    std::set<Tuple> getTuples() { return tuples; }
 };
 
 #endif
