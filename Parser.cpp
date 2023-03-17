@@ -27,8 +27,8 @@ void Parser::restoreLoc()
 
 /**
  * @brief Get the TokenType of the current Token.
- * 
- * @return TokenType 
+ *
+ * @return TokenType
  */
 TokenType Parser::tokenType()
 {
@@ -37,8 +37,8 @@ TokenType Parser::tokenType()
 
 /**
  * @brief Get the string value of the current Token.
- * 
- * @return std::string 
+ *
+ * @return std::string
  */
 std::string Parser::tokenStr()
 {
@@ -90,6 +90,7 @@ void Parser::parse()
         Token finalToken = tokens->at(u_max_location);
         std::cerr << "[ERROR] Failed to parse program. Ended on Token: " << std::endl
                   << "  " << finalToken.toString() << std::endl;
+        throw token;
     }
 }
 
