@@ -78,8 +78,9 @@ void DatalogDatabase::evaluateQueries()
 
         // Use a sequence of select, project, and rename operations on the Database to evaluate the query.
         relation = selectForQuery(relation, params);
-        relation = projectForQuery(relation, params);
-        relation = renameForQuery(relation, params);
+        std::vector<unsigned int> projectedIndices = getProjectedIndices(relation, params);
+        relation = projectForQuery(relation, projectedIndices);
+        relation = renameForQuery(relation, params, projectedIndices);
 
         QueryResult qResult(queryPredicate, relation);
         queryResults.push_back(qResult);
@@ -138,33 +139,39 @@ const Relation DatalogDatabase::selectForQuery(Relation relation, const std::vec
  * @param params The Parameter list of the current query.
  * @return const Relation
  */
-const Relation DatalogDatabase::projectForQuery(Relation relation, const std::vector<Parameter> *params) const
+
+std::vector<unsigned int> DatalogDatabase::getProjectedIndices(Relation relation, const std::vector<Parameter> *params) const
 {
     // After selecting the matching tuples, use the project operation to keep only the columns from the Relation that correspond to the positions of the variables in the query. Make sure that each variable name appears only once in the resulting relation. If the same name appears more than once, keep the first column where the name appears and remove any later columns where the same name appears. (This makes a difference when there are other columns in between the ones with the same name.)
 
-    std::vector<unsigned int> u_attributeIndices;
+    std::vector<unsigned int> projectedIndices;
 
-    for (unsigned int ui = 0; ui < params->size(); ui++)
+    for (unsigned int i = 0; i < params->size(); i++)
     {
-        Parameter param = params->at(ui);
+        Parameter param = params->at(i);
         if (param.isVariable())
         {
-            // Skip this variable if it was already added at a different index
+            // Don't include this variable if it was already added at a different index
             bool alreadyContains = false;
-            for (unsigned int uj = 0; uj < ui; uj++)
+            for (unsigned int j = 0; j < i; j++)
             {
-                if (params->at(uj).getValue() == param.getValue())
+                if (params->at(j).getValue() == param.getValue())
                 {
                     alreadyContains = true;
                 }
             }
             if (!alreadyContains)
             {
-                u_attributeIndices.push_back(ui);
+                projectedIndices.push_back(i);
             }
         }
     }
-    return relation.project(u_attributeIndices);
+    return projectedIndices;
+}
+
+const Relation DatalogDatabase::projectForQuery(Relation relation, std::vector<unsigned int> projectedIndices) const
+{
+    return relation.project(projectedIndices);
 }
 
 /**
@@ -174,28 +181,29 @@ const Relation DatalogDatabase::projectForQuery(Relation relation, const std::ve
  * @param params The Parameter list of the current query.
  * @return const Relation
  */
-const Relation DatalogDatabase::renameForQuery(Relation relation, const std::vector<Parameter> *params) const
+const Relation DatalogDatabase::renameForQuery(Relation relation, const std::vector<Parameter> *params,
+                                               std::vector<unsigned int> projectedIndices) const
 {
-    Scheme scheme = relation.getScheme();
+    // Scheme scheme = relation.getScheme();
 
-    unsigned int u_originalIndex = 0;  // Original index of current parameter
-    unsigned int u_projectedIndex = 0; // Index of current parameter after projection
-    while (u_originalIndex < params->size() && u_projectedIndex < scheme.size())
-    {
-        if (params->at(u_originalIndex).isVariable())
-        {
-            std::string oldName = scheme.at(u_projectedIndex);
-            std::string newName = params->at(u_originalIndex).getValue();
-            if (oldName != newName)
-            {
-                relation = relation.rename(oldName, newName);
-            }
-            u_projectedIndex++;
-        }
-        u_originalIndex++;
-    }
+    // unsigned int u_originalIndex = 0;  // Original index of current parameter
+    // unsigned int u_projectedIndex = 0; // Index of current parameter after projection
+    // while (u_originalIndex < params->size() && u_projectedIndex < scheme.size())
+    // {
+    //     if (params->at(u_originalIndex).isVariable())
+    //     {
+    //         std::string oldName = scheme.at(u_projectedIndex);
+    //         std::string newName = params->at(u_originalIndex).getValue();
+    //         if (oldName != newName)
+    //         {
+    //             relation = relation.rename(oldName, newName);
+    //         }
+    //         u_projectedIndex++;
+    //     }
+    //     u_originalIndex++;
+    // }
 
-    return relation;
+    // return relation;
 }
 
 std::string DatalogDatabase::toString() const

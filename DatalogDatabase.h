@@ -18,8 +18,9 @@ private:
     void evaluateQueries();
 
     const Relation selectForQuery(Relation relation, const std::vector<Parameter> *params) const;
-    const Relation projectForQuery(Relation relation, const std::vector<Parameter> *params) const;
-    const Relation renameForQuery(Relation relation, const std::vector<Parameter> *params) const;
+    std::vector<unsigned int> getProjectedIndices(Relation relation, const std::vector<Parameter> *params) const;
+    const Relation projectForQuery(Relation relation, std::vector<unsigned int> projectedIndices) const;
+    const Relation renameForQuery(Relation relation, const std::vector<Parameter> *params, std::vector<unsigned int> projectedIndices) const;
 
 public:
     DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram), hasEvaluatedQueries(false){};

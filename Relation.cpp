@@ -97,6 +97,8 @@ const Relation Relation::project(const std::vector<unsigned int> &u_indices) con
  * @param newName The new name.
  * @return const Relation
  */
+// TODO Redo docs
+
 const Relation Relation::rename(std::vector<std::string> &newNames) const
 {
     Scheme renamedScheme = scheme.rename(newNames);
