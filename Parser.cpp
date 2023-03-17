@@ -84,14 +84,11 @@ void Parser::parse()
     try
     {
         datalogProgram();
-
-        std::cout << "Success!" << std::endl;
-        std::cout << program->toString();
     }
     catch (Token token)
     {
         Token finalToken = tokens->at(u_max_location);
-        std::cout << "Failure!" << std::endl
+        std::cerr << "[ERROR] Failed to parse program. Ended on Token: " << std::endl
                   << "  " << finalToken.toString() << std::endl;
     }
 }
