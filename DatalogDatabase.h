@@ -3,20 +3,28 @@
 
 #include "Database.h"
 #include "DatalogProgram.h"
+#include "QueryResult.h"
 
 class DatalogDatabase : public Database
 {
 private:
     DatalogProgram *dlProgram;
+
+    bool hasEvaluatedQueries;
+    std::vector<QueryResult> queryResults;
+
+    void evaluateFacts();
+    void evaluateSchemes();
+    void evaluateQueries();
+
     const Relation selectForQuery(Relation relation, const std::vector<Parameter> *params) const;
     const Relation projectForQuery(Relation relation, const std::vector<Parameter> *params) const;
     const Relation renameForQuery(Relation relation, const std::vector<Parameter> *params) const;
 
 public:
-    DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram){};
-    void evaluateFacts();
-    void evaluateSchemes();
-    void evaluateQueries();
+    DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram), hasEvaluatedQueries(false){};
+    void evaluate();
+    void printQueries() const;
     std::string toString() const;
 };
 
