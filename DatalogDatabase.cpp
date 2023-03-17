@@ -57,7 +57,7 @@ void DatalogDatabase::evaluateQueries()
     }
 }
 
-Relation DatalogDatabase::selectForQuery(Relation relation, const std::vector<Parameter> *params)
+const Relation DatalogDatabase::selectForQuery(Relation relation, const std::vector<Parameter> *params) const
 {
     // Use one or more select operations to select the tuples from the Relation that match the query. Iterate over the parameters of the query: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the query, select the tuples from the Relation that have the same value in both positions where the variable name appears.
     for (unsigned int ui = 0; ui < params->size(); ui++)
@@ -83,7 +83,7 @@ Relation DatalogDatabase::selectForQuery(Relation relation, const std::vector<Pa
     return relation;
 }
 
-Relation DatalogDatabase::projectForQuery(Relation relation, const std::vector<Parameter> *params)
+const Relation DatalogDatabase::projectForQuery(Relation relation, const std::vector<Parameter> *params) const
 {
     // After selecting the matching tuples, use the project operation to keep only the columns from the Relation that correspond to the positions of the variables in the query. Make sure that each variable name appears only once in the resulting relation. If the same name appears more than once, keep the first column where the name appears and remove any later columns where the same name appears. (This makes a difference when there are other columns in between the ones with the same name.)
 
@@ -113,20 +113,20 @@ Relation DatalogDatabase::projectForQuery(Relation relation, const std::vector<P
     return relation.project(u_variableIndices);
 }
 
-Relation DatalogDatabase::renameForQuery(Relation relation, const std::vector<Parameter> *params)
+const Relation DatalogDatabase::renameForQuery(const Relation relation, const std::vector<Parameter> *params) const
 {
     // After projecting, use the rename operation to rename the scheme of the Relation to the names of the variables found in the query.
-    for (unsigned int ui = 0; ui < params->size(); ui++)
-    {
-        if (relation.getScheme().at(ui) != params->at(ui).getValue())
-        {
-            relation = relation.rename(ui, params->at(ui).getValue());
-        }
-    }
-    return relation;
+    // for (unsigned int ui = 0; ui < params->size(); ui++)
+    // {
+    //     if (relation.getScheme().at(ui) != params->at(ui).getValue())
+    //     {
+    //         relation = relation.rename(ui, params->at(ui).getValue());
+    //     }
+    // }
+    // return relation;
 }
 
-std::string DatalogDatabase::toString()
+std::string DatalogDatabase::toString() const
 {
     std::stringstream ss;
     ss << "-- Datalog Database --" << std::endl << std::endl;
