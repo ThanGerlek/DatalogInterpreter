@@ -15,12 +15,13 @@ public:
     Relation(const std::string &_name, const Scheme &_scheme)
         : name(_name), scheme(_scheme){};
 
-    void addTuple(const Tuple &tuple);
-    std::string toString() const;
-
     static bool joinable(const Scheme &leftScheme, const Scheme &rightScheme,
                          const Tuple &leftTuple, const Tuple &rightTuple);
 
+    void addTuple(const Tuple &tuple);
+    std::string toString() const;
+
+    const Relation join(const Relation &right);
     const Relation selectForConstant(unsigned int u_index, const std::string &value) const;
     const Relation selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const;
     const Relation project(const std::vector<unsigned int> &u_indices) const;

@@ -57,6 +57,24 @@ std::string Relation::toString() const
 ////
 ////
 ////
+const Relation Relation::join(const Relation &right)
+{
+    const Relation &left = *this;
+
+    Scheme myScheme({"Name", "Id"});
+    Relation result("students", myScheme);
+
+    for (const Tuple &leftTuple : left.tuples)
+    {
+        std::cout << "left tuple: " << leftTuple.toString(left.getScheme()) << std::endl;
+        for (const Tuple &rightTuple : right.tuples)
+        {
+            std::cout << "right tuple: " << rightTuple.toString(right.getScheme()) << std::endl;
+        }
+    }
+    
+    return result;
+}
 
 /**
  * @brief Return a new Relation, SELECT-ing for Tuples with the given value at the given attribute index.
