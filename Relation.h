@@ -4,6 +4,8 @@
 #include <set>
 #include "Tuple.h"
 
+// TODO Check/test for func(&x, &x) problems
+
 class Relation
 {
 private:
