@@ -72,7 +72,7 @@ const Relation Relation::join(const Relation &right)
             std::cout << "right tuple: " << rightTuple.toString(right.getScheme()) << std::endl;
         }
     }
-    
+
     return result;
 }
 
@@ -137,14 +137,11 @@ const Relation Relation::project(const std::vector<unsigned int> &u_indices) con
 }
 
 /**
- * @brief Return a new Relation with the given attribute renamed.
+ * @brief Return a new Relation with its attributes renamed.
  *
- * @param oldName The attribute to rename.
- * @param newName The new name.
+ * @param newNames The new names of the attributes in the given order.
  * @return const Relation
  */
-// TODO Redo docs
-
 const Relation Relation::rename(std::vector<std::string> &newNames) const
 {
     Scheme renamedScheme = scheme.rename(newNames);
