@@ -36,6 +36,7 @@ std::string Relation::toString() const
 bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
                         const Tuple &leftTuple, const Tuple &rightTuple)
 {
+    // TODO Test for cross product and make it its own function?
     for (unsigned leftIndex = 0; leftIndex < leftScheme.size(); leftIndex++)
     {
         const std::string &leftName = leftScheme.at(leftIndex);
@@ -53,24 +54,62 @@ bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
     return true;
 }
 
+/**
+ * @brief Apply the JOIN operation with this Relation on the left and the given Relation on the right.
+ *
+ * @param right The Relation to join on the right.
+ * @return const Relation The resulting joined Relation.
+ */
 const Relation Relation::join(const Relation &right)
 {
     const Relation &left = *this;
 
-    Scheme myScheme({"Name", "Id"});
-    Relation result("students", myScheme);
+    Scheme leftScheme = left.getScheme();
+    Scheme rightScheme = right.getScheme();
+    Scheme resultScheme = joinSchemes(leftScheme, rightScheme);
 
+    std::string resultName = joinNames(left.getName(), right.getName());
+    Relation result(resultName, resultScheme);
+
+    // For each Tuple in left and right Relations, if they're joinable,
+    // join them and add the resulting Tuple to the result Relation.
     for (const Tuple &leftTuple : left.tuples)
     {
-        std::cout << "left tuple: " << leftTuple.toString(left.getScheme()) << std::endl;
         for (const Tuple &rightTuple : right.tuples)
         {
-            std::cout << "right tuple: " << rightTuple.toString(right.getScheme()) << std::endl;
+            if (joinable(leftScheme, rightScheme, leftTuple, rightTuple))
+            {
+                Tuple tuple = joinSchemes(leftTuple, rightTuple);
+                result.addTuple(tuple);
+            }
         }
     }
 
     return result;
 }
+
+std::string Relation::joinNames(std::string left, std::string right)
+{
+    std::stringstream ss;
+    ss << "(" + left + ")" + " JOIN " + "(" + right + ")";
+    return ss.str();
+}
+
+const Scheme Relation::joinSchemes(const Scheme &left, const Scheme &right)
+{
+    // TODO
+}
+
+const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Scheme &resultScheme, const Tuple &left, const Tuple &right)
+{
+    //? Unneeded parameter?
+    // TODO
+}
+
+////
+////
+////
+////
 
 /**
  * @brief Return a new Relation, SELECT-ing for Tuples with the given value at the given attribute index.

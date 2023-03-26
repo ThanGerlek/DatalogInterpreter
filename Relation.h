@@ -24,6 +24,10 @@ public:
     std::string toString() const;
 
     const Relation join(const Relation &right);
+    std::string joinNames(std::string left, std::string right);
+    const Scheme joinSchemes(const Scheme &left, const Scheme &right);
+    const Tuple joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Scheme &resultScheme, const Tuple &left, const Tuple &right);
+
     const Relation selectForConstant(unsigned int u_index, const std::string &value) const;
     const Relation selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const;
     const Relation project(const std::vector<unsigned int> &u_indices) const;
