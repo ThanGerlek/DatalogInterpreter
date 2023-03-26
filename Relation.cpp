@@ -4,34 +4,6 @@
 #include "Relation.h"
 
 /**
- * @brief Test if the given tuples (under the given schemes) should be included in a call to join().
- */
-bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
-                        const Tuple &leftTuple, const Tuple &rightTuple)
-{
-    for (unsigned leftIndex = 0; leftIndex < leftScheme.size(); leftIndex++)
-    {
-        const std::string &leftName = leftScheme.at(leftIndex);
-        const std::string &leftValue = leftTuple.at(leftIndex);
-        for (unsigned rightIndex = 0; rightIndex < rightScheme.size(); rightIndex++)
-        {
-            const std::string &rightName = rightScheme.at(rightIndex);
-            const std::string &rightValue = rightTuple.at(rightIndex);
-            if (leftName == rightName && leftValue != rightValue)
-            {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-////
-////
-////
-////
-
-/**
  * @brief Add a Tuple to this Relation.
  */
 void Relation::addTuple(const Tuple &tuple)
@@ -57,6 +29,30 @@ std::string Relation::toString() const
 ////
 ////
 ////
+
+/**
+ * @brief Test if the given tuples (under the given schemes) should be included in a call to join().
+ */
+bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
+                        const Tuple &leftTuple, const Tuple &rightTuple)
+{
+    for (unsigned leftIndex = 0; leftIndex < leftScheme.size(); leftIndex++)
+    {
+        const std::string &leftName = leftScheme.at(leftIndex);
+        const std::string &leftValue = leftTuple.at(leftIndex);
+        for (unsigned rightIndex = 0; rightIndex < rightScheme.size(); rightIndex++)
+        {
+            const std::string &rightName = rightScheme.at(rightIndex);
+            const std::string &rightValue = rightTuple.at(rightIndex);
+            if (leftName == rightName && leftValue != rightValue)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 const Relation Relation::join(const Relation &right)
 {
     const Relation &left = *this;
