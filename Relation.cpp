@@ -111,6 +111,68 @@ const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightSc
 ////
 ////
 
+const Relation Relation::cross(const Relation &right)
+{
+    const Relation &left = *this;
+
+    Scheme resultScheme = crossSchemes(left.getScheme(), right.getScheme());
+    std::string resultName = crossNames(left.getName(), right.getName());
+    Relation result = Relation(resultName, resultScheme);
+
+    for (Tuple leftTuple : left.tuples)
+    {
+        for (Tuple rightTuple : right.tuples)
+        {
+            Tuple tuple = crossTuples(leftTuple, rightTuple);
+            result.addTuple(tuple);
+        }
+    }
+
+    return result;
+}
+
+std::string Relation::crossNames(std::string left, std::string right)
+{
+    std::stringstream ss;
+    ss << "(" + left + ")" + " CROSS " + "(" + right + ")";
+    return ss.str();
+}
+
+const Scheme Relation::crossSchemes(const Scheme &left, const Scheme &right)
+{
+    std::vector<std::string> resultNames;
+    for (std::string attributeName : left)
+    {
+        resultNames.push_back(attributeName);
+    }
+    for (std::string attributeName : right)
+    {
+        resultNames.push_back(attributeName);
+    }
+    Scheme result = Scheme(resultNames);
+    return result;
+}
+
+const Tuple Relation::crossTuples(const Tuple &left, const Tuple &right)
+{
+    std::vector<std::string> values;
+    for (std::string value : left)
+    {
+        values.push_back(value);
+    }
+    for (std::string value : right)
+    {
+        values.push_back(value);
+    }
+    Tuple result = Tuple(values);
+    return result;
+}
+
+////
+////
+////
+////
+
 // TODO? Add getTuples() function (safety)? Remove unneeded calls to getScheme() (efficiency)?
 
 /**
