@@ -78,7 +78,7 @@ const Relation Relation::join(const Relation &right)
         {
             if (joinable(leftScheme, rightScheme, leftTuple, rightTuple))
             {
-                Tuple tuple = joinSchemes(leftTuple, rightTuple);
+                Tuple tuple = joinTuples(leftScheme, rightScheme, leftTuple, rightTuple);
                 result.addTuple(tuple);
             }
         }
