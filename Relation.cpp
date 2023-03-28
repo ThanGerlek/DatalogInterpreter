@@ -127,11 +127,8 @@ bool Relation::contains(std::vector<std::string> strs, std::string str)
 
 const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Tuple &leftTuple, const Tuple &rightTuple)
 {
-    //? Unneeded parameter?
-
-    // HACK? Implicit conversion
-    // TODO Confirm: does polymorphism create a copy or ref?
-    std::vector<std::string> values = leftTuple; // Add attributes from left to result
+    // Add attributes from left to result
+    std::vector<std::string> values = static_cast<std::vector<std::string>>(leftTuple);
 
     // Add attributes from right to result, skipping duplicates
     std::vector<std::string> attributes = rightScheme;
