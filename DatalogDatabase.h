@@ -13,8 +13,9 @@ private:
     bool hasEvaluatedQueries;
     std::vector<QueryResult> queryResults;
 
-    void evaluateFacts();
     void evaluateSchemes();
+    void evaluateFacts();
+    void evaluateRules();
     void evaluateQueries();
 
     const Relation selectForQuery(Relation relation, const std::vector<Parameter> *params) const;

@@ -11,6 +11,7 @@ void DatalogDatabase::evaluate()
 {
     evaluateSchemes();
     evaluateFacts();
+    evaluateRules();
     evaluateQueries();
 }
 
@@ -53,6 +54,14 @@ void DatalogDatabase::evaluateFacts()
         Tuple tuple(values);
         addTuple(tuple, relationName);
     }
+}
+
+/**
+ * @brief Update the internal Database with the Rule list of the DatalogProgram.
+ */
+void DatalogDatabase::evaluateRules()
+{
+    // TODO
 }
 
 /**
