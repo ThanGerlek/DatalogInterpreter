@@ -125,10 +125,27 @@ bool Relation::contains(std::vector<std::string> strs, std::string str)
     return false;
 }
 
-const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Scheme &resultScheme, const Tuple &left, const Tuple &right)
+const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Tuple &leftTuple, const Tuple &rightTuple)
 {
     //? Unneeded parameter?
-    // TODO
+
+    // HACK? Implicit conversion
+    // TODO Confirm: does polymorphism create a copy or ref?
+    std::vector<std::string> values = leftTuple; // Add attributes from left to result
+
+    // Add attributes from right to result, skipping duplicates
+    std::vector<std::string> attributes = rightScheme;
+    for (unsigned int i = 0; i < rightScheme.size(); i++)
+    {
+        std::string attribute = rightScheme.at(i);
+        if (!contains(leftScheme, attribute))
+        {
+            std::string value = rightTuple.at(i);
+            values.push_back(value);
+        }
+    }
+    Tuple result = Tuple(values);
+    return result;
 }
 
 ////

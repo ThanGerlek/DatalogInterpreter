@@ -15,7 +15,7 @@ private:
     bool contains(std::vector<std::string> strs, std::string str);
     std::string joinNames(std::string left, std::string right);
     const Scheme joinSchemes(const Scheme &left, const Scheme &right);
-    const Tuple joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Scheme &resultScheme, const Tuple &left, const Tuple &right);
+    const Tuple joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Tuple &left, const Tuple &right);
     std::string crossNames(std::string left, std::string right);
     const Scheme crossSchemes(const Scheme &left, const Scheme &right);
     const Tuple crossTuples(const Tuple &left, const Tuple &right);
