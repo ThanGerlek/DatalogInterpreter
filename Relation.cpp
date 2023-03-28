@@ -10,20 +10,20 @@
  */
 void Relation::addTuple(const Tuple &tuple)
 {
-    if (tuple.size() != scheme.size())
+    if (tuple.size() != this->scheme.size())
     {
         std::cerr << "[ERROR] Tried to add tuple to a relation with a scheme of a different size." << std::endl;
         throw;
     }
 
-    tuples.insert(tuple);
+    this->tuples.insert(tuple);
 }
 
 std::string Relation::toString() const
 {
     std::stringstream out;
-    for (auto &tuple : tuples)
-        out << tuple.toString(scheme) << std::endl;
+    for (auto &tuple : this->tuples)
+        out << tuple.toString(this->scheme) << std::endl;
     return out.str();
 }
 
@@ -232,16 +232,16 @@ const Tuple Relation::crossTuples(const Tuple &left, const Tuple &right)
  * Returns a new Relation containing only Tuples where the attribute at the given
  * index has the specified value.
  *
- * @param u_index The index of the attribute to SELECT for.
+ * @param index The index of the attribute to SELECT for.
  * @param value The value to look for.
  * @return const Relation
  */
-const Relation Relation::selectForConstant(unsigned int u_index, const std::string &value) const
+const Relation Relation::selectForConstant(unsigned int index, const std::string &value) const
 {
-    Relation result(name, scheme);
-    for (Tuple tuple : tuples)
+    Relation result(this->name, this->scheme);
+    for (Tuple tuple : this->tuples)
     {
-        if (tuple.at(u_index) == value)
+        if (tuple.at(index) == value)
         {
             result.addTuple(tuple);
         }
@@ -254,17 +254,18 @@ const Relation Relation::selectForConstant(unsigned int u_index, const std::stri
  * Returns a new Relation containing only Tuples where the values
  * at the given indices are equal.
  *
- * @param u_index1
- * @param u_index2
+ * @param index1
+ * @param index2
  * @return const Relation
  */
-const Relation Relation::selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const
+const Relation Relation::selectForEqualVariables(unsigned int index1,
+                                                 unsigned int index2) const
 {
-    Relation result(name, scheme);
-    for (Tuple tuple : tuples)
+    Relation result(this->name, this->scheme);
+    for (Tuple tuple : this->tuples)
     {
-        std::string v1 = tuple.at(u_index1);
-        std::string v2 = tuple.at(u_index2);
+        std::string v1 = tuple.at(index1);
+        std::string v2 = tuple.at(index2);
         if (v1 == v2)
         {
             result.addTuple(tuple);
@@ -279,16 +280,16 @@ const Relation Relation::selectForEqualVariables(unsigned int u_index1, unsigned
  * Returns a new Relation which includes only the attributes at the given
  * indices, in the given order.
  *
- * @param u_indices The indices of the attributes to include.
+ * @param indices The indices of the attributes to include.
  * @return const Relation
  */
-const Relation Relation::project(const std::vector<unsigned int> &u_indices) const
+const Relation Relation::project(const std::vector<unsigned int> &indices) const
 {
-    Scheme projectedScheme = scheme.project(u_indices);
-    Relation result(name, projectedScheme);
-    for (Tuple tuple : tuples)
+    Scheme projectedScheme = this->scheme.project(indices);
+    Relation result(this->name, projectedScheme);
+    for (Tuple tuple : this->tuples)
     {
-        Tuple projectedTuple = tuple.project(u_indices);
+        Tuple projectedTuple = tuple.project(indices);
         result.addTuple(projectedTuple);
     }
     return result;
@@ -303,8 +304,8 @@ const Relation Relation::project(const std::vector<unsigned int> &u_indices) con
 const Relation Relation::rename(std::vector<std::string> &newNames) const
 {
     Scheme renamedScheme = scheme.rename(newNames);
-    Relation result(name, renamedScheme);
-    for (Tuple tuple : tuples)
+    Relation result(this->name, renamedScheme);
+    for (Tuple tuple : this->tuples)
     {
         result.addTuple(tuple.copy());
     }
