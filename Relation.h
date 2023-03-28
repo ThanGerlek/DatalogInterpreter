@@ -38,11 +38,11 @@ public:
     void addTuple(const Tuple &tuple);
 
     // Accessors
-    Scheme getScheme() const { return scheme; }
     std::string getName() const { return name; }
-    std::set<Tuple> getTuples() { return tuples; }
+    // Scheme getScheme() const { return scheme; }
+    // std::set<Tuple> getTuples() { return tuples; }
+    // int size() const { return static_cast<int>(tuples.size()); }
     std::string toString() const;
-    int size() const { return static_cast<int>(tuples.size()); }
 
     // Mathematical Relation operations
     const Relation join(const Relation &right);

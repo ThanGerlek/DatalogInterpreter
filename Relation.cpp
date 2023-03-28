@@ -63,11 +63,11 @@ const Relation Relation::join(const Relation &right)
 {
     const Relation &left = *this;
 
-    Scheme leftScheme = left.getScheme();
-    Scheme rightScheme = right.getScheme();
+    Scheme leftScheme = left.scheme;
+    Scheme rightScheme = right.scheme;
     Scheme resultScheme = joinSchemes(leftScheme, rightScheme);
 
-    std::string resultName = joinNames(left.getName(), right.getName());
+    std::string resultName = joinNames(left.name, right.name);
     Relation result(resultName, resultScheme);
 
     // For each Tuple in left and right Relations, if they're joinable,
@@ -160,8 +160,8 @@ const Relation Relation::cross(const Relation &right)
 {
     const Relation &left = *this;
 
-    Scheme resultScheme = crossSchemes(left.getScheme(), right.getScheme());
-    std::string resultName = crossNames(left.getName(), right.getName());
+    Scheme resultScheme = crossSchemes(left.scheme, right.scheme);
+    std::string resultName = crossNames(left.name, right.name);
     Relation result = Relation(resultName, resultScheme);
 
     for (Tuple leftTuple : left.tuples)
