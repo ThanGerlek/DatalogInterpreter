@@ -96,7 +96,31 @@ std::string Relation::joinNames(std::string left, std::string right)
 
 const Scheme Relation::joinSchemes(const Scheme &left, const Scheme &right)
 {
-    // TODO
+    std::vector<std::string> attributes; // includes duplicates
+    for (std::string attribute : left)
+    {
+        attributes.push_back(attribute);
+    }
+    for (std::string attribute : right)
+    {
+
+        if (contains(attributes, attribute))
+        {
+            attributes.push_back(attribute);
+        }
+    }
+}
+
+// Returns true if strs contains str.
+bool Relation::contains(std::vector<std::string> strs, std::string str)
+{
+    bool contains = false;
+    std::vector<std::string>::iterator i = strs.begin();
+    while (!contains && i != strs.end())
+    {
+        contains = (*i == str);
+    }
+    return contains;
 }
 
 const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Scheme &resultScheme, const Tuple &left, const Tuple &right)

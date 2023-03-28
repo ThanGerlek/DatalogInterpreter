@@ -12,6 +12,7 @@ private:
     std::string name;
     Scheme scheme;
     std::set<Tuple> tuples;
+    bool contains(std::vector<std::string> strs, std::string str);
     std::string joinNames(std::string left, std::string right);
     const Scheme joinSchemes(const Scheme &left, const Scheme &right);
     const Tuple joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Scheme &resultScheme, const Tuple &left, const Tuple &right);
