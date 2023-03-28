@@ -33,7 +33,7 @@ std::string Relation::toString() const
 ////
 
 /**
- * @brief Test if the given tuples (under the given schemes) should be included in a call to join().
+ * @brief Test if the given tuples should be included in a call to join().
  */
 bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
                         const Tuple &leftTuple, const Tuple &rightTuple)
@@ -56,10 +56,13 @@ bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
 }
 
 /**
- * @brief Apply the JOIN operation with this Relation on the left and the given Relation on the right.
+ * @brief JOIN this Relation with another Relation.
+ *
+ * Applies the natural join operation with this Relation on the left and
+ * the given Relation on the right.
  *
  * @param right The Relation to join on the right.
- * @return const Relation The resulting joined Relation.
+ * @return const Relation
  */
 const Relation Relation::join(const Relation &right)
 {
@@ -153,10 +156,13 @@ const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightSc
 ////
 
 /**
- * @brief Apply the JOIN operation with this Relation on the left and the given Relation on the right.
+ * @brief Apply the cross product to this Relation.
  *
- * @param right The Relation to join on the right.
- * @return const Relation The resulting joined Relation.
+ * Applies the cross product operation with this Relation on the left and
+ * the given Relation on the right.
+ *
+ * @param right The Relation to cross on the right.
+ * @return const Relation
  */
 const Relation Relation::cross(const Relation &right)
 {
@@ -220,10 +226,11 @@ const Tuple Relation::crossTuples(const Tuple &left, const Tuple &right)
 ////
 ////
 
-// TODO? Add getTuples() function (safety)? Remove unneeded calls to getScheme() (efficiency)?
-
 /**
- * @brief Return a new Relation, SELECT-ing for Tuples with the given value at the given attribute index.
+ * @brief SELECT on this Relation for an attribute with a specific value.
+ *
+ * Returns a new Relation containing only Tuples where the attribute at the given
+ * index has the specified value.
  *
  * @param u_index The index of the attribute to SELECT for.
  * @param value The value to look for.
@@ -243,7 +250,9 @@ const Relation Relation::selectForConstant(unsigned int u_index, const std::stri
 }
 
 /**
- * @brief Return a new Relation, SELECT-ing for Tuples where the attributes at the given indices are equal.
+ * @brief SELECT on this Relation for attributes with the same value.
+ * Returns a new Relation containing only Tuples where the values
+ * at the given indices are equal.
  *
  * @param u_index1
  * @param u_index2
@@ -265,9 +274,12 @@ const Relation Relation::selectForEqualVariables(unsigned int u_index1, unsigned
 }
 
 /**
- * @brief Return a new Relation which includes only the selected attributes in the given order.
+ * @brief Apply the PROJECT operator on this Relation.
  *
- * @param u_indices The (unsigned) indices of the attributes to include.
+ * Returns a new Relation which includes only the attributes at the given
+ * indices, in the given order.
+ *
+ * @param u_indices The indices of the attributes to include.
  * @return const Relation
  */
 const Relation Relation::project(const std::vector<unsigned int> &u_indices) const
@@ -285,7 +297,7 @@ const Relation Relation::project(const std::vector<unsigned int> &u_indices) con
 /**
  * @brief Return a new Relation with its attributes renamed.
  *
- * @param newNames The new names of the attributes in the given order.
+ * @param newNames The new names of the attributes.
  * @return const Relation
  */
 const Relation Relation::rename(std::vector<std::string> &newNames) const
