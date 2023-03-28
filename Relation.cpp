@@ -111,6 +111,8 @@ const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightSc
 ////
 ////
 
+// TODO? Add getTuples() function (safety)? Remove unneeded calls to getScheme() (efficiency)?
+
 /**
  * @brief Return a new Relation, SELECT-ing for Tuples with the given value at the given attribute index.
  *
