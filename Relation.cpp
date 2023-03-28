@@ -113,13 +113,14 @@ const Scheme Relation::joinSchemes(const Scheme &left, const Scheme &right)
 // Returns true if strs contains str.
 bool Relation::contains(std::vector<std::string> strs, std::string str)
 {
-    bool contains = false;
-    std::vector<std::string>::iterator i = strs.begin();
-    while (!contains && i != strs.end())
+    for (std::string current : strs)
     {
-        contains = (*i == str);
+        if (current == str)
+        {
+            return true;
+        }
     }
-    return contains;
+    return false;
 }
 
 const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Scheme &resultScheme, const Tuple &left, const Tuple &right)
