@@ -36,7 +36,6 @@ std::string Relation::toString() const
 bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
                         const Tuple &leftTuple, const Tuple &rightTuple)
 {
-    // TODO Test for cross product and make it its own function?
     for (unsigned leftIndex = 0; leftIndex < leftScheme.size(); leftIndex++)
     {
         const std::string &leftName = leftScheme.at(leftIndex);
