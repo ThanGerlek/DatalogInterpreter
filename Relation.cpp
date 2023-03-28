@@ -108,6 +108,8 @@ const Scheme Relation::joinSchemes(const Scheme &left, const Scheme &right)
             attributes.push_back(attribute);
         }
     }
+    Scheme result = Scheme(attributes);
+    return result;
 }
 
 // Returns true if strs contains str.
