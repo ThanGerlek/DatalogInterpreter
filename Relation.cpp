@@ -96,7 +96,7 @@ std::string Relation::joinNames(std::string left, std::string right)
 
 const Scheme Relation::joinSchemes(const Scheme &left, const Scheme &right)
 {
-    std::vector<std::string> attributes; // includes duplicates
+    std::vector<std::string> attributes;
     for (std::string attribute : left)
     {
         attributes.push_back(attribute);
@@ -134,6 +134,12 @@ const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightSc
 ////
 ////
 
+/**
+ * @brief Apply the JOIN operation with this Relation on the left and the given Relation on the right.
+ *
+ * @param right The Relation to join on the right.
+ * @return const Relation The resulting joined Relation.
+ */
 const Relation Relation::cross(const Relation &right)
 {
     const Relation &left = *this;
