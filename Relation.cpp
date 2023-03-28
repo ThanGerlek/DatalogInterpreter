@@ -103,8 +103,7 @@ const Scheme Relation::joinSchemes(const Scheme &left, const Scheme &right)
     }
     for (std::string attribute : right)
     {
-
-        if (contains(attributes, attribute))
+        if (!contains(attributes, attribute))
         {
             attributes.push_back(attribute);
         }
