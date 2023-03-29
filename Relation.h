@@ -54,7 +54,9 @@ public:
     const Relation selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const;
     const Relation project(const std::vector<unsigned int> &u_indices) const;
     const Relation rename(std::vector<std::string> &newNames) const;
+
     const Relation makeUnionCompatibleWith(const Relation &other);
+    bool isUnionCompatibleWith(const Relation &other);
 
     // Mathematical set operations
     const Relation unionWith(const Relation &other);

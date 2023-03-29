@@ -321,6 +321,11 @@ const Relation Relation::rename(std::vector<std::string> &newNames) const
 ////
 ////
 
+bool Relation::isUnionCompatibleWith(const Relation &other)
+{
+    return this->scheme == other.scheme;
+}
+
 const Relation Relation::makeUnionCompatibleWith(const Relation &other)
 {
     // TODO
