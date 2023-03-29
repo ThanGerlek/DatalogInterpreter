@@ -92,7 +92,7 @@ void DatalogDatabase::evaluateQueries()
         relation = selectForPredicate(relation, params);
         std::vector<unsigned int> projectedIndices = getProjectedIndices(params);
         relation = projectForPredicate(relation, projectedIndices);
-        relation = renameForQuery(relation, params, projectedIndices);
+        relation = renameForPredicate(relation, params, projectedIndices);
 
         QueryResult qResult(queryPredicate, relation);
         queryResults.push_back(qResult);
@@ -245,15 +245,14 @@ const Relation DatalogDatabase::projectForPredicate(Relation relation, std::vect
 }
 
 /**
- * @brief Apply RENAME operations to rename the scheme of the Relation to the names of the variables found in the query.
+ * @brief Apply RENAME operations to rename the scheme of the Relation to the names of the variables found in the predicate.
  *
  * @param relation The relation to apply RENAME to.
- * @param params The Parameter list of the current query.
+ * @param params The Parameter list of the current predicate.
  * @param projectedIndices The indices of the attributes kept after projection.
  * @return const Relation
  */
-const Relation DatalogDatabase::renameForQuery(Relation relation, const std::vector<Parameter> *params,
-                                               std::vector<unsigned int> projectedIndices) const
+const Relation DatalogDatabase::renameForPredicate(Relation relation, const std::vector<Parameter> *params, std::vector<unsigned int> projectedIndices) const
 {
     std::vector<std::string> newNames;
 
