@@ -22,7 +22,7 @@ private:
     const Relation evaluateRulePredicates(Rule rule) const;
     const Relation evaluateRulePredicate(
         Predicate predicate) const;
-    const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rule rule) const;
+    const Relation projectRuleColumns(const Relation &relation, Rule rule) const;
 
     const Relation selectForPredicate(Relation relation, const std::vector<Parameter> *params) const;
     std::vector<unsigned int> getProjectedIndices(const std::vector<Parameter> *params) const;
