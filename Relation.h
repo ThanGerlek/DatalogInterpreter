@@ -38,6 +38,7 @@ public:
 
     // Manipulators
     void addTuple(const Tuple &tuple);
+    void setName(std::string &newName);
 
     // Accessors
     std::string getName() const { return name; }

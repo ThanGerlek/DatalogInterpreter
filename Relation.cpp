@@ -19,6 +19,11 @@ void Relation::addTuple(const Tuple &tuple)
     this->tuples.insert(tuple);
 }
 
+void Relation::setName(std::string &newName)
+{
+    this->name = newName;
+}
+
 std::string Relation::toString() const
 {
     std::stringstream out;
