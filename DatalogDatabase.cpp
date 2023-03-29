@@ -91,7 +91,7 @@ void DatalogDatabase::evaluateQueries()
         // Use a sequence of select, project, and rename operations on the Database to evaluate the query.
         relation = selectForPredicate(relation, params);
         std::vector<unsigned int> projectedIndices = getProjectedIndices(params);
-        relation = projectForQuery(relation, projectedIndices);
+        relation = projectForPredicate(relation, projectedIndices);
         relation = renameForQuery(relation, params, projectedIndices);
 
         QueryResult qResult(queryPredicate, relation);
@@ -233,13 +233,13 @@ std::vector<unsigned int> DatalogDatabase::getProjectedIndices(const std::vector
 }
 
 /**
- * @brief Apply PROJECT operations to keep only attributes that correspond to the positions of the variables in the query in the given order.
+ * @brief Apply PROJECT operations to keep only attributes that correspond to the positions of the variables in the predicate in the given order.
  *
  * @param relation The relation to apply PROJECT to.
  * @param projectedIndices The indices of the attributes to keep after the projection.
  * @return const Relation
  */
-const Relation DatalogDatabase::projectForQuery(Relation relation, std::vector<unsigned int> projectedIndices) const
+const Relation DatalogDatabase::projectForPredicate(Relation relation, std::vector<unsigned int> projectedIndices) const
 {
     return relation.project(projectedIndices);
 }

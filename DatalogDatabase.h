@@ -26,7 +26,7 @@ private:
 
     const Relation selectForPredicate(Relation relation, const std::vector<Parameter> *params) const;
     std::vector<unsigned int> getProjectedIndices(const std::vector<Parameter> *params) const;
-    const Relation projectForQuery(Relation relation, std::vector<unsigned int> projectedIndices) const;
+    const Relation projectForPredicate(Relation relation, std::vector<unsigned int> projectedIndices) const;
     const Relation renameForQuery(Relation relation, const std::vector<Parameter> *params, std::vector<unsigned int> projectedIndices) const;
 
 public:
