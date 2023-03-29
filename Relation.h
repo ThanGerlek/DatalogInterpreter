@@ -39,9 +39,9 @@ public:
 
     // Accessors
     std::string getName() const { return name; }
-    // Scheme getScheme() const { return scheme; }
-    // std::set<Tuple> getTuples() { return tuples; }
-    // int size() const { return static_cast<int>(tuples.size()); }
+    Scheme getScheme() const { return scheme; }
+    std::set<Tuple> getTuples() { return tuples; }
+    int size() const { return static_cast<int>(tuples.size()); }
     std::string toString() const;
 
     // Mathematical Relation operations
