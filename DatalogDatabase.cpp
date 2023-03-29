@@ -116,7 +116,7 @@ void DatalogDatabase::evaluateRule(Rule rule)
     relation = projectRuleColumns(relation, rule);
 
     // Union with the relation in the database (the table)
-    std::string tableName = rule.getTableName();
+    std::string tableName = rule.getId();
     Relation table = this->getRelation(tableName);
     relation = relation.makeUnionCompatibleWith(table);
     relation = relation.unionWith(table);
@@ -131,7 +131,7 @@ const Relation DatalogDatabase::evaluateRulePredicates(Rule rule) const
     // Join the relations that result
 
     const std::vector<Predicate> &predicates = rule.getPredicates();
-    Relation result(rule.getTableName());
+    Relation result(rule.getId());
 
     for (Predicate predicate : predicates)
     {
