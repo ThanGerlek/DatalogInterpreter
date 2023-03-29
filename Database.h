@@ -26,7 +26,7 @@ protected:
         return -1;
     }
 
-    const Relation getRelation(std::string relationName)
+    const Relation &getRelation(std::string &relationName)
     {
         int index = getIndex(relationName);
         if (!hasRelation(relationName))
