@@ -36,9 +36,11 @@ protected:
         }
     }
 
-    void updateRelation(std::string relationName, const Relation relation)
+    // Update a relation in the database. Does not affect relation names.
+    void updateRelation(std::string relationName, Relation relation)
     {
         int index = getIndex(relationName);
+        relation.setName(relationName);
         relations.at(index) = relation;
     }
 
