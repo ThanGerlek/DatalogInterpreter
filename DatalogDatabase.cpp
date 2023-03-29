@@ -89,7 +89,7 @@ void DatalogDatabase::evaluateQueries()
         Relation relation = relations.at(static_cast<unsigned int>(index));
 
         // Use a sequence of select, project, and rename operations on the Database to evaluate the query.
-        relation = selectForQuery(relation, params);
+        relation = selectForPredicate(relation, params);
         std::vector<unsigned int> projectedIndices = getProjectedIndices(params);
         relation = projectForQuery(relation, projectedIndices);
         relation = renameForQuery(relation, params, projectedIndices);
@@ -100,6 +100,11 @@ void DatalogDatabase::evaluateQueries()
 
     hasEvaluatedQueries = true;
 }
+
+////
+////
+////
+////
 
 void DatalogDatabase::evaluateRule(Rule rule)
 {
@@ -154,23 +159,24 @@ const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rul
 ////
 
 /**
- * @brief Apply SELECT operations to select the tuples from the given Relation that match the query.
+ * @brief Apply SELECT operations to select the tuples from the given Relation that match the predicate.
  *
  * @param relation The relation to apply SELECT to.
- * @param params The Parameter list of the current query.
+ * @param params The Parameter list of the current predicate.
  * @return const Relation
  */
-const Relation DatalogDatabase::selectForQuery(Relation relation, const std::vector<Parameter> *params) const
+const Relation DatalogDatabase::selectForPredicate(Relation relation, const std::vector<Parameter> *params) const
 {
-    // Iterate over the parameters of the query: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the query, select the tuples from the Relation that have the same value in both positions where the variable name appears.
-    // TODO Error if params and relation.scheme don't match in size?
+    // TODO Test that selectForPredicate() etc. all work for both Queries and Rules
+    // Iterate over the parameters of the predicate: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the predicate, select the tuples from the Relation that have the same value in both positions where the variable name appears.
+    //  TODO Error if params and relation.scheme don't match in size?
 
     for (unsigned int ui = 0; ui < params->size(); ui++)
     {
         Parameter param = params->at(ui);
         if (param.isVariable())
         {
-            // Check if this variable is also used in another Parameter later in the query
+            // Check if this variable is also used in another Parameter later in the predicate
             for (unsigned int uj = ui; uj < params->size(); uj++)
             {
                 if (params->at(uj).isVariable() && params->at(uj).getValue() == param.getValue())
