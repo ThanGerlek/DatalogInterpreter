@@ -8,6 +8,7 @@
 class Scheme : public std::vector<std::string>
 {
 public:
+    Scheme(){};
     Scheme(vector<std::string> attributeNames) : vector<std::string>(attributeNames)
     {
         checkForDuplicateNames();

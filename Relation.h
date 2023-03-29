@@ -5,6 +5,7 @@
 #include "Tuple.h"
 
 // TODO Check/test for func(&x, &x) problems
+// TODO? Change QueryResult to not need getTuples()?
 
 class Relation
 {
@@ -31,6 +32,7 @@ private:
 
 public:
     // Constructors
+    Relation(const std::string &_name) : name(_name){};
     Relation(const std::string &_name, const Scheme &_scheme)
         : name(_name), scheme(_scheme){};
 
