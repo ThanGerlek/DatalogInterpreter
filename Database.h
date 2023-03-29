@@ -28,7 +28,7 @@ protected:
 
     const Relation getRelation(std::string &relationName) const
     {
-        int index = getIndex(relationName);
+        unsigned int index = static_cast<unsigned int>(getIndex(relationName));
         if (!hasRelation(relationName))
         {
             std::cerr << "[ERROR] Tried to get a relation that isn't in the database." << std::endl;
@@ -41,7 +41,7 @@ protected:
     // Update a relation in the database. Does not affect relation names.
     void updateRelation(std::string relationName, Relation relation)
     {
-        int index = getIndex(relationName);
+        unsigned int index = static_cast<unsigned int>(getIndex(relationName));
         relation.setName(relationName);
         relations.at(index) = relation;
     }
