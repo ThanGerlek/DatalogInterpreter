@@ -9,12 +9,12 @@ class Database
 protected:
     std::vector<Relation> relations;
 
-    bool hasRelation(std::string name)
+    bool hasRelation(std::string name) const
     {
         return getIndex(name) != -1;
     }
 
-    int getIndex(std::string relationName)
+    int getIndex(std::string relationName) const
     {
         for (unsigned int ui = 0; ui < relations.size(); ui++)
         {
@@ -26,7 +26,7 @@ protected:
         return -1;
     }
 
-    const Relation &getRelation(std::string &relationName)
+    const Relation &getRelation(std::string &relationName) const
     {
         int index = getIndex(relationName);
         if (!hasRelation(relationName))
