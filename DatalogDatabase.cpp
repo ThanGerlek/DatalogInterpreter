@@ -103,12 +103,37 @@ void DatalogDatabase::evaluateQueries()
 
 void DatalogDatabase::evaluateRule(Rule rule)
 {
-    // TODO
+    // Evaluate the predicates on the right-hand side of the rule
+    Relation relation = evaluateRulePredicates(rule);
+
+    // Project the columns that appear in the head predicate
+    relation = projectRuleColumns(relation, rule);
+
+    // Union with the relation in the database (the table)
+    std::string tableName = rule.getTableName();
+    Relation table = this->getRelation(tableName);
+    relation = relation.makeUnionCompatibleWith(table);
+    relation = relation.unionWith(table);
+
+    // Update relation in the database to the new relation
+    updateRelation(tableName, relation);
 }
 
 const Relation DatalogDatabase::evaluateRulePredicates(Rule rule) const
 {
-    // TODO
+    // Evaluate each predicate on the right-hand side of the rule
+    // Join the relations that result
+
+    const std::vector<Predicate> &predicates = rule.getPredicates();
+    Relation result(rule.getTableName());
+
+    for (Predicate predicate : predicates)
+    {
+        const Relation predicateRelation = evaluateRulePredicate(predicate);
+        result = result.join(predicateRelation);
+    }
+
+    return result;
 }
 
 const Relation DatalogDatabase::evaluateRulePredicate(Predicate predicate) const
