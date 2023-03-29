@@ -3,7 +3,7 @@
 
 #include "Relation.h"
 
-// TODO Reorder functions (Clean Code practice)
+// TODO. Reorder functions (Clean Code practice)
 
 /**
  * @brief Add a Tuple to this Relation.

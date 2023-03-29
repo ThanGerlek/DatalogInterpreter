@@ -113,7 +113,7 @@ void DatalogDatabase::evaluateRule(Rule rule)
     Relation relation = evaluateRulePredicates(rule);
 
     // Project the columns that appear in the head predicate
-    relation = projectRuleColumns(relation, rule);
+    // relation = projectRuleColumns(relation, rule);
 
     // Union with the relation in the database (the table)
     std::string tableName = rule.getId();
@@ -144,12 +144,24 @@ const Relation DatalogDatabase::evaluateRulePredicates(Rule rule) const
 
 const Relation DatalogDatabase::evaluateRulePredicate(Predicate predicate) const
 {
-    // TODO
+    // TODO Test evaluateRulePredicate()
+    // Use a sequence of select, project, and rename operations on the Database to evaluate the Rule predicate.
+    std::vector<Parameter> *params = predicate.getParams();
+
+    std::string relationName = predicate.getId();
+    Relation relation = getRelation(relationName);
+
+    relation = selectForPredicate(relation, params);
+    std::vector<unsigned int> projectedIndices = getProjectedIndices(params);
+    relation = projectForPredicate(relation, projectedIndices);
+    relation = renameForPredicate(relation, params, projectedIndices);
+
+    return relation;
 }
 
 const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rule rule) const
 {
-    // TODO
+    // TODO projectRuleColumns()
 }
 
 ////
@@ -170,7 +182,7 @@ const Relation DatalogDatabase::selectForPredicate(Relation relation, const std:
 {
     // TODO Test that selectForPredicate() etc. all work for both Queries and Rules
     // Iterate over the parameters of the predicate: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the predicate, select the tuples from the Relation that have the same value in both positions where the variable name appears.
-    //  TODO Error if params and relation.scheme don't match in size?
+    //  TODO. Error if params and relation.scheme don't match in size
 
     for (unsigned int ui = 0; ui < params->size(); ui++)
     {

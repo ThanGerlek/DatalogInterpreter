@@ -4,7 +4,7 @@
 #include <set>
 #include "Tuple.h"
 
-// TODO Check/test for func(&x, &x) problems
+// TODO. Check/test for func(&x, &x) problems
 // TODO? Change QueryResult to not need getTuples()?
 
 class Relation
