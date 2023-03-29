@@ -317,4 +317,18 @@ const Relation Relation::rename(std::vector<std::string> &newNames) const
     return result;
 }
 
+////
+////
+////
+
+const Relation Relation::makeUnionCompatibleWith(const Relation &other)
+{
+    // TODO
+}
+
+const Relation Relation::unionWith(const Relation &other)
+{
+    // TODO
+}
+
 #endif
