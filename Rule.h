@@ -12,7 +12,7 @@ public:
     ~Rule(){};
 
     Predicate getHead() const { return head; }
-    std::string getTableName() const { return head.toString(); }
+    std::string getTableName() const { return head.getId(); }
     const std::vector<Predicate> &getPredicates() const { return body; }
     void addPredicate(Predicate p) { body.push_back(p); }
 
