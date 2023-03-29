@@ -61,7 +61,10 @@ void DatalogDatabase::evaluateFacts()
  */
 void DatalogDatabase::evaluateRules()
 {
-    // TODO
+    for (Rule rule : *(this->dlProgram->getRules()))
+    {
+        evaluateRule(rule);
+    }
 }
 
 /**
@@ -96,6 +99,26 @@ void DatalogDatabase::evaluateQueries()
     }
 
     hasEvaluatedQueries = true;
+}
+
+void DatalogDatabase::evaluateRule(Rule rule)
+{
+    // TODO
+}
+
+const Relation DatalogDatabase::evaluateRulePredicates(Rule rule) const
+{
+    // TODO
+}
+
+const Relation DatalogDatabase::evaluateRulePredicate(Predicate predicate) const
+{
+    // TODO
+}
+
+const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rule rule) const
+{
+    // TODO
 }
 
 ////
