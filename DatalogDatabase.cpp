@@ -80,12 +80,13 @@ void DatalogDatabase::evaluateQueries()
         std::vector<Parameter> *params = queryPredicate.getParams();
         std::string relationName = queryPredicate.getId();
 
-        int index = getIndex(relationName);
-        if (index < 0)
+        if (!hasRelation(relationName))
         {
             std::cerr << "[ERROR] Invalid query: no such relation." << std::endl;
             throw;
         }
+
+        int index = getIndex(relationName);
         Relation relation = relations.at(static_cast<unsigned int>(index));
 
         // Use a sequence of select, project, and rename operations on the Database to evaluate the query.
