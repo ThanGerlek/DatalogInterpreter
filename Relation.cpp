@@ -282,7 +282,7 @@ const Relation Relation::selectForEqualVariables(unsigned int index1,
 }
 
 /**
- * @brief Apply the PROJECT operator on this Relation.
+ * @brief PROJECT onto the given attribute indices.
  *
  * Returns a new Relation which includes only the attributes at the given
  * indices, in the given order.
@@ -300,6 +300,29 @@ const Relation Relation::project(const std::vector<unsigned int> &indices) const
         result.addTuple(projectedTuple);
     }
     return result;
+}
+
+/**
+ * @brief PROJECT onto the given attributes.
+ *
+ * Returns a new Relation which includes only the given attributes, in the given order.
+ *
+ * @param attributes The attributes to include.
+ * @return const Relation
+ */
+const Relation Relation::project(const std::vector<std::string> &attributes) const
+{
+    std::vector<unsigned int> indices;
+    for (std::string attribute : attributes)
+    {
+        if (!scheme.hasAttribute(attribute))
+        {
+            std::cout << "[ERROR] Tried to project by attribute name with an attribute that is not in the Relation." << std::endl;
+        }
+        unsigned int index = scheme.getAttributeIndex(attribute);
+        indices.push_back(index);
+    }
+    return this->project(indices);
 }
 
 /**

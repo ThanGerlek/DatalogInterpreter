@@ -56,6 +56,7 @@ public:
     const Relation selectForConstant(unsigned int u_index, const std::string &value) const;
     const Relation selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const;
     const Relation project(const std::vector<unsigned int> &u_indices) const;
+    const Relation project(const std::vector<std::string> &attributes) const;
     const Relation rename(std::vector<std::string> &newNames) const;
 
     const Relation makeUnionCompatibleWith(const Relation &other);
