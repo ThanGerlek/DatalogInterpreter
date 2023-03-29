@@ -30,7 +30,7 @@ public:
 
     unsigned int getAttributeIndex(std::string attribute) const
     {
-        for (int i = 0; i < this->size(); i++)
+        for (unsigned int i = 0; i < this->size(); i++)
         {
             if (this->at(i) == attribute)
             {
