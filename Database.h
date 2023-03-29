@@ -34,6 +34,8 @@ protected:
             std::cerr << "[ERROR] Tried to get a relation that isn't in the database." << std::endl;
             throw;
         }
+
+        return relations.at(index);
     }
 
     // Update a relation in the database. Does not affect relation names.
