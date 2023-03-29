@@ -113,7 +113,7 @@ void DatalogDatabase::evaluateRule(Rule rule)
     Relation relation = evaluateRulePredicates(rule);
 
     // Project the columns that appear in the head predicate
-    // relation = projectRuleColumns(relation, rule);
+    relation = projectRuleColumns(relation, rule);
 
     // Union with the relation in the database (the table)
     std::string tableName = rule.getId();
@@ -161,7 +161,10 @@ const Relation DatalogDatabase::evaluateRulePredicate(Predicate predicate) const
 
 const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rule rule) const
 {
-    // TODO projectRuleColumns()
+    // TODO test projectRuleColumns
+    std::vector<std::string> attributes = rule.getHead().getParamStrings();
+    Relation result = relation.project(attributes);
+    return result;
 }
 
 ////
@@ -220,6 +223,7 @@ const Relation DatalogDatabase::selectForPredicate(Relation relation, const std:
  */
 std::vector<unsigned int> DatalogDatabase::getProjectedIndices(const std::vector<Parameter> *params) const
 {
+    // TODO Rename and redoc--make this a lot more understandable
     std::vector<unsigned int> projectedIndices;
 
     for (unsigned int i = 0; i < params->size(); i++)
