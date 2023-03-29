@@ -36,6 +36,12 @@ protected:
         }
     }
 
+    void updateRelation(std::string relationName, const Relation relation)
+    {
+        int index = getIndex(relationName);
+        relations.at(index) = relation;
+    }
+
     ////
     ////
     ////
