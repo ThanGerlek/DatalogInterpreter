@@ -328,12 +328,36 @@ bool Relation::isUnionCompatibleWith(const Relation &other)
 
 const Relation Relation::makeUnionCompatibleWith(const Relation &other)
 {
-    // TODO
+    // HACK? Make sure casting works here
+    if (this->scheme.size() != other.scheme.size())
+    {
+        std::cout << "[ERROR] Applied makeUnionCompatibleWith() to Schemes of different sizes." << std::endl;
+        throw;
+    }
+    std::vector<std::string> newNames = static_cast<std::vector<std::string>>(other.scheme);
+    return this->rename(newNames);
+}
+
+std::string Relation::unionNames(std::string &left, std::string &right) const
+{
+    return "(" + left + ") UNION (" + right + ")";
 }
 
 const Relation Relation::unionWith(const Relation &other)
 {
-    // TODO
+    // TODO Test unionWith()
+    if (!this->isUnionCompatibleWith(other))
+    {
+        std::cout << "[ERROR] Tried to union two non-union-compatible relations." << std::endl;
+        throw;
+    }
+
+    // Need otherName variable because unionNames() takes references
+    std::string otherName = other.getName();
+    std::string resultName = unionNames(this->name, otherName);
+
+    Relation result = Relation(resultName, this->scheme);
+    return result;
 }
 
 #endif

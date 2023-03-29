@@ -25,6 +25,9 @@ private:
     const Scheme crossSchemes(const Scheme &left, const Scheme &right);
     const Tuple crossTuples(const Tuple &left, const Tuple &right);
 
+    // unionWith() functions
+    std::string unionNames(std::string &left, std::string &right) const;
+
     // Misc
     bool contains(std::vector<std::string> strs, std::string str);
     static bool joinable(const Scheme &leftScheme, const Scheme &rightScheme,
