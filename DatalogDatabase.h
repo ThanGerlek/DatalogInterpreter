@@ -20,7 +20,7 @@ private:
 
     void evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;
-    const Relation DatalogDatabase::evaluateRulePredicate(
+    const Relation evaluateRulePredicate(
         Predicate predicate) const;
     const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rule rule) const;
 
