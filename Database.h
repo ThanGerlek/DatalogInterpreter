@@ -26,6 +26,16 @@ protected:
         return -1;
     }
 
+    const Relation getRelation(std::string relationName)
+    {
+        int index = getIndex(relationName);
+        if (!hasRelation(relationName))
+        {
+            std::cerr << "[ERROR] Tried to get a relation that isn't in the database." << std::endl;
+            throw;
+        }
+    }
+
     ////
     ////
     ////
