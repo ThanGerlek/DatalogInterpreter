@@ -30,6 +30,7 @@ private:
     const Relation renameForPredicate(Relation relation, const std::vector<Parameter> *params, std::vector<unsigned int> projectedIndices) const;
 
     void DatalogDatabase::printQueryResult(Predicate query, Relation results);
+    void DatalogDatabase::printRuleResult(Rule rule, Relation results);
 
 public:
     DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram), hasEvaluatedQueries(false){};

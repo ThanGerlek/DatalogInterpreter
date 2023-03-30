@@ -90,7 +90,6 @@ void DatalogDatabase::evaluateQueries()
         relation = renameForPredicate(relation, params, projectedIndices);
 
         printQueryResult(queryPredicate, relation);
-
     }
 
     hasEvaluatedQueries = true;
@@ -182,6 +181,11 @@ const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rul
     std::vector<std::string> attributes = rule.getHead().getParamStrings();
     Relation result = relation.project(attributes);
     return result;
+}
+
+void DatalogDatabase::printRuleResult(Rule rule, Relation results)
+{
+    // TODO
 }
 
 ////
