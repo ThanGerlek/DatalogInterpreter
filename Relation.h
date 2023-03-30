@@ -19,11 +19,6 @@ private:
     static const Scheme joinSchemes(const Scheme &left, const Scheme &right);
     static const Tuple joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Tuple &left, const Tuple &right);
 
-    // cross() functions
-    static std::string crossNames(std::string left, std::string right);
-    static const Scheme crossSchemes(const Scheme &left, const Scheme &right);
-    static const Tuple crossTuples(const Tuple &left, const Tuple &right);
-
     // unionWith() functions
     static std::string unionNames(std::string &left, std::string &right);
 
@@ -53,7 +48,6 @@ public:
 
     // Mathematical Relation operations
     const Relation join(const Relation &right) const;
-    const Relation cross(const Relation &right) const;
     const Relation selectForConstant(unsigned int u_index, const std::string &value) const;
     const Relation selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const;
     const Relation project(const std::vector<unsigned int> &u_indices) const;
