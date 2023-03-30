@@ -9,41 +9,49 @@ class Database
 protected:
     std::vector<Relation> relations;
 
-    bool hasRelation(std::string name) const
+    bool hasRelation(std::string relationName) const
     {
-        return getIndex(name) != -1;
-    }
-
-    int getIndex(std::string relationName) const
-    {
-        for (unsigned int ui = 0; ui < relations.size(); ui++)
+        for (unsigned int i = 0; i < relations.size(); i++)
         {
-            if (relations.at(ui).getName() == relationName)
+            if (relations.at(i).getName() == relationName)
             {
-                return static_cast<int>(ui);
+                return true;
             }
         }
-        return -1;
+        return false;
+    }
+
+    unsigned int getIndex(std::string relationName) const
+    {
+        for (unsigned int i = 0; i < relations.size(); i++)
+        {
+            if (relations.at(i).getName() == relationName)
+            {
+                return i;
+            }
+        }
+        std::cerr << "[ERROR] Called getIndex() with a Relation name that is not in the Database." << std::endl;
+        throw;
     }
 
     const Relation getRelation(std::string &relationName) const
     {
-        unsigned int index = static_cast<unsigned int>(getIndex(relationName));
         if (!hasRelation(relationName))
         {
-            std::cerr << "[ERROR] Tried to get a relation that isn't in the database." << std::endl;
+            std::cerr << "[ERROR] Called getRelation() with a Relation name that is not in the Database." << std::endl;
             throw;
         }
 
+        unsigned int index = getIndex(relationName);
         return relations.at(index);
     }
 
     // Update a relation in the database. Does not affect relation names.
-    void updateRelation(std::string relationName, Relation relation)
+    void updateRelation(std::string destinationName, Relation newValue)
     {
-        unsigned int index = static_cast<unsigned int>(getIndex(relationName));
-        relation.setName(relationName);
-        relations.at(index) = relation;
+        unsigned int index = getIndex(destinationName);
+        newValue.setName(destinationName);
+        relations.at(index) = newValue;
     }
 
     ////
@@ -56,7 +64,7 @@ public:
     {
         if (hasRelation(relation.getName()))
         {
-            std::cerr << "[ERROR] Tried to add a relation whose name is already in use." << std::endl;
+            std::cerr << "[ERROR] Tried to add a relation whose name is already in the database." << std::endl;
             throw;
         }
         relations.push_back(relation);
@@ -64,18 +72,18 @@ public:
 
     void addTuple(Tuple tuple, std::string relationName)
     {
-        int index = getIndex(relationName);
-        if (index == -1)
+        if (!hasRelation(relationName))
         {
             std::cerr << "[ERROR] Tried to add a tuple to a relation that doesn't exist." << std::endl;
             throw;
         }
-        relations.at(static_cast<unsigned int>(index)).addTuple(tuple);
+        unsigned int index = getIndex(relationName);
+        relations.at(index).addTuple(tuple);
     }
 
-    int size()
+    unsigned int size()
     {
-        int total = 0;
+        unsigned int total = 0;
         for (Relation relation : relations)
         {
             total += relation.size();

@@ -39,8 +39,10 @@ bool Relation::containsTuple(Tuple &tuple) const
 std::string Relation::toString() const
 {
     std::stringstream out;
-    for (auto &tuple : this->tuples)
+    for (const Tuple &tuple : this->tuples)
+    {
         out << tuple.toString(this->scheme) << std::endl;
+    }
     return out.str();
 }
 
@@ -55,15 +57,17 @@ std::string Relation::toString() const
 bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
                         const Tuple &leftTuple, const Tuple &rightTuple)
 {
-    for (unsigned leftIndex = 0; leftIndex < leftScheme.size(); leftIndex++)
+    for (unsigned int leftIndex = 0; leftIndex < leftScheme.size(); leftIndex++)
     {
-        const std::string &leftName = leftScheme.at(leftIndex);
+        const std::string &leftAttribute = leftScheme.at(leftIndex);
         const std::string &leftValue = leftTuple.at(leftIndex);
-        for (unsigned rightIndex = 0; rightIndex < rightScheme.size(); rightIndex++)
+
+        for (unsigned int rightIndex = 0; rightIndex < rightScheme.size(); rightIndex++)
         {
-            const std::string &rightName = rightScheme.at(rightIndex);
+            const std::string &rightAttribute = rightScheme.at(rightIndex);
             const std::string &rightValue = rightTuple.at(rightIndex);
-            if (leftName == rightName && leftValue != rightValue)
+
+            if (leftAttribute == rightAttribute && leftValue != rightValue)
             {
                 return false;
             }
@@ -83,6 +87,7 @@ bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
  */
 const Relation Relation::join(const Relation &right) const
 {
+    // TODO. Split into multiple functions
     const Relation &left = *this;
 
     Scheme leftScheme = left.scheme;
@@ -121,9 +126,7 @@ const Relation Relation::join(const Relation &right) const
 
 std::string Relation::joinNames(std::string left, std::string right)
 {
-    std::stringstream ss;
-    ss << "(" + left + ")" + " JOIN " + "(" + right + ")";
-    return ss.str();
+    return "(" + left + ")" + " JOIN " + "(" + right + ")";
 }
 
 const Scheme Relation::joinSchemes(const Scheme &left, const Scheme &right)
@@ -147,6 +150,7 @@ const Scheme Relation::joinSchemes(const Scheme &left, const Scheme &right)
 // Returns true if strs contains str.
 bool Relation::contains(std::vector<std::string> &strs, std::string &str)
 {
+    // TODO. contains() Replace? Generalize? Rename?
     for (std::string current : strs)
     {
         if (current == str)
@@ -174,6 +178,7 @@ const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightSc
             values.push_back(value);
         }
     }
+
     Tuple result = Tuple(values);
     return result;
 }
@@ -196,6 +201,7 @@ const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightSc
 const Relation Relation::selectForConstant(unsigned int index, const std::string &value) const
 {
     Relation result(this->name, this->scheme);
+
     for (Tuple tuple : this->tuples)
     {
         if (tuple.at(index) == value)
@@ -203,6 +209,7 @@ const Relation Relation::selectForConstant(unsigned int index, const std::string
             result.addTuple(tuple);
         }
     }
+
     return result;
 }
 
@@ -219,15 +226,17 @@ const Relation Relation::selectForEqualVariables(unsigned int index1,
                                                  unsigned int index2) const
 {
     Relation result(this->name, this->scheme);
+
     for (Tuple tuple : this->tuples)
     {
-        std::string v1 = tuple.at(index1);
-        std::string v2 = tuple.at(index2);
-        if (v1 == v2)
+        std::string value1 = tuple.at(index1);
+        std::string value2 = tuple.at(index2);
+        if (value1 == value2)
         {
             result.addTuple(tuple);
         }
     }
+
     return result;
 }
 
@@ -244,11 +253,13 @@ const Relation Relation::project(const std::vector<unsigned int> &indices) const
 {
     Scheme projectedScheme = this->scheme.project(indices);
     Relation result(this->name, projectedScheme);
+
     for (Tuple tuple : this->tuples)
     {
         Tuple projectedTuple = tuple.project(indices);
         result.addTuple(projectedTuple);
     }
+
     return result;
 }
 
@@ -263,15 +274,17 @@ const Relation Relation::project(const std::vector<unsigned int> &indices) const
 const Relation Relation::project(const std::vector<std::string> &attributes) const
 {
     std::vector<unsigned int> indices;
+
     for (std::string attribute : attributes)
     {
         if (!scheme.hasAttribute(attribute))
         {
-            std::cout << "[ERROR] Tried to project by attribute name with an attribute that is not in the Relation." << std::endl;
+            std::cerr << "[ERROR] Tried to project on an attribute name that is not in the Relation." << std::endl;
         }
         unsigned int index = scheme.getAttributeIndex(attribute);
         indices.push_back(index);
     }
+
     return this->project(indices);
 }
 
@@ -285,10 +298,12 @@ const Relation Relation::rename(std::vector<std::string> &newNames) const
 {
     Scheme renamedScheme = scheme.rename(newNames);
     Relation result(this->name, renamedScheme);
+
     for (Tuple tuple : this->tuples)
     {
         result.addTuple(tuple.copy());
     }
+
     return result;
 }
 
@@ -308,7 +323,8 @@ const Relation Relation::makeUnionCompatibleWith(const Relation &other) const
         std::cout << "[ERROR] Applied makeUnionCompatibleWith() to Schemes of different sizes." << std::endl;
         throw;
     }
-    std::vector<std::string> newNames = static_cast<std::vector<std::string>>(other.scheme);
+
+    auto newNames = static_cast<std::vector<std::string>>(other.scheme);
     return this->rename(newNames);
 }
 
@@ -321,12 +337,11 @@ const Relation Relation::unionWith(const Relation &other) const
 {
     if (!this->isUnionCompatibleWith(other))
     {
-        std::cout << "[ERROR] Tried to union two non-union-compatible relations." << std::endl;
+        std::cerr << "[ERROR] Tried to union two non-union-compatible relations." << std::endl;
         throw;
     }
 
     std::string resultName = unionNames(this->name, other.name);
-
     Relation result = Relation(resultName, this->scheme);
 
     for (Tuple tuple : this->tuples)
@@ -347,7 +362,7 @@ const Relation Relation::subtract(const Relation &right) const
 
     if (!left.isUnionCompatibleWith(right))
     {
-        std::cout << "[ERROR] Tried to subtract non-union-compatible Relations." << std::endl;
+        std::cerr << "[ERROR] Tried to subtract non-union-compatible Relations." << std::endl;
         throw;
     }
 
@@ -365,6 +380,11 @@ const Relation Relation::subtract(const Relation &right) const
     }
 
     return result;
+}
+
+std::string Relation::subtractNames(std::string left, std::string right)
+{
+    return "(" + left + ") SUBTRACT (" + right + ")";
 }
 
 #endif

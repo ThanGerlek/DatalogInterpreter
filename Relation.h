@@ -4,8 +4,6 @@
 #include <set>
 #include "Tuple.h"
 
-// TODO. Check/test for func(&x, &x) problems
-
 class Relation
 {
 private:
@@ -19,8 +17,9 @@ private:
     static const Scheme joinSchemes(const Scheme &left, const Scheme &right);
     static const Tuple joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Tuple &left, const Tuple &right);
 
-    // unionWith() functions
+    // Other set-operation helper functions
     static std::string unionNames(std::string left, std::string right);
+    static std::string subtractNames(std::string left, std::string right);
 
     // Misc
     static bool contains(std::vector<std::string> &strs, std::string &str);
@@ -41,7 +40,7 @@ public:
     std::string getName() const { return name; }
     Scheme getScheme() const { return scheme; }
     std::set<Tuple> getTuples() { return tuples; }
-    unsigned int size() const { return tuples.size(); }
+    unsigned int size() const { return static_cast<unsigned int>(tuples.size()); }
 
     bool containsTuple(Tuple &tuple) const;
     std::string toString() const;

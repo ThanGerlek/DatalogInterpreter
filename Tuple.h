@@ -21,29 +21,29 @@ public:
         }
 
         std::stringstream out;
-        for (unsigned int ui = 0; ui < this->size(); ui++)
+        for (unsigned int i = 0; i < this->size(); i++)
         {
-            if (ui != 0)
+            if (i != 0)
             {
                 out << ", ";
             }
-            out << scheme.at(ui) << "=" << this->at(ui);
+            out << scheme.at(i) << "=" << this->at(i);
         }
         return out.str();
     }
 
     /**
-     * @brief Return a new Scheme which includes only the selected attributes in the given order.
+     * @brief Return a new Tuple which includes only the selected values in the given order.
      *
-     * @param u_attributeIndices The (unsigned) indices of the attributes to include.
+     * @param indices The indices of the values to include.
      * @return Tuple
      */
-    const Tuple project(const std::vector<unsigned int> &u_attributeIndices) const
+    const Tuple project(const std::vector<unsigned int> &indices) const
     {
         std::vector<std::string> values;
-        for (unsigned int u_attributeIndex : u_attributeIndices)
+        for (unsigned int index : indices)
         {
-            std::string value = this->at(u_attributeIndex);
+            std::string value = this->at(index);
             values.push_back(value);
         }
         Tuple projectedTuple(values);
@@ -52,7 +52,6 @@ public:
 
     /**
      * @brief Return a copy of this Tuple.
-     * @return Tuple
      */
     const Tuple copy() const
     {

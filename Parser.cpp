@@ -6,23 +6,23 @@
 /**
  * @brief Save to the stack the current location in the input.
  */
-void Parser::saveLoc()
+void Parser::saveLocation()
 {
-    savedLocs.push(u_location);
+    savedLocations.push(nextTokenIndex);
 }
 
 /**
  * @brief Pop from the stack a location in the input.
  */
-void Parser::restoreLoc()
+void Parser::restoreLocation()
 {
-    if (savedLocs.empty())
+    if (savedLocations.empty())
     {
-        std::cerr << "[ERROR] Tried to call restoreLoc(), but with no saved locations." << std::endl;
+        std::cerr << "[ERROR] Tried to call restoreLocation(), but with no saved locations." << std::endl;
         throw;
     }
-    u_location = savedLocs.top();
-    savedLocs.pop();
+    nextTokenIndex = savedLocations.top();
+    savedLocations.pop();
 }
 
 /**
@@ -32,7 +32,7 @@ void Parser::restoreLoc()
  */
 TokenType Parser::tokenType()
 {
-    return tokens->at(u_location).getType();
+    return tokens->at(nextTokenIndex).getType();
 }
 
 /**
@@ -42,7 +42,7 @@ TokenType Parser::tokenType()
  */
 std::string Parser::tokenStr()
 {
-    return tokens->at(u_location).getValue();
+    return tokens->at(nextTokenIndex).getValue();
 }
 
 /**
@@ -50,13 +50,13 @@ std::string Parser::tokenStr()
  */
 void Parser::advanceToken()
 {
-    u_location++;
-    u_max_location = u_location > u_max_location ? u_location : u_max_location;
+    nextTokenIndex++;
+    max_nextTokenIndex = nextTokenIndex > max_nextTokenIndex ? nextTokenIndex : max_nextTokenIndex;
 }
 
 void Parser::throwError()
 {
-    throw tokens->at(u_location);
+    throw tokens->at(nextTokenIndex);
 }
 
 /**
@@ -87,7 +87,7 @@ void Parser::parse()
     }
     catch (Token token)
     {
-        Token finalToken = tokens->at(u_max_location);
+        Token finalToken = tokens->at(max_nextTokenIndex);
         std::cerr << "[ERROR] Failed to parse program. Ended on Token: " << std::endl
                   << "  " << finalToken.toString() << std::endl;
         throw token;
@@ -156,7 +156,7 @@ void Parser::schemeList()
 {
     // schemeList -> scheme schemeList | lambda
 
-    saveLoc();
+    saveLocation();
     try
     {
         scheme();
@@ -164,7 +164,7 @@ void Parser::schemeList()
     }
     catch (Token)
     {
-        restoreLoc();
+        restoreLocation();
         // lambda
     }
 }
@@ -173,7 +173,7 @@ void Parser::factList()
 {
     // factList -> fact factList | lambda
 
-    saveLoc();
+    saveLocation();
     try
     {
         fact();
@@ -181,7 +181,7 @@ void Parser::factList()
     }
     catch (Token)
     {
-        restoreLoc();
+        restoreLocation();
         // lambda
     }
 }
@@ -190,7 +190,7 @@ void Parser::ruleList()
 {
     // ruleList -> rule ruleList | lambda
 
-    saveLoc();
+    saveLocation();
     try
     {
         rule();
@@ -198,7 +198,7 @@ void Parser::ruleList()
     }
     catch (Token)
     {
-        restoreLoc();
+        restoreLocation();
         // lambda
     }
 }
@@ -207,7 +207,7 @@ void Parser::queryList()
 {
     // queryList -> query queryList | lambda
 
-    saveLoc();
+    saveLocation();
     try
     {
         query();
@@ -215,7 +215,7 @@ void Parser::queryList()
     }
     catch (Token)
     {
-        restoreLoc();
+        restoreLocation();
         // lambda
     }
 }
@@ -326,7 +326,7 @@ void Parser::predicateList(Rule &currentRule)
 {
     // predicateList -> COMMA predicate predicateList | lambda
 
-    saveLoc();
+    saveLocation();
     try
     {
         match(COMMA);
@@ -337,7 +337,7 @@ void Parser::predicateList(Rule &currentRule)
     }
     catch (Token)
     {
-        restoreLoc();
+        restoreLocation();
         // lambda
     }
 }
@@ -346,7 +346,7 @@ void Parser::parameterList(Predicate &currentPredicate)
 {
     // parameterList -> COMMA parameter parameterList | lambda
 
-    saveLoc();
+    saveLocation();
     try
     {
         match(COMMA);
@@ -358,7 +358,7 @@ void Parser::parameterList(Predicate &currentPredicate)
     }
     catch (Token)
     {
-        restoreLoc();
+        restoreLocation();
         // lambda
     }
 }
@@ -367,7 +367,7 @@ void Parser::stringList(Predicate &currentPredicate)
 {
     // stringList -> COMMA STRING stringList | lambda
 
-    saveLoc();
+    saveLocation();
     try
     {
         match(COMMA);
@@ -381,7 +381,7 @@ void Parser::stringList(Predicate &currentPredicate)
     }
     catch (Token)
     {
-        restoreLoc();
+        restoreLocation();
         // lambda
     }
 }
@@ -390,7 +390,7 @@ void Parser::idList(Predicate &currentPredicate)
 {
     // idList -> COMMA ID idList | lambda
 
-    saveLoc();
+    saveLocation();
     try
     {
         match(COMMA);
@@ -403,7 +403,7 @@ void Parser::idList(Predicate &currentPredicate)
     }
     catch (Token)
     {
-        restoreLoc();
+        restoreLocation();
         // lambda
     }
 }

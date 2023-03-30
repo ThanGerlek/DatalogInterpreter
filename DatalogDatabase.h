@@ -24,8 +24,8 @@ private:
     const Relation projectForPredicate(Relation relation, std::vector<unsigned int> projectedIndices) const;
     const Relation renameForPredicate(Relation relation, const std::vector<Parameter> *params, std::vector<unsigned int> projectedIndices) const;
 
-    void printQueryResult(Predicate query, Relation results);
-    void printRuleResult(Rule rule, Relation results);
+    void printQueryResult(Predicate query, Relation results) const;
+    void printRuleResult(Rule rule, Relation results) const;
 
 public:
     DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram){};

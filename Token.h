@@ -33,11 +33,11 @@ class Token
 private:
     TokenType type;
     std::string value;
-    int line;
+    int lineNumber;
 
 public:
-    Token(TokenType _type, std::string _value, int _line) : type(_type), value(_value), line(_line){};
-    Token() : type(UNDEFINED), value(""), line(-1){};
+    Token(TokenType _type, std::string _value, int _line) : type(_type), value(_value), lineNumber(_line){};
+    Token() : type(UNDEFINED), value(""), lineNumber(-1){};
 
     /**
      * @brief Get a string representation of a TokenType.
@@ -83,7 +83,7 @@ public:
         case END_OF_FILE:
             return "EOF";
         default:
-            std::cerr << "[ERROR] Unrecognized token type: '" << static_cast<int>(_type) <<"'" << std::endl;
+            std::cerr << "[ERROR] Unrecognized token type: '" << static_cast<int>(_type) << "'" << std::endl;
             throw;
         }
     }
@@ -100,7 +100,7 @@ public:
 
     int getLine() const
     {
-        return line;
+        return lineNumber;
     }
 
     std::string toString() const
@@ -108,7 +108,7 @@ public:
         std::stringstream out;
         out << "(" << typeName(type) << ","
             << "\"" << value << "\""
-            << "," << line << ")";
+            << "," << lineNumber << ")";
         return out.str();
     }
 };
@@ -127,15 +127,8 @@ private:
 
 public:
     MaybeToken() : isToken(false){};
-    MaybeToken(Token _token)
-    {
-        setToken(_token);
-    };
-
-    bool hasToken()
-    {
-        return isToken;
-    }
+    MaybeToken(Token _token) { setToken(_token); };
+    bool hasToken() { return isToken; }
 
     Token getToken()
     {

@@ -8,16 +8,16 @@
 class Parser
 {
 public:
-    Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program), u_location(0), u_max_location(0){};
+    Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program), nextTokenIndex(0), max_nextTokenIndex(0){};
     ~Parser(){};
     void parse();
 
 private:
     const std::vector<Token> *tokens;
     DatalogProgram *program;
-    unsigned u_location;     // Index of the next token
-    unsigned u_max_location; // Index of the farthest token reached (used for failure reporting)
-    std::stack<unsigned> savedLocs;
+    unsigned int nextTokenIndex;     // Index of the next token
+    unsigned int max_nextTokenIndex; // Index of the farthest token reached (used for failure reporting)
+    std::stack<unsigned int> savedLocations;
 
     TokenType tokenType();
     std::string tokenStr();
@@ -25,8 +25,8 @@ private:
     void throwError();
     void match(TokenType t);
 
-    void saveLoc();
-    void restoreLoc();
+    void saveLocation();
+    void restoreLocation();
 
     // Recursive descent grammar functions
     void datalogProgram();

@@ -55,7 +55,7 @@ void Scanner::removeWhitespace()
 /**
  * @brief Return true iff there is more text in the input string to scan.
  */
-bool Scanner::hasNext()
+bool Scanner::hasNext() const
 {
     return !reachedEOF;
 }
@@ -67,46 +67,46 @@ Token Scanner::scanToken()
 {
     removeWhitespace();
 
-    MaybeToken mToken = scanForEOFToken(); // END_OF_FILE token
-    if (mToken.hasToken())
+    MaybeToken maybeToken = scanForEOFToken(); // END_OF_FILE token
+    if (maybeToken.hasToken())
     {
-        Token t = mToken.getToken();
+        Token t = maybeToken.getToken();
         reachedEOF = true;
         return t;
     }
 
-    mToken = scanForCharTokens(); // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
-    if (mToken.hasToken())
+    maybeToken = scanForCharTokens(); // COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN, ADD, and MULTIPLY tokens
+    if (maybeToken.hasToken())
     {
-        Token t = mToken.getToken();
+        Token t = maybeToken.getToken();
         return t;
     }
 
-    mToken = scanForColonTokens(); // COLON and COLON_DASH tokens
-    if (mToken.hasToken())
+    maybeToken = scanForColonTokens(); // COLON and COLON_DASH tokens
+    if (maybeToken.hasToken())
     {
-        Token t = mToken.getToken();
+        Token t = maybeToken.getToken();
         return t;
     }
 
-    mToken = scanForWordTokens();
-    if (mToken.hasToken())
+    maybeToken = scanForWordTokens();
+    if (maybeToken.hasToken())
     {
-        Token t = mToken.getToken();
+        Token t = maybeToken.getToken();
         return t;
     }
 
-    mToken = scanForStringToken(); // STRING token
-    if (mToken.hasToken())
+    maybeToken = scanForStringToken(); // STRING token
+    if (maybeToken.hasToken())
     {
-        Token t = mToken.getToken();
+        Token t = maybeToken.getToken();
         return t;
     }
 
-    mToken = scanForCommentToken(); // COMMENT token
-    if (mToken.hasToken())
+    maybeToken = scanForCommentToken(); // COMMENT token
+    if (maybeToken.hasToken())
     {
-        Token t = mToken.getToken();
+        Token t = maybeToken.getToken();
         return t;
     }
 
@@ -140,13 +140,13 @@ MaybeToken Scanner::scanForEOFToken() // END_OF_FILE token
  */
 MaybeToken Scanner::scanForCharTokens()
 {
-    char c = input.at(0);
+    char character = input.at(0);
 
     TokenType type = UNDEFINED;
     std::string value = "";
-    int line = currentLine;
+    int lineNumber = currentLine;
 
-    switch (c)
+    switch (character)
     {
     case ',':
         type = COMMA;
@@ -186,9 +186,9 @@ MaybeToken Scanner::scanForCharTokens()
     }
 
     input = input.substr(1);
-    Token token = Token(type, value, line);
-    MaybeToken mToken = MaybeToken(token);
-    return mToken;
+    Token token = Token(type, value, lineNumber);
+    MaybeToken maybeToken = MaybeToken(token);
+    return maybeToken;
 }
 
 /**
@@ -225,38 +225,37 @@ MaybeToken Scanner::scanForStringToken()
         return MaybeToken();
     }
 
-    std::stringstream ss;
-    ss << "'";
+    std::string stringValue = "'";
 
     bool finishedScan = false;
-    int line = currentLine;
-    unsigned uindex = 1;
-    MaybeToken mt;
+    int lineNumber = currentLine;
+    unsigned int index = 1;
+    MaybeToken maybeToken;
 
     while (!finishedScan)
     {
-        if (uindex >= input.length()) // Fail: Unterminated string
+        if (index >= input.length()) // Fail: Unterminated string
         {
-            Token token = Token(UNDEFINED, ss.str(), line);
-            mt = MaybeToken(token);
+            Token token = Token(UNDEFINED, stringValue, lineNumber);
+            maybeToken = MaybeToken(token);
             finishedScan = true;
         }
 
-        else if (input.at(uindex) == '\'') // Found single quote
+        else if (input.at(index) == '\'') // Found single quote
         {
-            if (input.length() > uindex + 1 && input.at(uindex + 1) == '\'')
+            if (input.length() > index + 1 && input.at(index + 1) == '\'')
             {
                 // Escaped single quote
-                ss << "''";
-                uindex += 2;
+                stringValue += "''";
+                index += 2;
             }
             else
             {
                 // End of string
-                ss << "'";
-                uindex++;
-                Token token = Token(STRING, ss.str(), line);
-                mt = MaybeToken(token);
+                stringValue += "'";
+                index++;
+                Token token = Token(STRING, stringValue, lineNumber);
+                maybeToken = MaybeToken(token);
                 finishedScan = true;
             }
         }
@@ -264,18 +263,18 @@ MaybeToken Scanner::scanForStringToken()
         // Other character
         else
         {
-            if (input.at(uindex) == '\n')
+            if (input.at(index) == '\n')
             {
                 currentLine++;
             }
 
-            ss << input.at(uindex);
-            uindex++;
+            stringValue += input.at(index);
+            index++;
         }
     }
 
-    input = input.substr(uindex);
-    return mt;
+    input = input.substr(index);
+    return maybeToken;
 }
 
 /**
@@ -288,7 +287,7 @@ MaybeToken Scanner::scanForCommentToken()
         return MaybeToken();
     }
 
-    if (static_cast<int>(input.length()) > 1 && input.at(1) == '|')
+    if (input.length() > 1 && input.at(1) == '|')
     {
         // Block comment
         return scanBlockComment();
@@ -296,16 +295,16 @@ MaybeToken Scanner::scanForCommentToken()
     else
     {
         // Line comment
-        std::stringstream ss;
+        std::string valueString = "";
 
-        unsigned uindex = 0;
-        for (; uindex < input.length() && input.at(uindex) != '\n'; uindex++)
+        unsigned int index = 0;
+        for (; index < input.length() && input.at(index) != '\n'; index++)
         {
-            ss << input.at(uindex);
+            valueString += input.at(index);
         }
 
-        input = input.substr(uindex);
-        Token token = Token(COMMENT, ss.str(), currentLine);
+        input = input.substr(index);
+        Token token = Token(COMMENT, valueString, currentLine);
         return MaybeToken(token);
     }
 }
@@ -315,57 +314,56 @@ MaybeToken Scanner::scanForCommentToken()
  */
 MaybeToken Scanner::scanBlockComment()
 {
-    std::stringstream ss;
-    ss << "#|";
+    std::string valueString = "#|";
 
     bool finishedScan = false;
-    int line = currentLine;
-    unsigned uindex = 2;
-    MaybeToken mt;
+    int lineNumber = currentLine;
+    unsigned int index = 2;
+    MaybeToken maybeToken;
 
     while (!finishedScan)
     {
-        if (uindex >= input.length()) // Fail: Unterminated block comment
+        if (index >= input.length()) // Fail: Unterminated block comment
         {
-            Token token = Token(UNDEFINED, ss.str(), line);
-            mt = MaybeToken(token);
+            Token token = Token(UNDEFINED, valueString, lineNumber);
+            maybeToken = MaybeToken(token);
             finishedScan = true;
         }
 
-        else if (input.at(uindex) == '|') // Found pipe symbol
+        else if (input.at(index) == '|') // Found pipe symbol
         {
-            if (input.length() > uindex + 1 && input.at(uindex + 1) == '#')
+            if (input.length() > index + 1 && input.at(index + 1) == '#')
             {
                 // End of comment
-                ss << "|#";
-                uindex += 2;
-                Token token = Token(COMMENT, ss.str(), line);
-                mt = MaybeToken(token);
+                valueString += "|#";
+                index += 2;
+                Token token = Token(COMMENT, valueString, lineNumber);
+                maybeToken = MaybeToken(token);
                 finishedScan = true;
             }
             else
             {
                 // Actual '|' char
-                ss << "|";
-                uindex += 2;
+                valueString += "|";
+                index += 2;
             }
         }
 
         // Other character
         else
         {
-            if (input.at(uindex) == '\n')
+            if (input.at(index) == '\n')
             {
                 currentLine++;
             }
 
-            ss << input.at(uindex);
-            uindex++;
+            valueString += input.at(index);
+            index++;
         }
     }
 
-    input = input.substr(uindex);
-    return mt;
+    input = input.substr(index);
+    return maybeToken;
 }
 
 /**
@@ -378,31 +376,30 @@ MaybeToken Scanner::scanForWordTokens()
         return MaybeToken();
     }
 
-    std::stringstream ss;
+    std::string valueString;
 
-    unsigned uindex = 0;
-    for (; uindex < input.length() && std::isalnum(input.at(uindex)); uindex++)
+    unsigned index = 0;
+    for (; index < input.length() && std::isalnum(input.at(index)); index++)
     {
-        ss << input.at(uindex);
+        valueString += input.at(index);
     }
 
-    input = input.substr(uindex);
-    std::string value = ss.str();
+    input = input.substr(index);
 
     TokenType type;
-    if (value == "Schemes")
+    if (valueString == "Schemes")
     {
         type = SCHEMES;
     }
-    else if (value == "Facts")
+    else if (valueString == "Facts")
     {
         type = FACTS;
     }
-    else if (value == "Rules")
+    else if (valueString == "Rules")
     {
         type = RULES;
     }
-    else if (value == "Queries")
+    else if (valueString == "Queries")
     {
         type = QUERIES;
     }
@@ -411,7 +408,7 @@ MaybeToken Scanner::scanForWordTokens()
         type = ID;
     }
 
-    Token token = Token(type, value, currentLine);
+    Token token = Token(type, valueString, currentLine);
     return MaybeToken(token);
 }
 

@@ -16,14 +16,12 @@ public:
 
     std::string toString()
     {
-        std::stringstream out;
-        out << "( ";
+        std::string out = "( ";
         for (std::string attribute : *this)
         {
-            out << attribute << " ";
+            out += attribute + " ";
         }
-        out << ")";
-        return out.str();
+        return out + ")";
     }
 
     unsigned int getAttributeIndex(std::string &attribute) const
@@ -35,7 +33,7 @@ public:
                 return i;
             }
         }
-        std::cout << "[ERROR] getAttributeIndex() couldn't find given attribute." << std::endl;
+        std::cerr << "[ERROR] Called getAttributeIndex() on an attribute not in the Scheme." << std::endl;
         throw;
     }
 
@@ -59,13 +57,13 @@ public:
      */
     const Scheme project(const std::vector<unsigned int> &indices) const
     {
-        std::vector<std::string> names;
+        std::vector<std::string> attributeNames;
         for (unsigned int index : indices)
         {
             std::string attribute = this->at(index);
-            names.push_back(attribute);
+            attributeNames.push_back(attribute);
         }
-        Scheme projectedScheme(names);
+        Scheme projectedScheme(attributeNames);
         return projectedScheme;
     }
 

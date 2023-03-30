@@ -51,8 +51,8 @@ void DatalogDatabase::evaluateRules()
     std::cout << "Rule Evaluation" << std::endl;
 
     int iterations = 0;
-    int prevSize = -1;
-    while (prevSize != this->size())
+    unsigned int prevSize = 0;
+    do
     {
         iterations++;
         prevSize = this->size();
@@ -61,7 +61,7 @@ void DatalogDatabase::evaluateRules()
         {
             evaluateRule(rule);
         }
-    }
+    } while (prevSize != this->size());
 
     std::cout << std::endl
               << "Schemes populated after " << iterations << " passes through the Rules." << std::endl
@@ -89,8 +89,8 @@ void DatalogDatabase::evaluateQueries()
             throw;
         }
 
-        int index = getIndex(relationName);
-        Relation relation = relations.at(static_cast<unsigned int>(index));
+        unsigned int index = getIndex(relationName);
+        Relation relation = relations.at(index);
 
         // Use a sequence of select, project, and rename operations on the Database to evaluate the query.
         relation = selectForPredicate(relation, params);
@@ -102,7 +102,7 @@ void DatalogDatabase::evaluateQueries()
     }
 }
 
-void DatalogDatabase::printQueryResult(Predicate query, Relation results)
+void DatalogDatabase::printQueryResult(Predicate query, Relation results) const
 {
     std::cout << query.toString() << "? ";
 
@@ -192,7 +192,7 @@ const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rul
     return result;
 }
 
-void DatalogDatabase::printRuleResult(Rule rule, Relation results)
+void DatalogDatabase::printRuleResult(Rule rule, Relation results) const
 {
     std::cout << rule.toString() << "." << std::endl;
 
@@ -226,28 +226,28 @@ const Relation DatalogDatabase::selectForPredicate(Relation relation, const std:
 
     if (params->size() != relation.getScheme().size())
     {
-        std::cout << "[ERROR] Tried to selectForPredicate() with mismatched sizes." << std::endl;
+        std::cerr << "[ERROR] Tried to selectForPredicate() with mismatched sizes." << std::endl;
         throw;
     }
 
-    for (unsigned int ui = 0; ui < params->size(); ui++)
+    for (unsigned int i = 0; i < params->size(); i++)
     {
-        Parameter param = params->at(ui);
+        Parameter param = params->at(i);
         if (param.isVariable())
         {
             // Check if this variable is also used in another Parameter later in the predicate
-            for (unsigned int uj = ui; uj < params->size(); uj++)
+            for (unsigned int j = i; j < params->size(); j++)
             {
-                if (params->at(uj).isVariable() && params->at(uj).getValue() == param.getValue())
+                if (params->at(j).isVariable() && params->at(j).getValue() == param.getValue())
                 {
                     // If so, SELECT the Relation for equal values of the two Parameters
-                    relation = relation.selectForEqualVariables(ui, uj);
+                    relation = relation.selectForEqualVariables(i, j);
                 }
             }
         }
         else
         {
-            relation = relation.selectForConstant(ui, param.getValue());
+            relation = relation.selectForConstant(i, param.getValue());
         }
     }
 

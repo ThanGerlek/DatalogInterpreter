@@ -14,7 +14,7 @@ public:
     Scanner(std::ifstream &ifs);
     void scan(std::vector<Token> &tokens); // Scan all tokens into the given vector
     Token scanToken();
-    bool hasNext();
+    bool hasNext() const;
 
 private:
     std::string input;

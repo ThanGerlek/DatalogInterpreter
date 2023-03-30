@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
     ////
     ////
-    // Load Database
+    // Evaluate Database
 
     DatalogDatabase datalogdb(&dlProgram);
 
