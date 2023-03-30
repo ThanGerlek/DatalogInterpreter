@@ -145,7 +145,7 @@ const Scheme Relation::joinSchemes(const Scheme &left, const Scheme &right)
 }
 
 // Returns true if strs contains str.
-bool Relation::contains(std::vector<std::string> strs, std::string str)
+bool Relation::contains(std::vector<std::string> &strs, std::string &str)
 {
     for (std::string current : strs)
     {
@@ -167,7 +167,8 @@ const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightSc
     for (unsigned int i = 0; i < rightScheme.size(); i++)
     {
         std::string attribute = rightScheme.at(i);
-        if (!contains(leftScheme, attribute))
+        auto leftAttributes = static_cast<std::vector<std::string>>(leftScheme);
+        if (!contains(leftAttributes, attribute))
         {
             std::string value = rightTuple.at(i);
             values.push_back(value);
@@ -311,7 +312,7 @@ const Relation Relation::makeUnionCompatibleWith(const Relation &other) const
     return this->rename(newNames);
 }
 
-std::string Relation::unionNames(std::string &left, std::string &right)
+std::string Relation::unionNames(std::string left, std::string right)
 {
     return "(" + left + ") UNION (" + right + ")";
 }
@@ -324,10 +325,7 @@ const Relation Relation::unionWith(const Relation &other) const
         throw;
     }
 
-    // Need variables because unionNames() takes references
-    std::string thisName = this->name;
-    std::string otherName = other.name;
-    std::string resultName = unionNames(thisName, otherName);
+    std::string resultName = unionNames(this->name, other.name);
 
     Relation result = Relation(resultName, this->scheme);
 

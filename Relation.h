@@ -20,10 +20,10 @@ private:
     static const Tuple joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Tuple &left, const Tuple &right);
 
     // unionWith() functions
-    static std::string unionNames(std::string &left, std::string &right);
+    static std::string unionNames(std::string left, std::string right);
 
     // Misc
-    static bool contains(std::vector<std::string> strs, std::string str);
+    static bool contains(std::vector<std::string> &strs, std::string &str);
     static bool joinable(const Scheme &leftScheme, const Scheme &rightScheme,
                          const Tuple &leftTuple, const Tuple &rightTuple);
 
@@ -41,18 +41,18 @@ public:
     std::string getName() const { return name; }
     Scheme getScheme() const { return scheme; }
     std::set<Tuple> getTuples() { return tuples; }
-    int size() const { return static_cast<int>(tuples.size()); }
+    unsigned int size() const { return tuples.size(); }
 
     bool containsTuple(Tuple &tuple) const;
     std::string toString() const;
 
     // Mathematical Relation operations
     const Relation join(const Relation &right) const;
-    const Relation selectForConstant(unsigned int u_index, const std::string &value) const;
-    const Relation selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const;
-    const Relation project(const std::vector<unsigned int> &u_indices) const;
+    const Relation selectForConstant(unsigned int index, const std::string &value) const;
+    const Relation selectForEqualVariables(unsigned int index1, unsigned int index2) const;
+    const Relation project(const std::vector<unsigned int> &indices) const;
     const Relation project(const std::vector<std::string> &attributes) const;
-    const Relation rename(std::vector<std::string> &newNames) const;
+    const Relation rename(std::vector<std::string> &newAttributeNames) const;
 
     const Relation makeUnionCompatibleWith(const Relation &other) const;
     bool isUnionCompatibleWith(const Relation &other) const;
