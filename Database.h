@@ -72,6 +72,16 @@ public:
         }
         relations.at(static_cast<unsigned int>(index)).addTuple(tuple);
     }
+
+    int size()
+    {
+        int total = 0;
+        for (Relation relation : relations)
+        {
+            total += relation.size();
+        }
+        return total;
+    }
 };
 
 #endif
