@@ -394,6 +394,16 @@ const Relation Relation::unionWith(const Relation &other) const
     std::string resultName = unionNames(thisName, otherName);
 
     Relation result = Relation(resultName, this->scheme);
+
+    for (Tuple tuple : this->tuples)
+    {
+        result.addTuple(tuple);
+    }
+    for (Tuple tuple : other.tuples)
+    {
+        result.addTuple(tuple);
+    }
+
     return result;
 }
 
