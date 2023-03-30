@@ -4,8 +4,7 @@
 #include "DatalogDatabase.h"
 
 /**
- * @brief (WIP) Evaluate and load the results of the DatalogProgram's queries.
- * WIP: does not yet evaluate Rules.
+ * @brief Evaluate and load the results of the DatalogProgram's queries.
  */
 void DatalogDatabase::evaluate()
 {
@@ -200,7 +199,7 @@ const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rul
 
 void DatalogDatabase::printRuleResult(Rule rule, Relation results)
 {
-    std::cout << rule.toString() << ".";
+    std::cout << rule.toString() << "." << std::endl;
 
     // Print Tuples
     for (Tuple tuple : results.getTuples())
