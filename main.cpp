@@ -50,7 +50,6 @@ int main(int argc, char *argv[])
     DatalogDatabase datalogdb(&dlProgram);
 
     datalogdb.evaluate();
-    datalogdb.printQueries();
 
     return 0;
 }

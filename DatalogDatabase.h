@@ -29,10 +29,11 @@ private:
     const Relation projectForPredicate(Relation relation, std::vector<unsigned int> projectedIndices) const;
     const Relation renameForPredicate(Relation relation, const std::vector<Parameter> *params, std::vector<unsigned int> projectedIndices) const;
 
+    void DatalogDatabase::printQueryResult(Predicate query, Relation results);
+
 public:
     DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram), hasEvaluatedQueries(false){};
     void evaluate();
-    void printQueries() const;
     std::string toString() const;
 };
 

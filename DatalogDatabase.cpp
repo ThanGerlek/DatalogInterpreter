@@ -16,17 +16,6 @@ void DatalogDatabase::evaluate()
 }
 
 /**
- * @brief Print the results of the DatalogProgram's queries.
- */
-void DatalogDatabase::printQueries() const
-{
-    for (QueryResult queryResult : queryResults)
-    {
-        std::cout << queryResult.toString();
-    }
-}
-
-/**
  * @brief Update the internal Database with the data from the Scheme list of the DatalogProgram.
  */
 void DatalogDatabase::evaluateSchemes()
@@ -100,11 +89,34 @@ void DatalogDatabase::evaluateQueries()
         relation = projectForPredicate(relation, projectedIndices);
         relation = renameForPredicate(relation, params, projectedIndices);
 
-        QueryResult qResult(queryPredicate, relation);
-        queryResults.push_back(qResult);
+        printQueryResult(queryPredicate, relation);
+
     }
 
     hasEvaluatedQueries = true;
+}
+
+void DatalogDatabase::printQueryResult(Predicate query, Relation results)
+{
+    std::cout << query.toString() << "? ";
+
+    if (results.size() == 0)
+    {
+        std::cout << "No" << std::endl;
+    }
+    else
+    {
+        std::cout << "Yes(" << results.size() << ")" << std::endl;
+
+        // Print Tuples
+        for (Tuple tuple : results.getTuples())
+        {
+            if (tuple.size() > 0)
+            {
+                std::cout << "  " << tuple.toString(results.getScheme()) << std::endl;
+            }
+        }
+    }
 }
 
 ////
