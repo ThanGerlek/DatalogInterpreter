@@ -61,9 +61,14 @@ void DatalogDatabase::evaluateFacts()
  */
 void DatalogDatabase::evaluateRules()
 {
-    for (Rule rule : *(this->dlProgram->getRules()))
+    int prevSize = -1;
+    while (prevSize != this->size())
     {
-        evaluateRule(rule);
+        prevSize = this->size();
+        for (Rule rule : *(this->dlProgram->getRules()))
+        {
+            evaluateRule(rule);
+        }
     }
 }
 
