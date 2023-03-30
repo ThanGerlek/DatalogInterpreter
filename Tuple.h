@@ -10,7 +10,6 @@
 class Tuple : public std::vector<std::string>
 {
 public:
-    // TODO? Check what this line is doing (calling the base class's construstor?)
     Tuple(vector<std::string> values) : vector<std::string>(values){};
 
     std::string toString(const Scheme &scheme) const

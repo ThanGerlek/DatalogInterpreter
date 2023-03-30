@@ -4,7 +4,6 @@
 #include "Relation.h"
 
 // TODO. Reorder functions (Clean Code practice)
-// TODO. Remove cross(), it's unused
 
 /**
  * @brief Add a Tuple to this Relation.
@@ -303,7 +302,6 @@ bool Relation::isUnionCompatibleWith(const Relation &other) const
 
 const Relation Relation::makeUnionCompatibleWith(const Relation &other) const
 {
-    // HACK? Make sure casting works here
     if (this->scheme.size() != other.scheme.size())
     {
         std::cout << "[ERROR] Applied makeUnionCompatibleWith() to Schemes of different sizes." << std::endl;
