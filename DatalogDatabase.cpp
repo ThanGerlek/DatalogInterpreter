@@ -50,15 +50,24 @@ void DatalogDatabase::evaluateFacts()
  */
 void DatalogDatabase::evaluateRules()
 {
+    std::cout << "Rule Evaluation" << std::endl;
+
+    int iterations = 0;
     int prevSize = -1;
     while (prevSize != this->size())
     {
+        iterations++;
         prevSize = this->size();
+
         for (Rule rule : *(this->dlProgram->getRules()))
         {
             evaluateRule(rule);
         }
     }
+
+    std::cout << std::endl
+              << "Schemes populated after " << iterations << " passes through the Rules." << std::endl
+              << std::endl;
 }
 
 /**
@@ -66,6 +75,8 @@ void DatalogDatabase::evaluateRules()
  */
 void DatalogDatabase::evaluateQueries()
 {
+    std::cout << "Query Evaluation" << std::endl;
+
     // For each query in the Datalog program:
     for (Predicate queryPredicate : *(dlProgram->getQueries()))
     {
@@ -136,6 +147,10 @@ void DatalogDatabase::evaluateRule(Rule rule)
     Relation table = this->getRelation(tableName);
     relation = relation.makeUnionCompatibleWith(table);
     relation = relation.unionWith(table);
+
+    // Print new results
+    Relation newTuples = relation.subtract(table);
+    printRuleResult(rule, newTuples);
 
     // Update relation in the database to the new relation
     updateRelation(tableName, relation);
