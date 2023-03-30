@@ -3,7 +3,6 @@
 
 #include "Database.h"
 #include "DatalogProgram.h"
-#include "QueryResult.h"
 
 class DatalogDatabase : public Database
 {
@@ -11,7 +10,6 @@ private:
     DatalogProgram *dlProgram;
 
     bool hasEvaluatedQueries;
-    std::vector<QueryResult> queryResults;
 
     void evaluateSchemes();
     void evaluateFacts();
