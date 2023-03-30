@@ -4,7 +4,7 @@
 #include "Relation.h"
 
 // TODO. Reorder functions (Clean Code practice)
-// TODO? (Address JOIN snap) JOIN snap?
+// TODO. Remove cross(), it's unused
 
 /**
  * @brief Add a Tuple to this Relation.
@@ -391,7 +391,6 @@ std::string Relation::unionNames(std::string &left, std::string &right)
 
 const Relation Relation::unionWith(const Relation &other) const
 {
-    // TODO Test unionWith()
     if (!this->isUnionCompatibleWith(other))
     {
         std::cout << "[ERROR] Tried to union two non-union-compatible relations." << std::endl;
@@ -419,7 +418,6 @@ const Relation Relation::unionWith(const Relation &other) const
 
 const Relation Relation::subtract(const Relation &right) const
 {
-    // TODO Test subtract()
     const Relation &left = *this;
 
     if (!left.isUnionCompatibleWith(right))

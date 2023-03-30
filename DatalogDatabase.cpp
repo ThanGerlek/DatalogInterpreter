@@ -173,7 +173,6 @@ const Relation DatalogDatabase::evaluateRulePredicates(Rule rule) const
 
 const Relation DatalogDatabase::evaluateRulePredicate(Predicate predicate) const
 {
-    // TODO Test evaluateRulePredicate()
     // Use a sequence of select, project, and rename operations on the Database to evaluate the Rule predicate.
     std::vector<Parameter> *params = predicate.getParams();
 
@@ -190,7 +189,6 @@ const Relation DatalogDatabase::evaluateRulePredicate(Predicate predicate) const
 
 const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rule rule) const
 {
-    // TODO test projectRuleColumns
     std::vector<std::string> attributes = rule.getHead().getParamStrings();
     Relation result = relation.project(attributes);
     return result;
@@ -226,7 +224,6 @@ void DatalogDatabase::printRuleResult(Rule rule, Relation results)
  */
 const Relation DatalogDatabase::selectForPredicate(Relation relation, const std::vector<Parameter> *params) const
 {
-    // TODO Test that selectForPredicate() etc. all work for both Queries and Rules
     // Iterate over the parameters of the predicate: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the predicate, select the tuples from the Relation that have the same value in both positions where the variable name appears.
     //  TODO. Error if params and relation.scheme don't match in size
 
