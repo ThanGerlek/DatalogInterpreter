@@ -66,6 +66,7 @@ public:
 
     // Mathematical set operations
     const Relation unionWith(const Relation &other) const;
+    const Relation subtract(const Relation &right) const;
 };
 
 #endif

@@ -398,4 +398,31 @@ const Relation Relation::unionWith(const Relation &other) const
     return result;
 }
 
+const Relation Relation::subtract(const Relation &right) const
+{
+    // TODO Test subtract()
+    const Relation &left = *this;
+
+    if (!left.isUnionCompatibleWith(right))
+    {
+        std::cout << "[ERROR] Tried to subtract non-union-compatible Relations." << std::endl;
+        throw;
+    }
+
+    std::string resultName = "(" + left.getName() +
+                             ") SUBTRACT (" +
+                             right.getName() + ")";
+    Relation result = Relation(resultName, left.scheme);
+
+    for (Tuple tuple : left.tuples)
+    {
+        if (!right.containsTuple(tuple))
+        {
+            result.addTuple(tuple.copy());
+        }
+    }
+
+    return result;
+}
+
 #endif
