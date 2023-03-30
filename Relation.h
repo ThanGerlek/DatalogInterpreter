@@ -16,20 +16,20 @@ private:
     std::set<Tuple> tuples;
 
     // join() functions
-    std::string joinNames(std::string left, std::string right);
-    const Scheme joinSchemes(const Scheme &left, const Scheme &right);
-    const Tuple joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Tuple &left, const Tuple &right);
+    static std::string joinNames(std::string left, std::string right);
+    static const Scheme joinSchemes(const Scheme &left, const Scheme &right);
+    static const Tuple joinTuples(const Scheme &leftScheme, const Scheme &rightScheme, const Tuple &left, const Tuple &right);
 
     // cross() functions
-    std::string crossNames(std::string left, std::string right);
-    const Scheme crossSchemes(const Scheme &left, const Scheme &right);
-    const Tuple crossTuples(const Tuple &left, const Tuple &right);
+    static std::string crossNames(std::string left, std::string right);
+    static const Scheme crossSchemes(const Scheme &left, const Scheme &right);
+    static const Tuple crossTuples(const Tuple &left, const Tuple &right);
 
     // unionWith() functions
-    std::string unionNames(std::string &left, std::string &right) const;
+    static std::string unionNames(std::string &left, std::string &right);
 
     // Misc
-    bool contains(std::vector<std::string> strs, std::string str);
+    static bool contains(std::vector<std::string> strs, std::string str);
     static bool joinable(const Scheme &leftScheme, const Scheme &rightScheme,
                          const Tuple &leftTuple, const Tuple &rightTuple);
 
@@ -51,19 +51,19 @@ public:
     std::string toString() const;
 
     // Mathematical Relation operations
-    const Relation join(const Relation &right);
-    const Relation cross(const Relation &right);
+    const Relation join(const Relation &right) const;
+    const Relation cross(const Relation &right) const;
     const Relation selectForConstant(unsigned int u_index, const std::string &value) const;
     const Relation selectForEqualVariables(unsigned int u_index1, unsigned int u_index2) const;
     const Relation project(const std::vector<unsigned int> &u_indices) const;
     const Relation project(const std::vector<std::string> &attributes) const;
     const Relation rename(std::vector<std::string> &newNames) const;
 
-    const Relation makeUnionCompatibleWith(const Relation &other);
-    bool isUnionCompatibleWith(const Relation &other);
+    const Relation makeUnionCompatibleWith(const Relation &other) const;
+    bool isUnionCompatibleWith(const Relation &other) const;
 
     // Mathematical set operations
-    const Relation unionWith(const Relation &other);
+    const Relation unionWith(const Relation &other) const;
 };
 
 #endif

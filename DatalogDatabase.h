@@ -20,8 +20,7 @@ private:
 
     void evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;
-    const Relation evaluateRulePredicate(
-        Predicate predicate) const;
+    const Relation evaluateRulePredicate(Predicate predicate) const;
     const Relation projectRuleColumns(const Relation &relation, Rule rule) const;
 
     const Relation selectForPredicate(Relation relation, const std::vector<Parameter> *params) const;
@@ -29,8 +28,8 @@ private:
     const Relation projectForPredicate(Relation relation, std::vector<unsigned int> projectedIndices) const;
     const Relation renameForPredicate(Relation relation, const std::vector<Parameter> *params, std::vector<unsigned int> projectedIndices) const;
 
-    void DatalogDatabase::printQueryResult(Predicate query, Relation results);
-    void DatalogDatabase::printRuleResult(Rule rule, Relation results);
+    void printQueryResult(Predicate query, Relation results);
+    void printRuleResult(Rule rule, Relation results);
 
 public:
     DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram), hasEvaluatedQueries(false){};

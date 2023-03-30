@@ -71,7 +71,7 @@ bool Relation::joinable(const Scheme &leftScheme, const Scheme &rightScheme,
  * @param right The Relation to join on the right.
  * @return const Relation
  */
-const Relation Relation::join(const Relation &right)
+const Relation Relation::join(const Relation &right) const
 {
     const Relation &left = *this;
 
@@ -171,7 +171,7 @@ const Tuple Relation::joinTuples(const Scheme &leftScheme, const Scheme &rightSc
  * @param right The Relation to cross on the right.
  * @return const Relation
  */
-const Relation Relation::cross(const Relation &right)
+const Relation Relation::cross(const Relation &right) const
 {
     const Relation &left = *this;
 
@@ -346,12 +346,12 @@ const Relation Relation::rename(std::vector<std::string> &newNames) const
 ////
 ////
 
-bool Relation::isUnionCompatibleWith(const Relation &other)
+bool Relation::isUnionCompatibleWith(const Relation &other) const
 {
     return this->scheme == other.scheme;
 }
 
-const Relation Relation::makeUnionCompatibleWith(const Relation &other)
+const Relation Relation::makeUnionCompatibleWith(const Relation &other) const
 {
     // HACK? Make sure casting works here
     if (this->scheme.size() != other.scheme.size())
@@ -363,12 +363,12 @@ const Relation Relation::makeUnionCompatibleWith(const Relation &other)
     return this->rename(newNames);
 }
 
-std::string Relation::unionNames(std::string &left, std::string &right) const
+std::string Relation::unionNames(std::string &left, std::string &right)
 {
     return "(" + left + ") UNION (" + right + ")";
 }
 
-const Relation Relation::unionWith(const Relation &other)
+const Relation Relation::unionWith(const Relation &other) const
 {
     // TODO Test unionWith()
     if (!this->isUnionCompatibleWith(other))
@@ -377,9 +377,10 @@ const Relation Relation::unionWith(const Relation &other)
         throw;
     }
 
-    // Need otherName variable because unionNames() takes references
-    std::string otherName = other.getName();
-    std::string resultName = unionNames(this->name, otherName);
+    // Need variables because unionNames() takes references
+    std::string thisName = this->name;
+    std::string otherName = other.name;
+    std::string resultName = unionNames(thisName, otherName);
 
     Relation result = Relation(resultName, this->scheme);
     return result;
