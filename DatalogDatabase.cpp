@@ -34,7 +34,6 @@ void DatalogDatabase::evaluateSchemes()
  */
 void DatalogDatabase::evaluateFacts()
 {
-    // TODO? Check if facts ever contain variables (I'm assuming they don't)
     for (Predicate predicate : *(dlProgram->getFacts()))
     {
         std::vector<std::string> values = predicate.getParamStrings();
@@ -267,7 +266,7 @@ const Relation DatalogDatabase::selectForPredicate(Relation relation, const std:
  */
 std::vector<unsigned int> DatalogDatabase::getProjectedIndices(const std::vector<Parameter> *params) const
 {
-    // TODO Rename and redoc--make this a lot more understandable
+    // TODO. Rename and redoc--make this a lot more understandable
     std::vector<unsigned int> projectedIndices;
 
     for (unsigned int i = 0; i < params->size(); i++)

@@ -5,7 +5,6 @@
 
 // TODO. Reorder functions (Clean Code practice)
 // TODO? (Address JOIN snap) JOIN snap?
-// TODO Repeat evaluateRules() - fixed point algorithm
 
 /**
  * @brief Add a Tuple to this Relation.

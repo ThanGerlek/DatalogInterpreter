@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-// TODO Standardize variable names and signedness
+// TODO. Standardize variable names and signedness
 
 class Scheme : public std::vector<std::string>
 {

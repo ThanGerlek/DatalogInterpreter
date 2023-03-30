@@ -67,8 +67,6 @@ Token Scanner::scanToken()
 {
     removeWhitespace();
 
-    // TODO? Order calls according to frequency
-
     MaybeToken mToken = scanForEOFToken(); // END_OF_FILE token
     if (mToken.hasToken())
     {
