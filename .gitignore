@@ -9,3 +9,6 @@ test.cpp
 out.txt
 passoffs/*
 run-tests*
+in*.txt
+out*.txt
+answer*.txt
