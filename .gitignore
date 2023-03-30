@@ -2,8 +2,10 @@
 input.txt
 main
 test
-project3
+project4
+project4*/*
 test.cpp
 *.zip
 out.txt
 passoffs/*
+run-tests*
