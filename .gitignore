@@ -4,7 +4,7 @@ main
 test
 project4*
 project4*/*
-test.cpp
+test.cpp*
 *.zip
 out.txt
 passoffs/*
