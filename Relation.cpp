@@ -93,6 +93,16 @@ const Relation Relation::join(const Relation &right) const
     std::string resultName = joinNames(left.name, right.name);
     Relation result(resultName, resultScheme);
 
+    // If one of the Schemes is empty, accept all Tuples.
+    if (leftScheme.size() == 0)
+    {
+        return result.unionWith(right);
+    }
+    if (rightScheme.size() == 0)
+    {
+        return result.unionWith(left);
+    }
+
     // For each Tuple in left and right Relations, if they're joinable,
     // join them and add the resulting Tuple to the result Relation.
     for (const Tuple &leftTuple : left.tuples)
