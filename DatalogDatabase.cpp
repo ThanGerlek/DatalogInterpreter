@@ -225,7 +225,6 @@ void DatalogDatabase::printRuleResult(Rule rule, Relation results)
 const Relation DatalogDatabase::selectForPredicate(Relation relation, const std::vector<Parameter> *params) const
 {
     // Iterate over the parameters of the predicate: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the predicate, select the tuples from the Relation that have the same value in both positions where the variable name appears.
-    //  TODO. Error if params and relation.scheme don't match in size
 
     if (params->size() != relation.getScheme().size())
     {
