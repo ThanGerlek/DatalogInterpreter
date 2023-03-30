@@ -185,7 +185,16 @@ const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rul
 
 void DatalogDatabase::printRuleResult(Rule rule, Relation results)
 {
-    // TODO
+    std::cout << rule.toString() << ".";
+
+    // Print Tuples
+    for (Tuple tuple : results.getTuples())
+    {
+        if (tuple.size() > 0)
+        {
+            std::cout << "  " << tuple.toString(results.getScheme()) << std::endl;
+        }
+    }
 }
 
 ////
