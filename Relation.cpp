@@ -26,6 +26,18 @@ void Relation::setName(std::string &newName)
     this->name = newName;
 }
 
+bool Relation::containsTuple(Tuple &tuple) const
+{
+    for (Tuple currentTuple : tuples)
+    {
+        if (currentTuple == tuple)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 std::string Relation::toString() const
 {
     std::stringstream out;

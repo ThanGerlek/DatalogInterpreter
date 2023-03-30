@@ -48,6 +48,8 @@ public:
     Scheme getScheme() const { return scheme; }
     std::set<Tuple> getTuples() { return tuples; }
     int size() const { return static_cast<int>(tuples.size()); }
+
+    bool containsTuple(Tuple &tuple) const;
     std::string toString() const;
 
     // Mathematical Relation operations
