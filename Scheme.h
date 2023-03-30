@@ -5,30 +5,28 @@
 #include <string>
 #include <sstream>
 
-// TODO. Standardize variable names and signedness
-
 class Scheme : public std::vector<std::string>
 {
 public:
     Scheme(){};
     Scheme(vector<std::string> attributeNames) : vector<std::string>(attributeNames)
     {
-        checkForDuplicateNames();
+        checkForDuplicateAttributes();
     };
 
     std::string toString()
     {
         std::stringstream out;
         out << "( ";
-        for (std::string name : *this)
+        for (std::string attribute : *this)
         {
-            out << name << " ";
+            out << attribute << " ";
         }
         out << ")";
         return out.str();
     }
 
-    unsigned int getAttributeIndex(std::string attribute) const
+    unsigned int getAttributeIndex(std::string &attribute) const
     {
         for (unsigned int i = 0; i < this->size(); i++)
         {
@@ -56,36 +54,35 @@ public:
     /**
      * @brief Return a new Scheme which includes only the selected attributes in the given order.
      *
-     * @param u_indices The (unsigned) indices of the attributes to include.
+     * @param indices The indices of the attributes to include.
      * @return const Scheme
      */
-    const Scheme project(const std::vector<unsigned int> &u_indices) const
+    const Scheme project(const std::vector<unsigned int> &indices) const
     {
         std::vector<std::string> names;
-        for (unsigned int u_index : u_indices)
+        for (unsigned int index : indices)
         {
-            std::string name = this->at(u_index);
-            names.push_back(name);
+            std::string attribute = this->at(index);
+            names.push_back(attribute);
         }
         Scheme projectedScheme(names);
         return projectedScheme;
     }
 
     /**
-     * @brief Return a new Scheme with the given attribute renamed.
+     * @brief Return a new Scheme with the attributes renamed.
      *
-     * @param oldName The attribute to rename.
-     * @param newName The new name.
+     * @param newAttributeNames
      * @return const Scheme
      */
-    const Scheme rename(std::vector<std::string> &newNames) const
+    const Scheme rename(std::vector<std::string> &newAttributeNames) const
     {
-        if (newNames.size() != this->size())
+        if (newAttributeNames.size() != this->size())
         {
             std::cerr << "[ERROR] Renamed a Scheme to a different size." << std::endl;
             throw;
         }
-        Scheme renamedScheme(newNames);
+        Scheme renamedScheme(newAttributeNames);
         return renamedScheme;
     }
 
@@ -93,14 +90,14 @@ private:
     /**
      * @brief Throw an error if this Scheme contains duplicate attribute names.
      */
-    void checkForDuplicateNames()
+    void checkForDuplicateAttributes()
     {
-        std::set<std::string> nameSet;
-        for (std::string name : *this)
+        std::set<std::string> attributeSet;
+        for (std::string attribute : *this)
         {
-            nameSet.insert(name);
+            attributeSet.insert(attribute);
         }
-        if (nameSet.size() != this->size())
+        if (attributeSet.size() != this->size())
         {
             std::cerr << "[ERROR] Created Scheme with duplicate attribute names." << std::endl;
             throw;
