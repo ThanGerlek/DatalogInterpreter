@@ -100,8 +100,6 @@ void DatalogDatabase::evaluateQueries()
 
         printQueryResult(queryPredicate, relation);
     }
-
-    hasEvaluatedQueries = true;
 }
 
 void DatalogDatabase::printQueryResult(Predicate query, Relation results)

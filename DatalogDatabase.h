@@ -9,8 +9,6 @@ class DatalogDatabase : public Database
 private:
     DatalogProgram *dlProgram;
 
-    bool hasEvaluatedQueries;
-
     void evaluateSchemes();
     void evaluateFacts();
     void evaluateRules();
@@ -30,7 +28,7 @@ private:
     void printRuleResult(Rule rule, Relation results);
 
 public:
-    DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram), hasEvaluatedQueries(false){};
+    DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram){};
     void evaluate();
     std::string toString() const;
 };
