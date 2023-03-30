@@ -4,7 +4,7 @@ WARNINGS = -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy 
 FLAGS = -std=c++17 -g -Wall
 
 CPPFILES = Scanner.cpp Parser.cpp DatalogProgram.cpp Relation.cpp DatalogDatabase.cpp
-PROJECT = project3
+PROJECT = project4
 
 
 main: main.cpp $(CPPFILES)
