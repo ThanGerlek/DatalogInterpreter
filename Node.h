@@ -4,13 +4,14 @@
 #include <set>
 #include <sstream>
 
-class Node
+struct Node
 {
-private:
-    std::set<int> adjacentNodeIds;
-
 public:
-    Node(){};
+    Node() : hasBeenVisited(false), postOrderId(-1){};
+
+    std::set<int> adjacentNodeIds;
+    bool hasBeenVisited;
+    int postOrderId;
 
     void addEdge(int receivingNodeId)
     {
