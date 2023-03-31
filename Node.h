@@ -19,19 +19,19 @@ public:
 
     std::string toString() const
     {
-        std::stringstream ss;
+        std::stringstream out;
         for (std::set<int>::iterator i = adjacentNodeIds.begin(); i != adjacentNodeIds.end(); i++)
         {
             if (i == adjacentNodeIds.begin())
             {
-                ss << "R" << *i;
+                out << "R" << *i;
             }
             else
             {
-                ss << ",R" << *i;
+                out << ",R" << *i;
             }
         }
-        return ss.str();
+        return out.str();
     }
 };
 
