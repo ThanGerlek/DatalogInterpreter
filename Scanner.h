@@ -10,16 +10,19 @@
 class Scanner
 {
 public:
-    Scanner(const std::string &_input) : input(_input), reachedEOF(false), currentLine(1){};
-    Scanner(std::ifstream &ifs);
-    void scan(std::vector<Token> &tokens); // Scan all tokens into the given vector
-    Token scanToken();
-    bool hasNext() const;
+    Scanner(const std::string &_inputString) : inputString(_inputString), reachedEOF(false), currentLine(1){};
+
+    void scanTokensInto(std::vector<Token> &tokens);
 
 private:
-    std::string input;
+    std::string inputString;
     bool reachedEOF;
     int currentLine;
+
+    void scanNextTokenInto(std::vector<Token> &tokens);
+
+    Token scanNextToken();
+    bool hasNextToken() const;
 
     MaybeToken scanForWordTokens(); // ID, SCHEMES, FACTS, RULES, and QUERIES tokens
 
@@ -31,7 +34,7 @@ private:
     MaybeToken scanForCommentToken(); // COMMENT token
     MaybeToken scanBlockComment();
 
-    void removeWhitespace();
+    void removeWhitespaceFromInput();
 };
 
 #endif

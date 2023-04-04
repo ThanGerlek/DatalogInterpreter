@@ -7,6 +7,8 @@
 #include "Parser.h"
 #include "DatalogDatabase.h"
 
+std::string convertIFStreamToString(std::ifstream &ifs);
+
 int main(int argc, char *argv[])
 {
     if (argc < 2)
@@ -28,11 +30,13 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    Scanner scanner = Scanner(ifs);
+    std::string inputString = convertIFStreamToString(ifs);
     ifs.close();
 
+    Scanner scanner(inputString);
+
     std::vector<Token> tokens;
-    scanner.scan(tokens);
+    scanner.scanTokensInto(tokens);
 
     ////
     ////
@@ -52,6 +56,16 @@ int main(int argc, char *argv[])
     datalogdb.evaluate();
 
     return 0;
+}
+
+std::string convertIFStreamToString(std::ifstream &ifs)
+{
+    std::string outStr = "";
+    ifs.seekg(0, std::ios_base::end);                           // offset 0 from end
+    outStr.resize(static_cast<long unsigned>(ifs.tellg()));     // resize string
+    ifs.seekg(0, std::ios_base::beg);                           // offset 0 from beginning
+    ifs.read(&outStr[0], static_cast<long int>(outStr.size())); // read data
+    return outStr;
 }
 
 #endif
