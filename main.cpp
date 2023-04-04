@@ -1,5 +1,5 @@
-#ifndef PROJECT1_T2K_MAIN_CPP
-#define PROJECT1_T2K_MAIN_CPP
+#ifndef CS236_T2K_MAIN_CPP
+#define CS236_T2K_MAIN_CPP
 
 #include "DatalogInterpreter.h"
 
