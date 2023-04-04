@@ -18,6 +18,23 @@ public:
     void addParam(Parameter param) { params.push_back(param); }
     std::string getId() const { return id; }
 
+    bool operator==(Predicate const &other)
+    {
+        if (this->id != other.id || params.size() != other.params.size())
+            return false;
+
+        for (unsigned i = 0; i < params.size(); i++)
+        {
+            if (params.at(i) != other.params.at(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool operator!=(Predicate const &other) {
+        return !(*this == other);
+    }
+
     std::vector<Parameter> *getParams()
     {
         return &params;

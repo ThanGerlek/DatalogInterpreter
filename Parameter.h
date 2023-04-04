@@ -13,6 +13,15 @@ public:
     std::string toString() const { return getValue(); };
     std::string getValue() const { return text; }
 
+    bool operator==(Parameter const &other)
+    {
+        return this->text == other.text && this->isVar == other.isVar;
+    }
+
+    bool operator!=(Parameter const &other) {
+        return !(*this == other);
+    }
+
 private:
     std::string text;
     bool isVar;
