@@ -11,6 +11,7 @@ private:
     int numNodes;
 
 public:
+    Graph() : numNodes(0){};
     Graph(int _numNodes) : numNodes(_numNodes)
     {
         for (int i = 0; i < numNodes; i++)
