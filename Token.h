@@ -5,6 +5,8 @@
 #include <string>
 #include <sstream>
 
+// TODO. Polymorphism-ify
+
 enum TokenType
 {
     COMMA,
@@ -36,7 +38,7 @@ private:
     int lineNumber;
 
 public:
-    Token(TokenType _type, std::string _value, int _line) : type(_type), value(_value), lineNumber(_line){};
+    Token(TokenType _type, std::string _value, int _lineNumber) : type(_type), value(_value), lineNumber(_lineNumber){};
     Token() : type(UNDEFINED), value(""), lineNumber(-1){};
 
     /**

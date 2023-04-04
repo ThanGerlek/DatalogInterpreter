@@ -13,20 +13,21 @@ public:
 
     Predicate getHead() const { return head; }
     std::string getId() const { return head.getId(); }
-    const std::vector<Predicate> &getPredicates() const { return body; }
-    void addPredicate(Predicate p) { body.push_back(p); }
+    const std::vector<Predicate> &getPredicates() const { return bodyPredicates; }
+    void addBodyPredicate(Predicate p) { bodyPredicates.push_back(p); }
 
     std::string toString()
     {
-        if (body.size() == 0)
+        if (bodyPredicates.size() == 0)
         {
             std::cerr << "[ERROR] Tried to access a Rule with no body." << std::endl;
             throw;
         }
 
-        std::string out = head.toString() + " :- " + body.at(0).toString();
-        std::vector<Predicate>::const_iterator i = body.begin();
-        for (i++; i != body.end(); i++)
+        std::string out = head.toString() + " :- " + bodyPredicates.at(0).toString();
+
+        std::vector<Predicate>::const_iterator i = bodyPredicates.begin();
+        for (i++; i != bodyPredicates.end(); i++)
         {
             out += "," + i->toString();
         }
@@ -35,7 +36,7 @@ public:
 
 private:
     Predicate head;
-    std::vector<Predicate> body;
+    std::vector<Predicate> bodyPredicates;
 };
 
 #endif
