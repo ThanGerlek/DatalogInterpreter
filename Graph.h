@@ -15,7 +15,8 @@ public:
     {
         for (int i = 0; i < numNodes; i++)
         {
-            nodes.at(i) = Node();
+            std::pair<int, Node> pair(i, Node());
+            nodes.insert(pair);
         }
     };
 
