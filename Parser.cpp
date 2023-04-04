@@ -269,7 +269,7 @@ void Parser::rule()
     match(COLON_DASH);
 
     Predicate pred1 = predicate(); // First predicate
-    currentRule.addPredicate(pred1);
+    currentRule.addBodyPredicate(pred1);
 
     predicateList(currentRule); // Remaining predicates
 
@@ -332,7 +332,7 @@ void Parser::predicateList(Rule &currentRule)
         match(COMMA);
 
         Predicate pred = predicate();
-        currentRule.addPredicate(pred);
+        currentRule.addBodyPredicate(pred);
         predicateList(currentRule);
     }
     catch (Token)
