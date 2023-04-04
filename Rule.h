@@ -13,7 +13,10 @@ public:
 
     Predicate getHead() const { return head; }
     std::string getId() const { return head.getId(); }
-    const std::vector<Predicate> &getPredicates() const { return bodyPredicates; }
+    unsigned size() const { return static_cast<unsigned>(bodyPredicates.size()); }
+    Predicate getBodyPredicate(unsigned index) const { return bodyPredicates.at(index); }
+
+    const std::vector<Predicate> &getPredicates() const { return bodyPredicates; } // TODO. Remove
     void addBodyPredicate(Predicate p) { bodyPredicates.push_back(p); }
 
     std::string toString()
