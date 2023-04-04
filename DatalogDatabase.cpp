@@ -3,6 +3,8 @@
 
 #include "DatalogDatabase.h"
 
+// TODO. Refactor
+
 /**
  * @brief Evaluate and load the results of the DatalogProgram's queries.
  */
@@ -48,7 +50,7 @@ void DatalogDatabase::evaluateFacts()
  */
 void DatalogDatabase::evaluateRules()
 {
-    std::cout << "Rule Evaluation" << std::endl;
+    std::cout << "Rule Evaluation" << std::endl; // TODO. Extract output
 
     int iterations = 0;
     unsigned int prevSize = 0;
@@ -83,7 +85,7 @@ void DatalogDatabase::evaluateQueries()
         std::vector<Parameter> *params = queryPredicate.getParams();
         std::string relationName = queryPredicate.getId();
 
-        if (!hasRelation(relationName))
+        if (!hasRelation(relationName)) // TODO. Extract error handling
         {
             std::cerr << "[ERROR] Invalid query: no such relation." << std::endl;
             throw;
