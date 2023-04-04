@@ -2,8 +2,8 @@
 input.txt
 main
 test
-project4*
-project4*/*
+project5*
+project5*/*
 test.cpp*
 *.zip
 out.txt
