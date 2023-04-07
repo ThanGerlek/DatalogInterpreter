@@ -3,7 +3,10 @@
 
 #include <string>
 #include "DatalogDatabase.h"
+#include "Graph.h"
 #include "Scanner.h"
+
+// TODO DatalogFileReader
 
 class DatalogInterpreter
 {
@@ -14,6 +17,7 @@ private:
 public:
     DatalogInterpreter(std::string _filename) : filename(_filename){};
     void run();
+    static void printDependencies(Graph &dependencyGraph);
     Scanner createScanner() const;
 };
 

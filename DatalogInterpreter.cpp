@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <iostream>
+#include "DependencyGraphBuilder.h"
 #include "DatalogInterpreter.h"
 #include "Parser.h"
 
@@ -15,6 +16,10 @@ void DatalogInterpreter::run()
     scanner.scanTokensInto(tokens);
     Parser parser(&tokens, &program);
     parser.parse();
+
+    Graph dependencyGraph =
+        DependencyGraphBuilder::buildGraphFromProgram(program);
+    printDependencies(dependencyGraph);
 
     DatalogDatabase dlDatabase(&program);
     dlDatabase.evaluate();
@@ -32,6 +37,12 @@ Scanner DatalogInterpreter::createScanner() const
     ifs.close();
 
     return Scanner(inputString);
+}
+
+void DatalogInterpreter::printDependencies(Graph &dependencyGraph)
+{
+    std::cout << "Dependency Graph" << std::endl
+              << dependencyGraph.toString() << std::endl;
 }
 
 std::string DatalogInterpreter::convertIFStreamToString(std::ifstream &ifs)
