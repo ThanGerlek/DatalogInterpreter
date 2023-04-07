@@ -20,16 +20,7 @@ public:
 
     bool operator==(Predicate const &other)
     {
-        if (this->id != other.id || params.size() != other.params.size())
-            return false;
-
-        for (unsigned i = 0; i < params.size(); i++)
-        {
-            if (params.at(i) != other.params.at(i)) {
-                return false;
-            }
-        }
-        return true;
+        return this->id == other.id && params.size() == other.params.size();
     }
     bool operator!=(Predicate const &other) {
         return !(*this == other);
