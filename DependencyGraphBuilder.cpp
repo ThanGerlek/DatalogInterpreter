@@ -3,6 +3,14 @@
 
 #include "DependencyGraphBuilder.h"
 
+Graph DependencyGraphBuilder::buildGraphFromProgram(const DatalogProgram &program)
+{
+    const std::vector<Rule> &rules = *program.getRules();
+    DependencyGraphBuilder builder(rules);
+    builder.addEdges();
+    return builder.graph;
+}
+
 Graph DependencyGraphBuilder::makeGraph(const std::vector<Rule> &rules)
 {
     DependencyGraphBuilder builder(rules);

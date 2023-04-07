@@ -2,6 +2,7 @@
 #define CS236_LAB5_T2K_DATALOG_DEPENDENCY_GRAPH_BUILDER_H
 
 #include <vector>
+#include "DatalogProgram.h"
 #include "Rule.h"
 #include "Graph.h"
 
@@ -10,6 +11,7 @@
 class DependencyGraphBuilder
 {
 public:
+    static Graph DependencyGraphBuilder::buildGraphFromProgram(const DatalogProgram &program);
     static Graph makeGraph(const std::vector<Rule> &rules);
 
 private:
