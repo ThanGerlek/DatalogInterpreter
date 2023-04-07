@@ -11,7 +11,7 @@
 class DependencyGraphBuilder
 {
 public:
-    static Graph DependencyGraphBuilder::buildGraphFromProgram(const DatalogProgram &program);
+    static Graph buildGraphFromProgram(const DatalogProgram &program);
 
 private:
     Graph graph;
