@@ -34,11 +34,11 @@ void DependencyGraphBuilder::addEdgesFromRuleID(unsigned fromRuleID)
     {
         Predicate bodyPredicate = fromRule.getBodyPredicate(predIndex);
         // std::cout << "from body predicate: " << bodyPredicate.toString() << std::endl;
-        addEdgesFromRuleIDFromBodyPredicate(fromRuleID, bodyPredicate);
+        addEdgesFromRuleIDWithBodyPredicate(fromRuleID, bodyPredicate);
     }
 }
 
-void DependencyGraphBuilder::addEdgesFromRuleIDFromBodyPredicate(unsigned fromRuleID, Predicate bodyPredicate)
+void DependencyGraphBuilder::addEdgesFromRuleIDWithBodyPredicate(unsigned fromRuleID, Predicate bodyPredicate)
 {
     for (unsigned toRuleID = 0; toRuleID < rules.size(); toRuleID++)
     {

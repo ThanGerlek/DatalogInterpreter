@@ -5,6 +5,8 @@
 #include "Rule.h"
 #include "Graph.h"
 
+// TODO. Eliminate pointers
+
 class DependencyGraphBuilder
 {
 public:
@@ -19,7 +21,7 @@ private:
 
     void addEdges();
     void addEdgesFromRuleID(unsigned fromRuleID);
-    void addEdgesFromRuleIDFromBodyPredicate(unsigned fromRuleID, Predicate bodyPredicate);
+    void addEdgesFromRuleIDWithBodyPredicate(unsigned fromRuleID, Predicate bodyPredicate);
     bool hasEdgeFromPredicateToRule(Predicate bodyPredicate, unsigned toRuleID);
     void addEdgeFromRuleToRule(unsigned fromRuleID, unsigned toRuleID);
 };
