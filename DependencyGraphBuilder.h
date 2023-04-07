@@ -12,7 +12,6 @@ class DependencyGraphBuilder
 {
 public:
     static Graph DependencyGraphBuilder::buildGraphFromProgram(const DatalogProgram &program);
-    static Graph makeGraph(const std::vector<Rule> &rules);
 
 private:
     Graph graph;
@@ -21,6 +20,7 @@ private:
 
     DependencyGraphBuilder(const std::vector<Rule> &_rules);
 
+    void build();
     void addEdges();
     void addEdgesFromRuleID(unsigned fromRuleID);
     void addEdgesFromRuleIDWithBodyPredicate(unsigned fromRuleID, Predicate bodyPredicate);

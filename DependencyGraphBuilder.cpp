@@ -7,14 +7,7 @@ Graph DependencyGraphBuilder::buildGraphFromProgram(const DatalogProgram &progra
 {
     const std::vector<Rule> &rules = *program.getRules();
     DependencyGraphBuilder builder(rules);
-    builder.addEdges();
-    return builder.graph;
-}
-
-Graph DependencyGraphBuilder::makeGraph(const std::vector<Rule> &rules)
-{
-    DependencyGraphBuilder builder(rules);
-    builder.addEdges();
+    builder.build();
     return builder.graph;
 }
 
@@ -23,6 +16,11 @@ DependencyGraphBuilder::DependencyGraphBuilder(const std::vector<Rule> &_rules)
 {
     numNodes = static_cast<int>(_rules.size());
     graph = Graph(numNodes);
+}
+
+void DependencyGraphBuilder::build()
+{
+    addEdges();
 }
 
 void DependencyGraphBuilder::addEdges()
