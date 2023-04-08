@@ -34,18 +34,6 @@ protected:
         throw;
     }
 
-    const Relation getRelation(std::string &relationName) const
-    {
-        if (!hasRelation(relationName))
-        {
-            std::cerr << "[ERROR] Called getRelation() with a Relation name that is not in the Database." << std::endl;
-            throw;
-        }
-
-        unsigned int index = getIndex(relationName);
-        return relations.at(index);
-    }
-
     // Update a relation in the database. Does not affect relation names.
     void updateRelation(std::string destinationName, Relation newValue)
     {
@@ -89,6 +77,18 @@ public:
             total += relation.size();
         }
         return total;
+    }
+
+    const Relation getRelation(std::string &relationName) const
+    {
+        if (!hasRelation(relationName))
+        {
+            std::cerr << "[ERROR] Called getRelation() with a Relation name that is not in the Database." << std::endl;
+            throw;
+        }
+
+        unsigned int index = getIndex(relationName);
+        return relations.at(index);
     }
 };
 
