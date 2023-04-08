@@ -46,31 +46,6 @@ void DatalogDatabase::evaluateFacts()
 }
 
 /**
- * @brief Update the internal Database with the Rule list of the DatalogProgram.
- */
-void DatalogDatabase::evaluateRules()
-{
-    std::cout << "Rule Evaluation" << std::endl; // TODO. Extract output
-
-    int iterations = 0;
-    unsigned int prevSize = 0;
-    do
-    {
-        iterations++;
-        prevSize = this->size();
-
-        for (Rule rule : *(this->dlProgram->getRules()))
-        {
-            evaluateRule(rule);
-        }
-    } while (prevSize != this->size());
-
-    std::cout << std::endl
-              << "Schemes populated after " << iterations << " passes through the Rules." << std::endl
-              << std::endl;
-}
-
-/**
  * @brief Update the internal Database with the data from the Query list of the DatalogProgram.
  */
 void DatalogDatabase::evaluateQueries()
@@ -95,10 +70,9 @@ void DatalogDatabase::evaluateQueries()
         Relation relation = relations.at(index);
 
         // Use a sequence of select, project, and rename operations on the Database to evaluate the query.
-        relation = selectForPredicate(relation, params);
-        std::vector<unsigned int> projectedIndices = getProjectedIndices(params);
-        relation = projectForPredicate(relation, projectedIndices);
-        relation = renameForPredicate(relation, params, projectedIndices);
+        relation = selectForPredicate(relation, queryPredicate);
+        relation = projectForPredicate(relation, queryPredicate); // TODO? Reuse projectedIndices? Both project and rename use it.
+        relation = renameForPredicate(relation, queryPredicate);
 
         printQueryResult(queryPredicate, relation);
     }
@@ -132,80 +106,11 @@ void DatalogDatabase::printQueryResult(Predicate query, Relation results) const
 ////
 ////
 
-void DatalogDatabase::evaluateRule(Rule rule)
-{
-    // Evaluate the predicates on the right-hand side of the rule
-    Relation relation = evaluateRulePredicates(rule);
-
-    // Project the columns that appear in the head predicate
-    relation = projectRuleColumns(relation, rule);
-
-    // Union with the relation in the database (the table)
-    std::string tableName = rule.getId();
-    Relation table = this->getRelation(tableName);
-    relation = relation.makeUnionCompatibleWith(table);
-    relation = relation.unionWith(table);
-
-    // Print new results
-    Relation newTuples = relation.subtract(table);
-    printRuleResult(rule, newTuples);
-
-    // Update relation in the database to the new relation
-    updateRelation(tableName, relation);
-}
-
-const Relation DatalogDatabase::evaluateRulePredicates(Rule rule) const
-{
-    // Evaluate each predicate on the right-hand side of the rule
-    // Join the relations that result
-
-    const std::vector<Predicate> &predicates = rule.getPredicates();
-    Relation result(rule.getId());
-
-    for (Predicate predicate : predicates)
-    {
-        const Relation predicateRelation = evaluateRulePredicate(predicate);
-        result = result.join(predicateRelation);
-    }
-
-    return result;
-}
-
-const Relation DatalogDatabase::evaluateRulePredicate(Predicate predicate) const
-{
-    // Use a sequence of select, project, and rename operations on the Database to evaluate the Rule predicate.
-    std::vector<Parameter> *params = predicate.getParams();
-
-    std::string relationName = predicate.getId();
-    Relation relation = getRelation(relationName);
-
-    relation = selectForPredicate(relation, params);
-    std::vector<unsigned int> projectedIndices = getProjectedIndices(params);
-    relation = projectForPredicate(relation, projectedIndices);
-    relation = renameForPredicate(relation, params, projectedIndices);
-
-    return relation;
-}
-
 const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rule rule) const
 {
     std::vector<std::string> attributes = rule.getHead().getParamStrings();
     Relation result = relation.project(attributes);
     return result;
-}
-
-void DatalogDatabase::printRuleResult(Rule rule, Relation results) const
-{
-    std::cout << rule.toString() << "." << std::endl;
-
-    // Print Tuples
-    for (Tuple tuple : results.getTuples())
-    {
-        if (tuple.size() > 0)
-        {
-            std::cout << "  " << tuple.toString(results.getScheme()) << std::endl;
-        }
-    }
 }
 
 ////
@@ -222,8 +127,9 @@ void DatalogDatabase::printRuleResult(Rule rule, Relation results) const
  * @param params The Parameter list of the current predicate.
  * @return const Relation
  */
-const Relation DatalogDatabase::selectForPredicate(Relation relation, const std::vector<Parameter> *params) const
+const Relation DatalogDatabase::selectForPredicate(Relation relation, Predicate predicate) const
 {
+    std::vector<Parameter> *params = predicate.getParams();
     // Iterate over the parameters of the predicate: If the parameter is a constant, select the tuples from the Relation that have the same value as the constant in the same position as the constant. If the parameter is a variable and the same variable name appears later in the predicate, select the tuples from the Relation that have the same value in both positions where the variable name appears.
 
     if (params->size() != relation.getScheme().size())
@@ -301,8 +207,9 @@ std::vector<unsigned int> DatalogDatabase::getProjectedIndices(const std::vector
  * @param projectedIndices The indices of the attributes to keep after the projection.
  * @return const Relation
  */
-const Relation DatalogDatabase::projectForPredicate(Relation relation, std::vector<unsigned int> projectedIndices) const
+const Relation DatalogDatabase::projectForPredicate(Relation relation, Predicate predicate) const
 {
+    std::vector<unsigned int> projectedIndices = getProjectedIndices(predicate.getParams());
     return relation.project(projectedIndices);
 }
 
@@ -314,8 +221,11 @@ const Relation DatalogDatabase::projectForPredicate(Relation relation, std::vect
  * @param projectedIndices The indices of the attributes kept after projection.
  * @return const Relation
  */
-const Relation DatalogDatabase::renameForPredicate(Relation relation, const std::vector<Parameter> *params, std::vector<unsigned int> projectedIndices) const
+const Relation DatalogDatabase::renameForPredicate(Relation relation, Predicate predicate) const
 {
+    std::vector<Parameter> *params = predicate.getParams();
+    std::vector<unsigned int> projectedIndices = getProjectedIndices(params);
+
     std::vector<std::string> newNames;
 
     for (unsigned int finalIndex = 0; finalIndex < projectedIndices.size(); finalIndex++)
