@@ -69,6 +69,13 @@ public:
         relations.at(index).addTuple(tuple);
     }
 
+    void unionIntoDatabase(Relation &relation, std::string tableName)
+    {
+        unsigned int index = getIndex(tableName);
+        Relation newRelation = relations.at(index).unionWith(relation);
+        relations.at(index) = newRelation; // TODO Check: Mem leak?
+    }
+
     unsigned int size()
     {
         unsigned int total = 0;
