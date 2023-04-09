@@ -7,11 +7,12 @@
 struct Node
 {
 public:
-    Node() : hasBeenVisited(false), postOrderId(-1){};
+    Node(int nodeId) : hasBeenVisited(false), postOrderId(-1), nodeId(nodeId){};
 
     std::set<int> adjacentNodeIds;
     bool hasBeenVisited;
     int postOrderId;
+    int nodeId;
 
     void addEdge(int receivingNodeId)
     {

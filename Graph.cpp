@@ -10,7 +10,7 @@ Graph::Graph(int _numNodes)
     this->numNodes = _numNodes;
     for (int i = 0; i < numNodes; i++)
     {
-        std::pair<int, Node> pair(i, Node());
+        std::pair<int, Node> pair(i, Node(i));
         nodes.insert(pair);
     }
 }
