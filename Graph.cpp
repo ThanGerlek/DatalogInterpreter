@@ -1,9 +1,9 @@
 #ifndef CS236_PROJECT5_T2K_DATALOG_GRAPH_CPP
 #define CS236_PROJECT5_T2K_DATALOG_GRAPH_CPP
 
+#include <set>
+#include <vector>
 #include "Graph.h"
-
-// TODO std::vector<std::set<Node>> findAllCliques();
 
 Graph::Graph(int _numNodes)
 {
@@ -13,6 +13,11 @@ Graph::Graph(int _numNodes)
         std::pair<int, Node> pair(i, Node());
         nodes.insert(pair);
     }
+}
+
+std::vector<std::set<Node>> Graph::findAllCliques()
+{
+    // TODO
 }
 
 void Graph::addEdge(int fromNodeId, int toNodeId)
@@ -29,6 +34,5 @@ std::string Graph::toString() const
     }
     return out.str();
 }
-
 
 #endif
