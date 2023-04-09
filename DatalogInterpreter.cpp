@@ -25,7 +25,7 @@ void DatalogInterpreter::run()
     DatalogDatabase dlDatabase(&program);
     dlDatabase.evaluateSchemes();
     dlDatabase.evaluateFacts();
-    evaluateRules(dlDatabase, dependencyGraph);
+    evaluateRules(dlDatabase, program, dependencyGraph);
     dlDatabase.evaluateQueries();
 }
 
@@ -50,9 +50,10 @@ void DatalogInterpreter::printDependencies(Graph &dependencyGraph)
 }
 
 void DatalogInterpreter::evaluateRules(DatalogDatabase &dlDatabase,
+                                       DatalogProgram &program,
                                        const Graph &dependencyGraph)
 {
-    RuleEvaluator evaluator(dlDatabase, dependencyGraph);
+    RuleEvaluator evaluator(dlDatabase, program, dependencyGraph);
     evaluator.evaluate();
 }
 

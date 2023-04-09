@@ -7,11 +7,18 @@
 class RuleEvaluator
 {
 public:
-    RuleEvaluator(DatalogDatabase &_database, const Graph &_dependencyGraph) : database(_database), dependencyGraph(_dependencyGraph){};
+    RuleEvaluator(DatalogDatabase &_database,
+                  const DatalogProgram &_program,
+                  const Graph &_dependencyGraph)
+        : database(_database),
+          program(_program),
+          dependencyGraph(_dependencyGraph){};
+
     void evaluate();
 
 private:
     DatalogDatabase &database;
+    const DatalogProgram &program;
     const Graph &dependencyGraph;
 
     static const std::set<Rule> convertNodeSetToRuleSet(
