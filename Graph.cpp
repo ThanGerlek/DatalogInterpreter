@@ -15,7 +15,7 @@ Graph::Graph(int _numNodes)
     }
 }
 
-std::vector<std::set<Node>> Graph::findAllCliques()
+std::vector<std::set<Node>> Graph::findAllCliques() const
 {
     // TODO
 }

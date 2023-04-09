@@ -3,8 +3,17 @@
 
 #include "RuleEvaluator.h"
 
-void RuleEvaluator::evaluate(const DatalogDatabase &database,
-                     const Graph &dependencyGraph)
+void RuleEvaluator::evaluate()
+{
+    std::vector<std::set<Node>> cliques = dependencyGraph.findAllCliques();
+    for (std::set<Node> clique : cliques)
+    {
+        const std::set<Rule> ruleSet = convertNodeSetToRuleSet(clique, database);
+        evaluateRuleSet(ruleSet);
+    }
+}
+
+const std::set<Rule> RuleEvaluator::convertNodeSetToRuleSet(std::set<Node> clique, DatalogDatabase database)
 {
     // TODO
 }
@@ -12,7 +21,7 @@ void RuleEvaluator::evaluate(const DatalogDatabase &database,
 /**
  * @brief Update the Database with the specified Rules of the DatalogProgram.
  */
-void RuleEvaluator::evaluateRuleSet(const std::vector<Rule> &rules)
+void RuleEvaluator::evaluateRuleSet(const std::set<Rule> &rules)
 {
     int iterations = 0;
     unsigned int prevSize = 0;
