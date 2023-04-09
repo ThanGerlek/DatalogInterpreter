@@ -25,7 +25,7 @@ void DatalogInterpreter::run()
     DatalogDatabase dlDatabase(&program);
     dlDatabase.evaluateFacts();
     dlDatabase.evaluateSchemes();
-    RuleEvaluator::evaluate(dlDatabase, dependencyGraph);
+    evaluateRules(dlDatabase, dependencyGraph);
     dlDatabase.evaluateQueries();
 }
 
@@ -47,6 +47,13 @@ void DatalogInterpreter::printDependencies(Graph &dependencyGraph)
 {
     std::cout << "Dependency Graph" << std::endl
               << dependencyGraph.toString() << std::endl;
+}
+
+void DatalogInterpreter::evaluateRules(DatalogDatabase &dlDatabase,
+                                       const Graph &dependencyGraph)
+{
+    RuleEvaluator evaluator(dlDatabase, dependencyGraph);
+    evaluator.evaluate();
 }
 
 std::string DatalogInterpreter::convertIFStreamToString(std::ifstream &ifs)
