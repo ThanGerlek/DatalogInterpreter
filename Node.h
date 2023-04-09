@@ -7,7 +7,7 @@
 struct Node
 {
 public:
-    Node(int nodeId) : hasBeenVisited(false), postOrderId(-1), nodeId(nodeId){};
+    Node(int _nodeId) : hasBeenVisited(false), postOrderId(-1), nodeId(_nodeId){};
 
     std::set<int> adjacentNodeIds;
     bool hasBeenVisited;
