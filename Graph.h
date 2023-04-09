@@ -12,29 +12,10 @@ private:
 
 public:
     Graph() : numNodes(0){};
-    Graph(int _numNodes) : numNodes(_numNodes)
-    {
-        for (int i = 0; i < numNodes; i++)
-        {
-            std::pair<int, Node> pair(i, Node());
-            nodes.insert(pair);
-        }
-    };
+    Graph(int _numNodes);
 
-    void addEdge(int fromNodeId, int toNodeId)
-    {
-        nodes.at(fromNodeId).addEdge(toNodeId);
-    }
-
-    std::string toString() const
-    {
-        std::stringstream out;
-        for (int i = 0; i < numNodes; i++)
-        {
-            out << "R" << i << ":" << nodes.at(i).toString() << std::endl;
-        }
-        return out.str();
-    }
+    void addEdge(int fromNodeId, int toNodeId);
+    std::string toString() const;
 };
 
 #endif
