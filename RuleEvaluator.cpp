@@ -8,12 +8,21 @@ void RuleEvaluator::evaluate()
     std::vector<std::set<Node>> cliques = dependencyGraph.findAllCliques();
     for (std::set<Node> clique : cliques)
     {
-        const std::set<Rule> ruleSet = convertNodeSetToRuleSet(clique, database);
+        const std::set<Rule> ruleSet = convertNodeSetToRuleSet(clique);
         evaluateRuleSet(ruleSet);
     }
 }
 
-const std::set<Rule> RuleEvaluator::convertNodeSetToRuleSet(std::set<Node> clique, DatalogDatabase database)
+const std::set<Rule> RuleEvaluator::convertNodeSetToRuleSet(std::set<Node> clique)
+{
+    std::set<Rule> ruleSet;
+    for (Node node : clique)
+    {
+        convertNodeToRule(node);
+    }
+}
+
+Rule convertNodeToRule(Node node)
 {
     // TODO
 }

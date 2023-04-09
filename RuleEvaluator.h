@@ -13,7 +13,7 @@ public:
         : database(_database),
           program(_program),
           dependencyGraph(_dependencyGraph){};
-
+          
     void evaluate();
 
 private:
@@ -21,9 +21,7 @@ private:
     const DatalogProgram &program;
     const Graph &dependencyGraph;
 
-    static const std::set<Rule> convertNodeSetToRuleSet(
-        std::set<Node> clique,
-        DatalogDatabase database);
+    const std::set<Rule> convertNodeSetToRuleSet(std::set<Node> clique);
     void evaluateRuleSet(const std::set<Rule> &rules);
     void evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;
