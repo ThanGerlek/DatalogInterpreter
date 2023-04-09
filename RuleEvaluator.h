@@ -7,7 +7,8 @@
 class RuleEvaluator
 {
 public:
-    static RuleEvaluator evaluateRules(const DatalogProgram &program);
+    static void evaluate(const DatalogDatabase &database,
+                         const Graph &dependencyGraph);
 
 private:
     DatalogDatabase &database;

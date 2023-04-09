@@ -6,6 +6,7 @@
 #include "DependencyGraphBuilder.h"
 #include "DatalogInterpreter.h"
 #include "Parser.h"
+#include "RuleEvaluator.h"
 
 void DatalogInterpreter::run()
 {
@@ -22,11 +23,10 @@ void DatalogInterpreter::run()
     printDependencies(dependencyGraph);
 
     DatalogDatabase dlDatabase(&program);
-    dlDatabase.evaluateSchemes();
     dlDatabase.evaluateFacts();
+    dlDatabase.evaluateSchemes();
+    RuleEvaluator::evaluate(dlDatabase, dependencyGraph);
     dlDatabase.evaluateQueries();
-
-    // RuleEvaluator evaluator(dlDatabase);
 }
 
 Scanner DatalogInterpreter::createScanner() const

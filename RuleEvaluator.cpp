@@ -3,6 +3,12 @@
 
 #include "RuleEvaluator.h"
 
+void RuleEvaluator::evaluate(const DatalogDatabase &database,
+                     const Graph &dependencyGraph)
+{
+    // TODO
+}
+
 /**
  * @brief Update the Database with the specified Rules of the DatalogProgram.
  */
@@ -68,7 +74,6 @@ const Relation RuleEvaluator::evaluateRulePredicates(Rule rule) const
 const Relation RuleEvaluator::evaluateRulePredicate(Predicate predicate) const
 {
     // Use a sequence of select, project, and rename operations on the Database to evaluate the Rule predicate.
-    std::vector<Parameter> *params = predicate.getParams();
 
     std::string relationName = predicate.getId();
     Relation relation = database.getRelation(relationName);
