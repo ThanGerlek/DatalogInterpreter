@@ -32,7 +32,7 @@ void RuleEvaluator::evaluateRule(Rule rule)
     Relation relation = evaluateRulePredicates(rule);
 
     // Project the columns that appear in the head predicate
-    relation = database.projectRuleColumns(relation, rule);
+    relation = database.projectForRule(relation, rule);
 
     // Union with the relation in the database (the table)
     std::string tableName = rule.getId();

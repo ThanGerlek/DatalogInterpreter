@@ -113,7 +113,7 @@ void DatalogDatabase::printQueryResult(Predicate query, Relation results) const
 ////
 ////
 
-const Relation DatalogDatabase::projectRuleColumns(const Relation &relation, Rule rule) const
+const Relation DatalogDatabase::projectForRule(const Relation &relation, Rule rule) const
 {
     std::vector<std::string> attributes = rule.getHead().getParamStrings();
     Relation result = relation.project(attributes);
