@@ -22,7 +22,8 @@ public:
     {
         return this->id == other.id && params.size() == other.params.size();
     }
-    bool operator!=(Predicate const &other) {
+    bool operator!=(Predicate const &other)
+    {
         return !(*this == other);
     }
 

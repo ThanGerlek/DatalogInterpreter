@@ -14,8 +14,9 @@ private:
     DatalogDatabase &database;
     const Graph &dependencyGraph;
 
-    static const std::set<Rule> convertNodeSetToRuleSet(std::set<Node> clique,
-                                                 DatalogDatabase database);
+    static const std::set<Rule> convertNodeSetToRuleSet(
+        std::set<Node> clique,
+        DatalogDatabase database);
     void evaluateRuleSet(const std::set<Rule> &rules);
     void evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;

@@ -9,7 +9,6 @@ class DatalogDatabase : public Database
 private:
     DatalogProgram *dlProgram;
 
-
     void evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;
     const Relation evaluateRulePredicate(Predicate predicate) const;

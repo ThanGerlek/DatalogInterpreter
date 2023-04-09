@@ -18,7 +18,8 @@ public:
         return this->text == other.text && this->isVar == other.isVar;
     }
 
-    bool operator!=(Parameter const &other) {
+    bool operator!=(Parameter const &other)
+    {
         return !(*this == other);
     }
 
