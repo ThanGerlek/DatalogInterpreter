@@ -2,19 +2,9 @@
 #define CS236_PROJECT3_T2K_DATALOG_DATABASE_CPP
 
 #include "DatalogDatabase.h"
+#include "RuleEvaluator.h"
 
 // TODO. Refactor
-
-/**
- * @brief Evaluate and load the results of the DatalogProgram's queries.
- */
-void DatalogDatabase::evaluate()
-{
-    evaluateSchemes();
-    evaluateFacts();
-    evaluateRules();
-    evaluateQueries();
-}
 
 /**
  * @brief Update the internal Database with the data from the Scheme list of the DatalogProgram.
@@ -43,14 +33,6 @@ void DatalogDatabase::evaluateFacts()
         Tuple tuple(values);
         addTuple(tuple, relationName);
     }
-}
-
-/**
- * @brief Update the internal Database with the data from the Scheme list of the DatalogProgram.
- */
-void DatalogDatabase::evaluateRules()
-{
-    // TODO
 }
 
 /**

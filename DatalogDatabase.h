@@ -9,10 +9,6 @@ class DatalogDatabase : public Database
 private:
     DatalogProgram *dlProgram;
 
-    void evaluateSchemes();
-    void evaluateFacts();
-    void evaluateRules();
-    void evaluateQueries();
 
     void evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;
@@ -23,7 +19,9 @@ private:
 
 public:
     DatalogDatabase(DatalogProgram *_dlProgram) : dlProgram(_dlProgram){};
-    void evaluate();
+    void evaluateSchemes();
+    void evaluateFacts();
+    void evaluateQueries();
 
     const Relation projectForRule(const Relation &relation, Rule rule) const;
 
