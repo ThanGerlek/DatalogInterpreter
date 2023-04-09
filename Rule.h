@@ -37,9 +37,18 @@ public:
         return out;
     }
 
+    bool operator<(Rule other) const { // TODO. Backwards?
+        return this->ruleId < other.ruleId;
+    }
+    bool operator>(Rule other) const
+    {
+        return this->ruleId > other.ruleId;
+    }
+
 private:
     Predicate head;
     std::vector<Predicate> bodyPredicates;
+    int ruleId;
 };
 
 #endif
