@@ -23,8 +23,8 @@ void DatalogInterpreter::run()
     printDependencies(dependencyGraph);
 
     DatalogDatabase dlDatabase(&program);
-    dlDatabase.evaluateFacts();
     dlDatabase.evaluateSchemes();
+    dlDatabase.evaluateFacts();
     evaluateRules(dlDatabase, dependencyGraph);
     dlDatabase.evaluateQueries();
 }
