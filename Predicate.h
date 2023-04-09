@@ -16,7 +16,7 @@ public:
     ~Predicate(){};
 
     void addParam(Parameter param) { params.push_back(param); }
-    std::string getId() const { return id; }
+    std::string getName() const { return id; }
 
     bool operator==(Predicate const &other)
     {

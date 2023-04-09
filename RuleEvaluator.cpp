@@ -62,7 +62,7 @@ void RuleEvaluator::evaluateRule(Rule rule)
     relation = database.projectForRule(relation, rule);
 
     // Union with the relation in the database (the table)
-    std::string tableName = rule.getId();
+    std::string tableName = rule.getName();
     Relation table = database.getRelation(tableName);
     relation = relation.makeUnionCompatibleWith(table);
     // relation = relation.unionWith(table);
@@ -81,7 +81,7 @@ const Relation RuleEvaluator::evaluateRulePredicates(Rule rule) const
     // Join the relations that result
 
     const std::vector<Predicate> &predicates = rule.getPredicates();
-    Relation result(rule.getId());
+    Relation result(rule.getName());
 
     for (Predicate predicate : predicates)
     {
@@ -96,7 +96,7 @@ const Relation RuleEvaluator::evaluateRulePredicate(Predicate predicate) const
 {
     // Use a sequence of select, project, and rename operations on the Database to evaluate the Rule predicate.
 
-    std::string relationName = predicate.getId();
+    std::string relationName = predicate.getName();
     Relation relation = database.getRelation(relationName);
 
     relation = database.selectForPredicate(relation, predicate);

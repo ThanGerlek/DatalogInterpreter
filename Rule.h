@@ -12,7 +12,7 @@ public:
     ~Rule(){};
 
     Predicate getHead() const { return head; }
-    std::string getId() const { return head.getId(); }
+    std::string getName() const { return head.getName(); }
     unsigned size() const { return static_cast<unsigned>(bodyPredicates.size()); }
     Predicate getBodyPredicate(unsigned index) const { return bodyPredicates.at(index); }
 

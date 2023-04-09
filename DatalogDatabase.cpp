@@ -14,7 +14,7 @@ void DatalogDatabase::evaluateSchemes()
     for (Predicate predicate : *(dlProgram->getSchemes()))
     {
         std::vector<std::string> attributeNames = predicate.getParamStrings();
-        std::string relationName = predicate.getId();
+        std::string relationName = predicate.getName();
         Scheme scheme(attributeNames);
         Relation relation(relationName, scheme);
         addRelation(relation);
@@ -29,7 +29,7 @@ void DatalogDatabase::evaluateFacts()
     for (Predicate predicate : *(dlProgram->getFacts()))
     {
         std::vector<std::string> values = predicate.getParamStrings();
-        std::string relationName = predicate.getId();
+        std::string relationName = predicate.getName();
         Tuple tuple(values);
         addTuple(tuple, relationName);
     }
@@ -47,7 +47,7 @@ void DatalogDatabase::evaluateQueries()
     {
         // Get the Relation from the Database with the same name as the predicate name in the query.
 
-        std::string relationName = queryPredicate.getId();
+        std::string relationName = queryPredicate.getName();
 
         if (!hasRelation(relationName)) // TODO. Extract error handling
         {
