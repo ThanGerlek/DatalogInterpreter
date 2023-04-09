@@ -4,6 +4,7 @@
 #include <set>
 #include <vector>
 #include "Graph.h"
+#include "DepthFirstSearcher.h"
 
 Graph::Graph(int _numNodes)
 {
@@ -15,14 +16,48 @@ Graph::Graph(int _numNodes)
     }
 }
 
-std::vector<std::set<Node>> Graph::findAllCliques() const
+std::vector<std::set<Node>> Graph::findAllCliques()
 {
     // TODO
+}
+
+Graph Graph::buildReverseGraph() const
+{
+    // TODO buildReverseGraph
+}
+
+void Graph::addReversedEdges(Graph &reverseGraph, Node origNode) const
+{
+    // TODO addReversedEdges
+}
+
+std::vector<int> Graph::calculateReversedPostOrderSequence(Graph &reverseGraph)
+{
+    // TODO calculateReversedPostOrderSequence
+    std::vector<int> dfsNodes = reverseGraph.depthFirstSearchFromRoot(0);
+}
+
+std::set<std::set<int>> Graph::calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder) const
+{
+    // TODO calculateCliquesFromDFSOnRootNodes
+}
+
+std::vector<int> Graph::depthFirstSearchFromRoot(int rootId)
+{
+    return DepthFirstSearcher::run(*this, rootId);
 }
 
 void Graph::addEdge(int fromNodeId, int toNodeId)
 {
     nodes.at(fromNodeId).addEdge(toNodeId);
+}
+
+void Graph::setAllNodesUnvisited()
+{
+    for (int i = 0; i < nodes.size(); i++)
+    {
+        nodes.at(i).hasBeenVisited = false;
+    }
 }
 
 std::string Graph::toString() const
