@@ -12,7 +12,7 @@ class DatalogInterpreter
 {
 private:
     std::string filename;
-    void DatalogInterpreter::evaluateRules(DatalogDatabase &dlDatabase,
+    void evaluateRules(DatalogDatabase &dlDatabase,
                                            const Graph &dependencyGraph);
     static std::string convertIFStreamToString(std::ifstream &ifs);
 

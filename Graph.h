@@ -14,7 +14,7 @@ public:
     Graph() : numNodes(0){};
     Graph(int _numNodes);
 
-    std::vector<std::set<Node>> Graph::findAllCliques() const;
+    std::vector<std::set<Node>> findAllCliques() const;
     void addEdge(int fromNodeId, int toNodeId);
     std::string toString() const;
 };
