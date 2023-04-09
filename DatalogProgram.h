@@ -24,6 +24,8 @@ public:
     const std::vector<Rule> *getRules() const;
     const std::set<std::string> *getDomain() const;
 
+    Rule getRuleFromId(int ruleId) const;
+
 private:
     std::vector<Predicate> schemes;
     std::vector<Predicate> facts;

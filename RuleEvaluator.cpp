@@ -18,13 +18,16 @@ const std::set<Rule> RuleEvaluator::convertNodeSetToRuleSet(std::set<Node> cliqu
     std::set<Rule> ruleSet;
     for (Node node : clique)
     {
-        convertNodeToRule(node);
+        Rule rule = convertNodeToRule(node);
+        ruleSet.insert(rule);
     }
+    return ruleSet;
 }
 
-Rule convertNodeToRule(Node node)
+Rule RuleEvaluator::convertNodeToRule(Node node) const
 {
-    // TODO
+    int ruleId = node.nodeId;
+    Rule rule = program.getRuleFromId(ruleId);
 }
 
 /**

@@ -22,6 +22,7 @@ private:
     const Graph &dependencyGraph;
 
     const std::set<Rule> convertNodeSetToRuleSet(std::set<Node> clique);
+    Rule convertNodeToRule(Node node) const;
     void evaluateRuleSet(const std::set<Rule> &rules);
     void evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;

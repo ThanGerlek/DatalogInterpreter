@@ -16,6 +16,13 @@ void DatalogProgram::addRule(Rule rule) { rules.push_back(rule); }
 void DatalogProgram::addFact(Predicate fact) { facts.push_back(fact); }
 void DatalogProgram::addToDomain(std::string str) { domain.insert(str); }
 
+Rule DatalogProgram::getRuleFromId(int ruleId) const
+{
+    unsigned index = static_cast<unsigned>(ruleId);
+    return rules.at(index);
+    // TODO Make sure ruleId, rules[index], and nodeId all line up
+}
+
 std::string DatalogProgram::toString()
 {
     std::stringstream ss;
