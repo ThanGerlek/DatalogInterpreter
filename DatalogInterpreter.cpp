@@ -23,6 +23,8 @@ void DatalogInterpreter::run()
 
     DatalogDatabase dlDatabase(&program);
     dlDatabase.evaluate();
+
+    // RuleEvaluator evaluator(dlDatabase);
 }
 
 Scanner DatalogInterpreter::createScanner() const

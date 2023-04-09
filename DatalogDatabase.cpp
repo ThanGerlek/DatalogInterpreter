@@ -46,6 +46,14 @@ void DatalogDatabase::evaluateFacts()
 }
 
 /**
+ * @brief Update the internal Database with the data from the Scheme list of the DatalogProgram.
+ */
+void DatalogDatabase::evaluateRules()
+{
+    // TODO
+}
+
+/**
  * @brief Update the internal Database with the data from the Query list of the DatalogProgram.
  */
 void DatalogDatabase::evaluateQueries()
@@ -57,7 +65,6 @@ void DatalogDatabase::evaluateQueries()
     {
         // Get the Relation from the Database with the same name as the predicate name in the query.
 
-        std::vector<Parameter> *params = queryPredicate.getParams();
         std::string relationName = queryPredicate.getId();
 
         if (!hasRelation(relationName)) // TODO. Extract error handling
