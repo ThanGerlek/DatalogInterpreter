@@ -14,7 +14,7 @@ private:
     std::string filename;
     void evaluateRules(DatalogDatabase &dlDatabase,
                        DatalogProgram &program,
-                       const Graph &dependencyGraph);
+                       Graph &dependencyGraph);
     static std::string convertIFStreamToString(std::ifstream &ifs);
 
 public:

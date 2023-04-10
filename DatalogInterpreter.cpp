@@ -51,7 +51,7 @@ void DatalogInterpreter::printDependencies(Graph &dependencyGraph)
 
 void DatalogInterpreter::evaluateRules(DatalogDatabase &dlDatabase,
                                        DatalogProgram &program,
-                                       const Graph &dependencyGraph)
+                                       Graph &dependencyGraph)
 {
     RuleEvaluator evaluator(dlDatabase, program, dependencyGraph);
     evaluator.evaluate();
