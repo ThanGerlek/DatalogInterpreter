@@ -18,17 +18,30 @@ Graph::Graph(int _numNodes)
 
 std::vector<std::set<Node>> Graph::findAllCliques()
 {
-    // TODO
+    Graph reverseGraph = buildReverseGraph();
+    std::vector<int> rootNodeOrder = calculateReversedPostOrderSequence(reverseGraph);
+    calculateCliquesFromDFSOnRootNodes(rootNodeOrder);
 }
 
 Graph Graph::buildReverseGraph() const
 {
-    // TODO buildReverseGraph
+    Graph reverseGraph(numNodes);
+    for (int i = 0; i < numNodes; i++)
+    {
+        Node originalNode = this->nodes.at(i);
+        addReversedEdgesFromNode(reverseGraph, originalNode);
+    }
+
+    return reverseGraph;
 }
 
-void Graph::addReversedEdges(Graph &reverseGraph, Node origNode) const
+void Graph::addReversedEdgesFromNode(Graph &reverseGraph, Node originalNode) const
 {
-    // TODO addReversedEdges
+    int fromId = originalNode.nodeId;
+    for (int toId : originalNode.adjacentNodeIds)
+    {
+        reverseGraph.addEdge(toId, fromId);
+    }
 }
 
 std::vector<int> Graph::calculateReversedPostOrderSequence(Graph &reverseGraph)

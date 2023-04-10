@@ -12,7 +12,7 @@ private:
 
     std::vector<int> calculateReversedPostOrderSequence(Graph &reverseGraph);
     std::set<std::set<int>> calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder) const;
-    void addReversedEdges(Graph &reverseGraph, Node origNode) const;
+    void addReversedEdgesFromNode(Graph &reverseGraph, Node originalNode) const;
     void setAllNodesUnvisited();
     std::vector<int> depthFirstSearchFromRoot(int rootId);
 
