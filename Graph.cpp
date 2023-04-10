@@ -9,7 +9,7 @@
 Graph::Graph(int _numNodes)
 {
     this->numNodes = _numNodes;
-    for (int i = 0; i < numNodes; i++)
+    for (int i = 0; i < _numNodes; i++)
     {
         std::pair<int, Node> pair(i, Node(i));
         nodes.insert(pair);
@@ -54,7 +54,7 @@ void Graph::addEdge(int fromNodeId, int toNodeId)
 
 void Graph::setAllNodesUnvisited()
 {
-    for (int i = 0; i < nodes.size(); i++)
+    for (int i = 0; i < numNodes; i++)
     {
         nodes.at(i).hasBeenVisited = false;
     }
