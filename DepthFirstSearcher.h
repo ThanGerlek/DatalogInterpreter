@@ -7,7 +7,7 @@
 class DepthFirstSearcher
 {
 public:
-    static std::vector<int> run(Graph &graph, int rootId);
+    static std::vector<int> run(Graph &graph, int _rootId);
 
 private:
     Graph *graphPtr;
@@ -15,10 +15,10 @@ private:
     int leastUnvisitedIndex;
     std::vector<int> sequence;
 
-    DepthFirstSearcher(Graph *graphPtr, int rootId);
+    DepthFirstSearcher(Graph *_graphPtr, int _rootId);
 
     void search();
-    int recurseDepthFirstSearch(int rootId);
+    int recurseDepthFirstSearch(int localRootId);
 };
 
 #endif

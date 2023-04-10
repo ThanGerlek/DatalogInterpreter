@@ -3,15 +3,15 @@
 
 #include "DepthFirstSearcher.h"
 
-std::vector<int> DepthFirstSearcher::run(Graph &graph, int rootId)
+std::vector<int> DepthFirstSearcher::run(Graph &graph, int _rootId)
 {
     graph.setAllNodesUnvisited();
-    DepthFirstSearcher searcher(&graph, rootId);
+    DepthFirstSearcher searcher(&graph, _rootId);
     searcher.search();
     return searcher.sequence;
 }
 
-DepthFirstSearcher::DepthFirstSearcher(Graph *graphPtr, int rootId)
+DepthFirstSearcher::DepthFirstSearcher(Graph *_graphPtr, int _rootId)
 {
     // TODO DepthFirstSearcher
 }
@@ -21,7 +21,7 @@ void DepthFirstSearcher::search()
     // TODO search()
 }
 
-int DepthFirstSearcher::recurseDepthFirstSearch(int rootId)
+int DepthFirstSearcher::recurseDepthFirstSearch(int localRootId)
 {
     // TODO recurseDepthFirstSearch
 }
