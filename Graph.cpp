@@ -6,6 +6,8 @@
 #include "Graph.h"
 #include "DepthFirstSearcher.h"
 
+// TODO. Convert sets/vectors into stacks
+
 Graph::Graph(int _numNodes)
 {
     this->numNodes = _numNodes;
@@ -46,8 +48,13 @@ void Graph::addReversedEdgesFromNode(Graph &reverseGraph, Node originalNode) con
 
 std::vector<int> Graph::calculateReversedPostOrderSequence(Graph &reverseGraph)
 {
-    // TODO calculateReversedPostOrderSequence
     std::vector<int> sequence = reverseGraph.depthFirstPostorder();
+    std::vector<int> reversedSequence;
+    for (int i = static_cast<int>(sequence.size()) - 1; i >= 0; i--)
+    {
+        reversedSequence.push_back(i);
+    }
+    return reversedSequence;
 }
 
 std::vector<std::set<int>> Graph::calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder)
