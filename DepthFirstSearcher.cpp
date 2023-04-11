@@ -12,6 +12,12 @@ std::vector<int> DepthFirstSearcher::generatePostorder(Graph &graph)
     return searcher.postOrderSequence;
 }
 
+std::vector<int> DepthFirstSearcher::generatePostorderWithRootPriorityList(
+    Graph &graph, std::vector<int> rootPriorityList)
+{
+    // TODO
+}
+
 void DepthFirstSearcher::search()
 {
     while (!isSearchComplete())
@@ -66,6 +72,20 @@ bool DepthFirstSearcher::isSearchComplete()
 
 void DepthFirstSearcher::updateNextRootNode(int nodeId)
 {
+    if (nextRootNode == nodeId)
+    {
+        nextRootNode++;
+    }
+}
+
+bool PrioritizedDepthFirstSearcher::isSearchComplete()
+{
+    return nextRootNode < static_cast<int>(rootPriorityList.size());
+}
+
+void PrioritizedDepthFirstSearcher::updateNextRootNode(int nodeId)
+{
+    // TODO getNextRoot
     if (nextRootNode == nodeId)
     {
         nextRootNode++;
