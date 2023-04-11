@@ -25,6 +25,7 @@ public:
     std::vector<std::set<Node>> findAllCliques();
     Graph buildReverseGraph() const;
     void addEdge(int fromNodeId, int toNodeId);
+    Node getNode(int nodeId);
     std::string toString() const;
 };
 

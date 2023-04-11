@@ -65,6 +65,11 @@ void Graph::addEdge(int fromNodeId, int toNodeId)
     nodes.at(fromNodeId).addEdge(toNodeId);
 }
 
+Node Graph::getNode(int nodeId)
+{
+    return nodes.at(nodeId);
+}
+
 void Graph::setAllNodesUnvisited()
 {
     for (int i = 0; i < numNodes; i++)
