@@ -16,10 +16,10 @@ protected:
     DepthFirstSearcher(Graph *_graphPtr)
         : graphPtr(_graphPtr), nextRootNodeId(0){};
 
+    Graph *graphPtr;
     int nextRootNodeId;
 
 private:
-    Graph *graphPtr;
     std::vector<int> visitSequence;
     std::vector<int> postOrderSequence;
 
@@ -35,13 +35,15 @@ private:
 
 class PrioritizedDepthFirstSearcher : DepthFirstSearcher
 {
-private:
-    std::vector<int> rootPriorityList;
-
-    PrioritizedDepthFirstSearcher(Graph *_graphPtr,
-                                  std::vector<int> _rootPriorityList)
+public:
+    PrioritizedDepthFirstSearcher(
+        Graph *_graphPtr,
+        std::vector<int> _rootPriorityList)
         : DepthFirstSearcher(_graphPtr),
           rootPriorityList(_rootPriorityList){};
+
+private:
+    std::vector<int> rootPriorityList;
 
     bool isSearchComplete();
     void updateNextRootNode();
