@@ -4,6 +4,8 @@
 #include <vector>
 #include "Graph.h"
 
+// TODO. Make lists into refs
+
 class DepthFirstSearcher
 {
 public:
@@ -12,23 +14,22 @@ public:
 
 protected:
     DepthFirstSearcher(Graph *_graphPtr)
-        : graphPtr(_graphPtr), nextRootNode(0){};
-    int nextRootNode;
+        : graphPtr(_graphPtr), nextRootNodeId(0){};
+
+    int nextRootNodeId;
 
 private:
     Graph *graphPtr;
     std::vector<int> visitSequence;
     std::vector<int> postOrderSequence;
 
-private:
-
     void search();
-    void searchTree(Node root);
+    void searchTree(Node &root);
     void recurseDepthFirstSearch(Node &node);
     void recordVisit(Node &node);
     void visitNeighborsOf(Node &node);
     virtual bool isSearchComplete();
-    Node getNextRoot();
+    Node &getNextRoot();
     virtual void updateNextRootNode(int nodeId);
 };
 
@@ -36,7 +37,6 @@ class PrioritizedDepthFirstSearcher : DepthFirstSearcher
 {
 private:
     std::vector<int> rootPriorityList;
-
 
     PrioritizedDepthFirstSearcher(Graph *_graphPtr,
                                   std::vector<int> _rootPriorityList)

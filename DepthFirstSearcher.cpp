@@ -22,12 +22,12 @@ void DepthFirstSearcher::search()
 {
     while (!isSearchComplete())
     {
-        Node root = getNextRoot();
+        Node &root = getNextRoot();
         searchTree(root);
     }
 }
 
-void DepthFirstSearcher::searchTree(Node root)
+void DepthFirstSearcher::searchTree(Node &root)
 {
     recurseDepthFirstSearch(root);
 }
@@ -58,9 +58,9 @@ void DepthFirstSearcher::visitNeighborsOf(Node &node)
     }
 }
 
-Node DepthFirstSearcher::getNextRoot()
+Node &DepthFirstSearcher::getNextRoot()
 {
-    return graphPtr->nodes.at(nextRootNode);
+    return graphPtr->nodes.at(nextRootNodeId);
 }
 
 bool DepthFirstSearcher::isSearchComplete()
@@ -72,23 +72,23 @@ bool DepthFirstSearcher::isSearchComplete()
 
 void DepthFirstSearcher::updateNextRootNode(int nodeId)
 {
-    if (nextRootNode == nodeId)
+    if (nextRootNodeId == nodeId)
     {
-        nextRootNode++;
+        nextRootNodeId++;
     }
 }
 
 bool PrioritizedDepthFirstSearcher::isSearchComplete()
 {
-    return nextRootNode < static_cast<int>(rootPriorityList.size());
+    return nextRootNodeId < static_cast<int>(rootPriorityList.size());
 }
 
 void PrioritizedDepthFirstSearcher::updateNextRootNode(int nodeId)
 {
     // TODO getNextRoot
-    if (nextRootNode == nodeId)
+    if (nextRootNodeId == nodeId)
     {
-        nextRootNode++;
+        nextRootNodeId++;
     }
 }
 
