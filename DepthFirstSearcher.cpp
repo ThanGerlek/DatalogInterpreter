@@ -12,18 +12,18 @@ std::vector<int> DepthFirstSearcher::generatePostorder(Graph &graph)
     return searcher.postOrderSequence;
 }
 
-std::vector<int> DepthFirstSearcher::generatePostorderWithRootPriorityList(
+std::vector<std::set<int>> DepthFirstSearcher::generateForestWithRootPriorityList(
     Graph &graph, std::vector<int> rootPriorityList)
 {
-    return PrioritizedDepthFirstSearcher::generatePostorderWithRootPriorityList(graph, rootPriorityList);
+    return PrioritizedDepthFirstSearcher::generateForestWithRootPriorityList(graph, rootPriorityList);
 }
 
-std::vector<int> PrioritizedDepthFirstSearcher::generatePostorderWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList)
+std::vector<std::set<int>> PrioritizedDepthFirstSearcher::generateForestWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList)
 {
     PrioritizedDepthFirstSearcher searcher(&graph, rootPriorityList);
     searcher.resetAllNodes();
     searcher.search();
-    return searcher.postOrderSequence;
+    return searcher.dfsForest;
 }
 
 void DepthFirstSearcher::search()
@@ -56,6 +56,8 @@ void DepthFirstSearcher::recordVisit(Node &node)
     node.hasBeenVisited = true;
     node.dfsTreeId = currentDfsTreeIndex;
     visitSequence.push_back(node.nodeId);
+    std::set<int> &dfsTree = dfsForest.at(currentDfsTreeIndex);
+    dfsTree.insert(node.nodeId);
 }
 
 void DepthFirstSearcher::visitNeighborsOf(Node &node)

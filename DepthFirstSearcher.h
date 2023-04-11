@@ -10,7 +10,7 @@ class DepthFirstSearcher
 {
 public:
     static std::vector<int> generatePostorder(Graph &graph);
-    static std::vector<int> generatePostorderWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList);
+    static std::vector<std::set<int>> generateForestWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList);
     virtual ~DepthFirstSearcher(){};
 
 protected:
@@ -22,6 +22,7 @@ protected:
     int currentDfsTreeIndex;
     std::vector<int> visitSequence;
     std::vector<int> postOrderSequence;
+    std::vector<std::set<int>> dfsForest;
 
     void search();
     void resetAllNodes();
@@ -39,7 +40,7 @@ private:
 class PrioritizedDepthFirstSearcher : DepthFirstSearcher
 {
 public:
-    static std::vector<int> generatePostorderWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList);
+    static std::vector<std::set<int>> generateForestWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList);
     ~PrioritizedDepthFirstSearcher(){};
 
 private:
