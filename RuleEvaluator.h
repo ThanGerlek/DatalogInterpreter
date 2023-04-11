@@ -14,7 +14,7 @@ public:
           program(_program),
           dependencyGraph(_dependencyGraph){};
 
-    void evaluate();
+    void evaluateRules();
 
 private:
     DatalogDatabase &database;

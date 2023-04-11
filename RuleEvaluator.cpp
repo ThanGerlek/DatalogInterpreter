@@ -3,7 +3,7 @@
 
 #include "RuleEvaluator.h"
 
-void RuleEvaluator::evaluate()
+void RuleEvaluator::evaluateRules()
 {
     std::vector<std::set<int>> cliques = dependencyGraph.findAllCliques();
     for (std::set<int> clique : cliques)
