@@ -7,19 +7,28 @@
 class DepthFirstSearcher
 {
 public:
-    static std::vector<int> run(Graph &graph, int rootId);
+    static std::vector<int> generatePostorder(Graph &graph);
 
 private:
     Graph *graphPtr;
     std::vector<int> visitSequence;
     std::vector<int> postOrderSequence;
 
-    DepthFirstSearcher(Graph *_graphPtr) : graphPtr(_graphPtr){};
+protected:
+    int nextRootNode;
+    DepthFirstSearcher(Graph *_graphPtr)
+        : graphPtr(_graphPtr), nextRootNode(0){};
 
-    void searchFrom(int rootId);
+private:
+
+    void search();
+    void searchTree(Node root);
     void recurseDepthFirstSearch(Node &node);
     void recordVisit(Node &node);
     void visitNeighborsOf(Node &node);
+    virtual bool isSearchComplete();
+    Node getNextRoot();
+    virtual void updateNextRootNode(int nodeId);
 };
 
 #endif

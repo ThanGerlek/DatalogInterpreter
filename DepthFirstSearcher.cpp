@@ -4,17 +4,25 @@
 #include <iostream>
 #include "DepthFirstSearcher.h"
 
-std::vector<int> DepthFirstSearcher::run(Graph &graph, int rootId)
+std::vector<int> DepthFirstSearcher::generatePostorder(Graph &graph)
 {
     DepthFirstSearcher searcher(&graph);
     graph.setAllNodesUnvisited();
-    searcher.searchFrom(rootId);
+    searcher.search();
     return searcher.postOrderSequence;
 }
 
-void DepthFirstSearcher::searchFrom(int rootId)
+void DepthFirstSearcher::search()
 {
-    Node root = graphPtr->nodes.at(rootId);
+    while (!isSearchComplete())
+    {
+        Node root = getNextRoot();
+        searchTree(root);
+    }
+}
+
+void DepthFirstSearcher::searchTree(Node root)
+{
     recurseDepthFirstSearch(root);
 }
 
@@ -32,6 +40,7 @@ void DepthFirstSearcher::recordVisit(Node &node)
 {
     node.hasBeenVisited = true;
     visitSequence.push_back(node.nodeId);
+    updateNextRootNode(node.nodeId);
 }
 
 void DepthFirstSearcher::visitNeighborsOf(Node &node)
@@ -40,6 +49,26 @@ void DepthFirstSearcher::visitNeighborsOf(Node &node)
     {
         Node &neighbor = graphPtr->nodes.at(neighborId);
         recurseDepthFirstSearch(neighbor);
+    }
+}
+
+Node DepthFirstSearcher::getNextRoot()
+{
+    return graphPtr->nodes.at(nextRootNode);
+}
+
+bool DepthFirstSearcher::isSearchComplete()
+{
+    // BUG! Infinite loop!
+    // return nextRootNode >= graphPtr->numNodes;
+    return true;
+}
+
+void DepthFirstSearcher::updateNextRootNode(int nodeId)
+{
+    if (nextRootNode == nodeId)
+    {
+        nextRootNode++;
     }
 }
 
