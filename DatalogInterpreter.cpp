@@ -10,13 +10,7 @@
 
 void DatalogInterpreter::run()
 {
-    std::vector<Token> tokens;
     DatalogProgram program;
-
-    Scanner scanner = createScanner();
-    scanner.scanTokensInto(tokens);
-    Parser parser(&tokens, &program);
-    parser.parse();
 
     Graph dependencyGraph =
         DependencyGraphBuilder::buildGraphFromProgram(program);
@@ -27,6 +21,15 @@ void DatalogInterpreter::run()
     dlDatabase.evaluateFacts();
     evaluateRules(dlDatabase, program, dependencyGraph);
     dlDatabase.evaluateQueries();
+}
+
+void DatalogInterpreter::readFile(DatalogProgram &program)
+{
+    std::vector<Token> tokens;
+    Scanner scanner = createScanner();
+    scanner.scanTokensInto(tokens);
+    Parser parser(&tokens, &program);
+    parser.parseTokensIntoDatalogProgram();
 }
 
 Scanner DatalogInterpreter::createScanner() const

@@ -12,6 +12,7 @@ class DatalogInterpreter
 {
 private:
     std::string filename;
+    void readFile(DatalogProgram &program);
     void evaluateRules(DatalogDatabase &dlDatabase,
                        DatalogProgram &program,
                        Graph &dependencyGraph);
