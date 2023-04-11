@@ -52,6 +52,8 @@ private:
 
     bool isSearchComplete();
     void updateNextRootNode();
+
+    unsigned priorityListSize();
 };
 
 #endif

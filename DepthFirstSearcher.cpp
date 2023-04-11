@@ -108,11 +108,37 @@ void DepthFirstSearcher::setAllNodesUnvisited()
 
 bool PrioritizedDepthFirstSearcher::isSearchComplete()
 {
-    // TODO
+    for (unsigned i = 0; i < priorityListSize(); i++)
+    {
+        int nodeId = rootPriorityList.at(i);
+        Node node = graphPtr->getNode(nodeId);
+        if (!node.hasBeenVisited)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 void PrioritizedDepthFirstSearcher::updateNextRootNode()
 {
-    // TODO
+    for (unsigned i = 0; i < priorityListSize(); i++)
+    {
+        int nodeId = rootPriorityList.at(i);
+        Node node = graphPtr->getNode(nodeId);
+        if (!node.hasBeenVisited)
+        {
+            this->nextRootNodeId = nodeId;
+            return;
+        }
+    }
+    std::cerr << "[ERROR] Could not find root node." << std::endl;
+    throw;
 }
+
+unsigned PrioritizedDepthFirstSearcher::priorityListSize()
+{
+    return static_cast<unsigned>(rootPriorityList.size());
+}
+
 #endif
