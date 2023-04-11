@@ -12,15 +12,14 @@ void DatalogInterpreter::run()
 {
     DatalogProgram program;
 
+    readFile(program);
+
     Graph dependencyGraph =
         DependencyGraphBuilder::buildGraphFromProgram(program);
     printDependencies(dependencyGraph);
 
     DatalogDatabase dlDatabase(&program);
-    dlDatabase.evaluateSchemes();
-    dlDatabase.evaluateFacts();
-    evaluateRules(dlDatabase, program, dependencyGraph);
-    dlDatabase.evaluateQueries();
+    evaluate(dlDatabase, program, dependencyGraph);
 }
 
 void DatalogInterpreter::readFile(DatalogProgram &program)
@@ -52,12 +51,15 @@ void DatalogInterpreter::printDependencies(Graph &dependencyGraph)
               << dependencyGraph.toString() << std::endl;
 }
 
-void DatalogInterpreter::evaluateRules(DatalogDatabase &dlDatabase,
+void DatalogInterpreter::evaluate(DatalogDatabase &dlDatabase,
                                        DatalogProgram &program,
                                        Graph &dependencyGraph)
 {
-    RuleEvaluator evaluator(dlDatabase, program, dependencyGraph);
-    evaluator.evaluate();
+    dlDatabase.evaluateSchemes();
+    dlDatabase.evaluateFacts();
+    RuleEvaluator ruleEvaluator(dlDatabase, program, dependencyGraph);
+    ruleEvaluator.evaluateRules();
+    dlDatabase.evaluateQueries();
 }
 
 std::string DatalogInterpreter::convertIFStreamToString(std::ifstream &ifs)
