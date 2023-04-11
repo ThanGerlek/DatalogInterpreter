@@ -31,6 +31,23 @@ void DatalogInterpreter::readFile(DatalogProgram &program)
     parser.parseTokensIntoDatalogProgram();
 }
 
+void DatalogInterpreter::evaluate(DatalogDatabase &dlDatabase,
+                                  DatalogProgram &program,
+                                  Graph &dependencyGraph)
+{
+    dlDatabase.evaluateSchemes();
+    dlDatabase.evaluateFacts();
+    RuleEvaluator ruleEvaluator(dlDatabase, program, dependencyGraph);
+    ruleEvaluator.evaluateRules();
+    dlDatabase.evaluateQueries();
+}
+
+void DatalogInterpreter::printDependencies(Graph &dependencyGraph)
+{
+    std::cout << "Dependency Graph" << std::endl
+              << dependencyGraph.toString() << std::endl;
+}
+
 Scanner DatalogInterpreter::createScanner() const
 {
     std::ifstream ifs = std::ifstream(filename);
@@ -43,23 +60,6 @@ Scanner DatalogInterpreter::createScanner() const
     ifs.close();
 
     return Scanner(inputString);
-}
-
-void DatalogInterpreter::printDependencies(Graph &dependencyGraph)
-{
-    std::cout << "Dependency Graph" << std::endl
-              << dependencyGraph.toString() << std::endl;
-}
-
-void DatalogInterpreter::evaluate(DatalogDatabase &dlDatabase,
-                                       DatalogProgram &program,
-                                       Graph &dependencyGraph)
-{
-    dlDatabase.evaluateSchemes();
-    dlDatabase.evaluateFacts();
-    RuleEvaluator ruleEvaluator(dlDatabase, program, dependencyGraph);
-    ruleEvaluator.evaluateRules();
-    dlDatabase.evaluateQueries();
 }
 
 std::string DatalogInterpreter::convertIFStreamToString(std::ifstream &ifs)

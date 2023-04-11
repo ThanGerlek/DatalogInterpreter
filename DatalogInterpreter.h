@@ -18,13 +18,14 @@ private:
                   DatalogProgram &program,
                   Graph &dependencyGraph);
 
+    static void printDependencies(Graph &dependencyGraph);
+
+    Scanner createScanner() const;
     static std::string convertIFStreamToString(std::ifstream &ifs);
 
 public:
     DatalogInterpreter(std::string _filename) : filename(_filename){};
     void run();
-    static void printDependencies(Graph &dependencyGraph);
-    Scanner createScanner() const;
 };
 
 #endif
