@@ -20,7 +20,6 @@ Rule DatalogProgram::getRuleFromId(int ruleId) const
 {
     unsigned index = static_cast<unsigned>(ruleId);
     return rules.at(index);
-    // TODO Make sure ruleId, rules[index], and nodeId all line up
 }
 
 std::string DatalogProgram::toString()

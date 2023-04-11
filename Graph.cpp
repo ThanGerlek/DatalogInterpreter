@@ -59,7 +59,6 @@ std::vector<int> Graph::calculateReversedPostOrderSequence(Graph &reverseGraph)
 
 std::vector<std::set<int>> Graph::calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder)
 {
-    // TODO calculateCliquesFromDFSOnRootNodes
     std::vector<std::set<int>> forest = DepthFirstSearcher::generateForestWithRootPriorityList(*this, rootOrder);
     return forest;
 }
