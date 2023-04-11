@@ -6,7 +6,7 @@
 #include "Graph.h"
 #include "Scanner.h"
 
-// TODO DatalogFileReader
+// TODO. DatalogFileReader
 
 class DatalogInterpreter
 {

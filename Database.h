@@ -73,7 +73,7 @@ public:
     {
         unsigned int index = getIndex(tableName);
         Relation newRelation = relations.at(index).unionWith(relation);
-        relations.at(index) = newRelation; // TODO Check: Mem leak?
+        relations.at(index) = newRelation;
     }
 
     unsigned int size()

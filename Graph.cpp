@@ -57,7 +57,7 @@ std::set<std::set<int>> Graph::calculateCliquesFromDFSOnRootNodes(std::vector<in
 
 std::vector<int> Graph::depthFirstPostorderFromRoot(int rootId)
 {
-    // TODO
+    // TODO Graph::depthFirstPostorderFromRoot
 }
 
 void Graph::addEdge(int fromNodeId, int toNodeId)
