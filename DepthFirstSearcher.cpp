@@ -12,13 +12,13 @@ std::vector<int> DepthFirstSearcher::generatePostorder(Graph &graph)
     return searcher.postOrderSequence;
 }
 
-std::vector<std::set<int>> DepthFirstSearcher::generateForestWithRootPriorityList(
+DFSForest DepthFirstSearcher::generateForestWithRootPriorityList(
     Graph &graph, std::vector<int> rootPriorityList)
 {
     return PrioritizedDepthFirstSearcher::generateForestWithRootPriorityList(graph, rootPriorityList);
 }
 
-std::vector<std::set<int>> PrioritizedDepthFirstSearcher::generateForestWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList)
+DFSForest PrioritizedDepthFirstSearcher::generateForestWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList)
 {
     PrioritizedDepthFirstSearcher searcher(&graph, rootPriorityList);
     searcher.resetAllNodes();
@@ -30,9 +30,9 @@ void DepthFirstSearcher::search()
 {
     while (!isSearchComplete())
     {
+        dfsForest.beginNewTree();
         Node &root = getNextRoot();
         searchTree(root);
-        currentDfsTreeIndex++;
     }
 }
 
@@ -54,10 +54,8 @@ void DepthFirstSearcher::recurseDepthFirstSearch(Node &node)
 void DepthFirstSearcher::recordVisit(Node &node)
 {
     node.hasBeenVisited = true;
-    node.dfsTreeId = currentDfsTreeIndex;
     visitSequence.push_back(node.nodeId);
-    std::set<int> &dfsTree = dfsForest.at(currentDfsTreeIndex);
-    dfsTree.insert(node.nodeId);
+    dfsForest.addNode(node);
 }
 
 void DepthFirstSearcher::visitNeighborsOf(Node &node)
