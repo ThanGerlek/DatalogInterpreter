@@ -7,16 +7,24 @@
 struct Node
 {
 public:
-    Node(int _nodeId) : hasBeenVisited(false), postOrderId(-1), nodeId(_nodeId){};
+    Node(int _nodeId) : hasBeenVisited(false), postOrderId(-1), nodeId(_nodeId), dfsTreeId(-1){};
 
     std::set<int> adjacentNodeIds;
     bool hasBeenVisited;
     int postOrderId;
     int nodeId;
+    int dfsTreeId;
 
     void addEdge(int receivingNodeId)
     {
         adjacentNodeIds.insert(receivingNodeId);
+    }
+
+    void reset()
+    {
+        hasBeenVisited = false;
+        postOrderId = -1;
+        dfsTreeId = -1;
     }
 
     std::string toString() const

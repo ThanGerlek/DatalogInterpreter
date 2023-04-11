@@ -15,15 +15,16 @@ public:
 
 protected:
     DepthFirstSearcher(Graph *_graphPtr)
-        : graphPtr(_graphPtr), nextRootNodeId(0){};
+        : graphPtr(_graphPtr), nextRootNodeId(0), currentDfsTreeIndex(0){};
 
     Graph *graphPtr;
     int nextRootNodeId;
+    int currentDfsTreeIndex;
     std::vector<int> visitSequence;
     std::vector<int> postOrderSequence;
 
     void search();
-    void setAllNodesUnvisited();
+    void resetAllNodes();
 
 private:
     void searchTree(Node &root);

@@ -70,11 +70,11 @@ Node Graph::getNode(int nodeId)
     return nodes.at(nodeId);
 }
 
-void Graph::setAllNodesUnvisited()
+void Graph::resetAllNodes()
 {
     for (int i = 0; i < numNodes; i++)
     {
-        nodes.at(i).hasBeenVisited = false;
+        nodes.at(i).reset();
     }
 }
 

@@ -7,7 +7,7 @@
 std::vector<int> DepthFirstSearcher::generatePostorder(Graph &graph)
 {
     DepthFirstSearcher searcher(&graph);
-    searcher.setAllNodesUnvisited();
+    searcher.resetAllNodes();
     searcher.search();
     return searcher.postOrderSequence;
 }
@@ -21,7 +21,7 @@ std::vector<int> DepthFirstSearcher::generatePostorderWithRootPriorityList(
 std::vector<int> PrioritizedDepthFirstSearcher::generatePostorderWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList)
 {
     PrioritizedDepthFirstSearcher searcher(&graph, rootPriorityList);
-    searcher.setAllNodesUnvisited();
+    searcher.resetAllNodes();
     searcher.search();
     return searcher.postOrderSequence;
 }
@@ -32,6 +32,7 @@ void DepthFirstSearcher::search()
     {
         Node &root = getNextRoot();
         searchTree(root);
+        currentDfsTreeIndex++;
     }
 }
 
@@ -53,6 +54,7 @@ void DepthFirstSearcher::recurseDepthFirstSearch(Node &node)
 void DepthFirstSearcher::recordVisit(Node &node)
 {
     node.hasBeenVisited = true;
+    node.dfsTreeId = currentDfsTreeIndex;
     visitSequence.push_back(node.nodeId);
 }
 
@@ -99,9 +101,9 @@ void DepthFirstSearcher::updateNextRootNode()
     throw;
 }
 
-void DepthFirstSearcher::setAllNodesUnvisited()
+void DepthFirstSearcher::resetAllNodes()
 {
-    graphPtr->setAllNodesUnvisited();
+    graphPtr->resetAllNodes();
 }
 
 // Subclasses
