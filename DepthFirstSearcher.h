@@ -11,6 +11,7 @@ class DepthFirstSearcher
 public:
     static std::vector<int> generatePostorder(Graph &graph);
     static std::vector<int> generatePostorderWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList);
+    virtual ~DepthFirstSearcher(){};
 
 protected:
     DepthFirstSearcher(Graph *_graphPtr)
@@ -18,12 +19,13 @@ protected:
 
     Graph *graphPtr;
     int nextRootNodeId;
-
-private:
     std::vector<int> visitSequence;
     std::vector<int> postOrderSequence;
 
     void search();
+    void setAllNodesUnvisited();
+
+private:
     void searchTree(Node &root);
     void recurseDepthFirstSearch(Node &node);
     void recordVisit(Node &node);
@@ -36,13 +38,16 @@ private:
 class PrioritizedDepthFirstSearcher : DepthFirstSearcher
 {
 public:
+    static std::vector<int> generatePostorderWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList);
+    ~PrioritizedDepthFirstSearcher(){};
+
+private:
     PrioritizedDepthFirstSearcher(
         Graph *_graphPtr,
         std::vector<int> _rootPriorityList)
         : DepthFirstSearcher(_graphPtr),
           rootPriorityList(_rootPriorityList){};
 
-private:
     std::vector<int> rootPriorityList;
 
     bool isSearchComplete();

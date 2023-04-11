@@ -7,7 +7,7 @@
 std::vector<int> DepthFirstSearcher::generatePostorder(Graph &graph)
 {
     DepthFirstSearcher searcher(&graph);
-    graph.setAllNodesUnvisited();
+    searcher.setAllNodesUnvisited();
     searcher.search();
     return searcher.postOrderSequence;
 }
@@ -15,7 +15,15 @@ std::vector<int> DepthFirstSearcher::generatePostorder(Graph &graph)
 std::vector<int> DepthFirstSearcher::generatePostorderWithRootPriorityList(
     Graph &graph, std::vector<int> rootPriorityList)
 {
-    // TODO generatePostorderWithRootPriorityList
+    return PrioritizedDepthFirstSearcher::generatePostorderWithRootPriorityList(graph, rootPriorityList);
+}
+
+std::vector<int> PrioritizedDepthFirstSearcher::generatePostorderWithRootPriorityList(Graph &graph, std::vector<int> rootPriorityList)
+{
+    PrioritizedDepthFirstSearcher searcher(&graph, rootPriorityList);
+    searcher.setAllNodesUnvisited();
+    searcher.search();
+    return searcher.postOrderSequence;
 }
 
 void DepthFirstSearcher::search()
@@ -91,4 +99,20 @@ void DepthFirstSearcher::updateNextRootNode()
     throw;
 }
 
+void DepthFirstSearcher::setAllNodesUnvisited()
+{
+    graphPtr->setAllNodesUnvisited();
+}
+
+// Subclasses
+
+bool PrioritizedDepthFirstSearcher::isSearchComplete()
+{
+    // TODO
+}
+
+void PrioritizedDepthFirstSearcher::updateNextRootNode()
+{
+    // TODO
+}
 #endif
