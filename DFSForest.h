@@ -36,7 +36,7 @@ public:
         return forest;
     }
 
-    int size()
+    int numTrees()
     {
         return static_cast<int>(forest.size());
     }
@@ -45,25 +45,26 @@ private:
     std::set<int> &getCurrentDfsTree()
     {
         initializeDfsTree();
-        return forest.at(getCurrentDfsTreeIndex());
+        unsigned index = static_cast<unsigned>(getCurrentDfsTreeIndex());
+        return forest.at(index);
     }
 
     void initializeDfsTree()
     {
-        if (getCurrentDfsTreeIndex() >= forest.size())
+        if (getCurrentDfsTreeIndex() >= numTrees())
         {
             std::set<int> dfsTree;
             forest.push_back(dfsTree);
         }
     }
 
-    unsigned getCurrentDfsTreeIndex()
+    int getCurrentDfsTreeIndex()
     {
-        if (forest.size() == 0)
+        if (numTrees() == 0)
         {
             return 0;
         }
-        return forest.size() - 1;
+        return numTrees() - 1;
     }
 };
 
