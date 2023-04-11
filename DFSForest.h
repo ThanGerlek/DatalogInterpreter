@@ -8,28 +8,26 @@
 class DFSForest
 {
 private:
-    unsigned currentDfsTreeIndex;
     std::vector<std::set<int>> forest;
 
 public:
-    DFSForest() : currentDfsTreeIndex(0)
+    DFSForest()
     {
         initializeDfsTree();
     }
 
     void addNode(Node &node)
     {
-        initializeDfsTree();
-        std::set<int> &dfsTree = forest.at(currentDfsTreeIndex);
-        dfsTree.insert(node.nodeId);
+        getCurrentDfsTree().insert(node.nodeId);
     }
 
     void beginNewTree()
     {
-        if (forest.at(currentDfsTreeIndex).size() != 0)
+        if (getCurrentDfsTree().size() != 0)
         {
+            std::set<int> dfsTree;
+            forest.push_back(dfsTree);
             initializeDfsTree();
-            currentDfsTreeIndex++;
         }
     }
 
@@ -44,13 +42,28 @@ public:
     }
 
 private:
+    std::set<int> &getCurrentDfsTree()
+    {
+        initializeDfsTree();
+        return forest.at(getCurrentDfsTreeIndex());
+    }
+
     void initializeDfsTree()
     {
-        if (forest.size() >= currentDfsTreeIndex)
+        if (getCurrentDfsTreeIndex() >= forest.size())
         {
             std::set<int> dfsTree;
-            forest.at(currentDfsTreeIndex) = dfsTree;
+            forest.push_back(dfsTree);
         }
+    }
+
+    unsigned getCurrentDfsTreeIndex()
+    {
+        if (forest.size() == 0)
+        {
+            return 0;
+        }
+        return forest.size() - 1;
     }
 };
 
