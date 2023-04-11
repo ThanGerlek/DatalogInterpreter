@@ -47,7 +47,7 @@ void Graph::addReversedEdgesFromNode(Graph &reverseGraph, Node originalNode) con
 std::vector<int> Graph::calculateReversedPostOrderSequence(Graph &reverseGraph)
 {
     // TODO calculateReversedPostOrderSequence
-    std::vector<int> dfsNodes = reverseGraph.depthFirstSearchFromRoot(0);
+    std::vector<int> dfsNodes = reverseGraph.depthFirstPostorderFromRoot(0);
 }
 
 std::set<std::set<int>> Graph::calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder) const
@@ -55,9 +55,9 @@ std::set<std::set<int>> Graph::calculateCliquesFromDFSOnRootNodes(std::vector<in
     // TODO calculateCliquesFromDFSOnRootNodes
 }
 
-std::vector<int> Graph::depthFirstSearchFromRoot(int rootId)
+std::vector<int> Graph::depthFirstPostorderFromRoot(int rootId)
 {
-    return DepthFirstSearcher::run(*this, rootId);
+    // TODO
 }
 
 void Graph::addEdge(int fromNodeId, int toNodeId)

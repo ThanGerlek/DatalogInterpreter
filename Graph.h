@@ -14,7 +14,7 @@ private:
     std::set<std::set<int>> calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder) const;
     void addReversedEdgesFromNode(Graph &reverseGraph, Node originalNode) const;
     void setAllNodesUnvisited();
-    std::vector<int> depthFirstSearchFromRoot(int rootId);
+    std::vector<int> depthFirstPostorderFromRoot(int rootId);
 
     friend class DepthFirstSearcher;
 
