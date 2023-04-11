@@ -52,7 +52,8 @@ std::vector<int> Graph::calculateReversedPostOrderSequence(Graph &reverseGraph)
     std::vector<int> reversedSequence;
     for (int i = static_cast<int>(sequence.size()) - 1; i >= 0; i--)
     {
-        reversedSequence.push_back(i);
+        int nodeId = sequence.at(static_cast<unsigned>(i));
+        reversedSequence.push_back(nodeId);
     }
     return reversedSequence;
 }
