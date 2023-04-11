@@ -16,11 +16,11 @@ Graph::Graph(int _numNodes)
     }
 }
 
-std::vector<std::set<Node>> Graph::findAllCliques()
+std::vector<std::set<int>> Graph::findAllCliques()
 {
     Graph reverseGraph = buildReverseGraph();
     std::vector<int> rootNodeOrder = calculateReversedPostOrderSequence(reverseGraph);
-    calculateCliquesFromDFSOnRootNodes(rootNodeOrder);
+    return calculateCliquesFromDFSOnRootNodes(rootNodeOrder);
 }
 
 Graph Graph::buildReverseGraph() const
@@ -47,17 +47,17 @@ void Graph::addReversedEdgesFromNode(Graph &reverseGraph, Node originalNode) con
 std::vector<int> Graph::calculateReversedPostOrderSequence(Graph &reverseGraph)
 {
     // TODO calculateReversedPostOrderSequence
-    std::vector<int> dfsNodes = reverseGraph.depthFirstPostorderFromRoot(0);
+    std::vector<int> sequence = reverseGraph.depthFirstPostorder();
 }
 
-std::set<std::set<int>> Graph::calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder) const
+std::vector<std::set<int>> Graph::calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder)
 {
     // TODO calculateCliquesFromDFSOnRootNodes
 }
 
-std::vector<int> Graph::depthFirstPostorderFromRoot(int rootId)
+std::vector<int> Graph::depthFirstPostorder()
 {
-    // TODO Graph::depthFirstPostorderFromRoot
+    return DepthFirstSearcher::generatePostorder(*this);
 }
 
 void Graph::addEdge(int fromNodeId, int toNodeId)

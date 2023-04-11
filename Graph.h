@@ -11,10 +11,10 @@ private:
     int numNodes;
 
     std::vector<int> calculateReversedPostOrderSequence(Graph &reverseGraph);
-    std::set<std::set<int>> calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder) const;
+    std::vector<std::set<int>> calculateCliquesFromDFSOnRootNodes(std::vector<int> &rootOrder);
     void addReversedEdgesFromNode(Graph &reverseGraph, Node originalNode) const;
     void resetAllNodes();
-    std::vector<int> depthFirstPostorderFromRoot(int rootId);
+    std::vector<int> depthFirstPostorder();
 
     friend class DepthFirstSearcher;
 
@@ -22,7 +22,7 @@ public:
     Graph() : numNodes(0){};
     Graph(int _numNodes);
 
-    std::vector<std::set<Node>> findAllCliques();
+    std::vector<std::set<int>> findAllCliques();
     Graph buildReverseGraph() const;
     void addEdge(int fromNodeId, int toNodeId);
     Node getNode(int nodeId);
