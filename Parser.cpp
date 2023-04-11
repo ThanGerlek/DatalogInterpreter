@@ -79,7 +79,7 @@ void Parser::match(TokenType type)
 /**
  * Parse this Parser's DatalogProgram using recursive descent.
  */
-void Parser::parse()
+void Parser::parseTokensIntoDatalogProgram()
 {
     try
     {

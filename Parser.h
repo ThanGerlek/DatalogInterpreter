@@ -10,7 +10,7 @@ class Parser
 public:
     Parser(const std::vector<Token> *_tokens, DatalogProgram *_program) : tokens(_tokens), program(_program), nextTokenIndex(0), max_nextTokenIndex(0){};
     ~Parser(){};
-    void parse();
+    void parseTokensIntoDatalogProgram();
 
 private:
     const std::vector<Token> *tokens;
