@@ -26,7 +26,7 @@ const std::set<Rule> RuleEvaluator::convertIdSetToRuleSet(std::set<int> clique)
 
 Rule RuleEvaluator::convertIdToRule(int id) const
 {
-    Rule rule = program.getRuleFromId(id);
+    return program.getRuleFromId(id);
 }
 
 /**
