@@ -39,7 +39,7 @@ public:
     // Accessors
     std::string getName() const { return name; }
     Scheme getScheme() const { return scheme; }
-    std::set<Tuple> getTuples() { return tuples; }
+    std::set<Tuple> getTuples() const { return tuples; }
     unsigned int size() const { return static_cast<unsigned int>(tuples.size()); }
 
     bool containsTuple(Tuple &tuple) const;

@@ -19,7 +19,7 @@ public:
     const std::vector<Predicate> &getPredicates() const { return bodyPredicates; } // TODO. Remove
     void addBodyPredicate(Predicate p) { bodyPredicates.push_back(p); }
 
-    std::string toString()
+    std::string toString() const
     {
         if (bodyPredicates.size() == 0)
         {
