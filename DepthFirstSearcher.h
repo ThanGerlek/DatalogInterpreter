@@ -30,7 +30,7 @@ private:
     void visitNeighborsOf(Node &node);
     virtual bool isSearchComplete();
     Node &getNextRoot();
-    virtual void updateNextRootNode(int nodeId);
+    virtual void updateNextRootNode();
 };
 
 class PrioritizedDepthFirstSearcher : DepthFirstSearcher
@@ -44,7 +44,7 @@ private:
           rootPriorityList(_rootPriorityList){};
 
     bool isSearchComplete();
-    void updateNextRootNode(int nodeId);
+    void updateNextRootNode();
 };
 
 #endif

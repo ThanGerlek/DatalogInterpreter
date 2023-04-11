@@ -46,7 +46,6 @@ void DepthFirstSearcher::recordVisit(Node &node)
 {
     node.hasBeenVisited = true;
     visitSequence.push_back(node.nodeId);
-    updateNextRootNode(node.nodeId);
 }
 
 void DepthFirstSearcher::visitNeighborsOf(Node &node)
@@ -60,36 +59,36 @@ void DepthFirstSearcher::visitNeighborsOf(Node &node)
 
 Node &DepthFirstSearcher::getNextRoot()
 {
+    updateNextRootNode();
     return graphPtr->nodes.at(nextRootNodeId);
 }
 
 bool DepthFirstSearcher::isSearchComplete()
 {
-    // BUG! Infinite loop!
-    // return nextRootNode >= graphPtr->numNodes;
+    for (int i = 0; i < graphPtr->numNodes; i++)
+    {
+        Node &node = graphPtr->nodes.at(i);
+        if (!node.hasBeenVisited)
+        {
+            return false;
+        }
+    }
     return true;
 }
 
-void DepthFirstSearcher::updateNextRootNode(int nodeId)
+void DepthFirstSearcher::updateNextRootNode()
 {
-    if (nextRootNodeId == nodeId)
+    for (int i = 0; i < graphPtr->numNodes; i++)
     {
-        nextRootNodeId++;
+        Node &root = graphPtr->nodes.at(i);
+        if (!root.hasBeenVisited)
+        {
+            this->nextRootNodeId = i;
+            return;
+        }
     }
-}
-
-bool PrioritizedDepthFirstSearcher::isSearchComplete()
-{
-    return nextRootNodeId < static_cast<int>(rootPriorityList.size());
-}
-
-void PrioritizedDepthFirstSearcher::updateNextRootNode(int nodeId)
-{
-    // TODO getNextRoot
-    if (nextRootNodeId == nodeId)
-    {
-        nextRootNodeId++;
-    }
+    std::cerr << "[ERROR] Could not find root node." << std::endl;
+    throw;
 }
 
 #endif
