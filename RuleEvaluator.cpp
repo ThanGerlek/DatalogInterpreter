@@ -5,29 +5,28 @@
 
 void RuleEvaluator::evaluate()
 {
-    std::vector<std::set<Node>> cliques = dependencyGraph.findAllCliques();
-    for (std::set<Node> clique : cliques)
+    std::vector<std::set<int>> cliques = dependencyGraph.findAllCliques();
+    for (std::set<int> clique : cliques)
     {
-        const std::set<Rule> ruleSet = convertNodeSetToRuleSet(clique);
+        const std::set<Rule> ruleSet = convertIdSetToRuleSet(clique);
         evaluateRuleSet(ruleSet);
     }
 }
 
-const std::set<Rule> RuleEvaluator::convertNodeSetToRuleSet(std::set<Node> clique)
+const std::set<Rule> RuleEvaluator::convertIdSetToRuleSet(std::set<int> clique)
 {
     std::set<Rule> ruleSet;
-    for (Node node : clique)
+    for (int id : clique)
     {
-        Rule rule = convertNodeToRule(node);
+        Rule rule = convertIdToRule(id);
         ruleSet.insert(rule);
     }
     return ruleSet;
 }
 
-Rule RuleEvaluator::convertNodeToRule(Node node) const
+Rule RuleEvaluator::convertIdToRule(int id) const
 {
-    int ruleId = node.nodeId;
-    Rule rule = program.getRuleFromId(ruleId);
+    Rule rule = program.getRuleFromId(id);
 }
 
 /**
