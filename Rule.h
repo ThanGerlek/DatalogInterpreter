@@ -37,12 +37,18 @@ public:
         return out;
     }
 
-    bool operator<(Rule other) const {
+    bool operator<(Rule other) const
+    {
         return this->ruleId < other.ruleId;
     }
     bool operator>(Rule other) const
     {
         return this->ruleId > other.ruleId;
+    }
+
+    int getRuleId() const
+    {
+        return ruleId;
     }
 
 private:
