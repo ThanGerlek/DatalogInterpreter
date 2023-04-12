@@ -73,6 +73,7 @@ public:
     {
         unsigned int index = getIndex(tableName);
         Relation newRelation = relations.at(index).unionWith(relation);
+        newRelation.setName(tableName);
         relations.at(index) = newRelation;
     }
 
