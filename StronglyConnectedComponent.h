@@ -11,7 +11,7 @@ struct StronglyConnectedComponent
 private:
     std::vector<Rule> rules;
     int numPasses;
-    std::stringstream resultStream;
+    std::string resultString;
 
 public:
     StronglyConnectedComponent(){};
@@ -20,24 +20,26 @@ public:
     {
         std::stringstream out;
         out << "SCC: " << ruleList() << std::endl;
-        out << resultStream.str();
+        out << resultString;
         out << numPasses << " passes: " << ruleList() << std::endl;
         return out.str();
     }
 
     void addIteration(Rule rule, Relation &resultRelation)
     {
-        resultStream << rule.toString() << "."
+        std::stringstream sstream;
+        sstream << rule.toString() << "."
                      << std::endl;
 
         for (Tuple tuple : resultRelation.getTuples())
         {
             if (tuple.size() > 0)
             {
-                resultStream << "  " << tuple.toString(resultRelation.getScheme())
+                sstream << "  " << tuple.toString(resultRelation.getScheme())
                              << std::endl;
             }
         }
+        resultString += sstream.str();
     }
 
 private:
