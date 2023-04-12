@@ -3,13 +3,14 @@
 
 #include "RuleEvaluator.h"
 
-void RuleEvaluator::evaluateRules()
+StronglyConnectedComponent RuleEvaluator::evaluateRules()
 {
+    // TODO
     std::vector<std::set<int>> cliques = dependencyGraph.findAllCliques();
     for (std::set<int> clique : cliques)
     {
         const std::set<Rule> ruleSet = convertIdSetToRuleSet(clique);
-        evaluateRuleSet(ruleSet);
+        StronglyConnectedComponent component = evaluateRuleSet(ruleSet);
     }
 }
 
@@ -32,27 +33,26 @@ Rule RuleEvaluator::convertIdToRule(int id) const
 /**
  * @brief Update the Database with the specified Rules of the DatalogProgram.
  */
-void RuleEvaluator::evaluateRuleSet(const std::set<Rule> &rules)
+StronglyConnectedComponent RuleEvaluator::evaluateRuleSet(const std::set<Rule> &rules)
 {
-    int iterations = 0;
+    StronglyConnectedComponent component;
+
+    int numPasses = 0;
     unsigned int prevSize = 0;
     do
     {
-        iterations++;
+        numPasses++;
         prevSize = database.size();
 
         for (Rule rule : rules)
         {
-            evaluateRule(rule);
+            Relation newRules = evaluateRule(rule);
+            component.addIteration(rule, newRules);
         }
     } while (prevSize != database.size());
-
-    std::cout << std::endl
-              << "Schemes populated after " << iterations << " passes through the Rules." << std::endl
-              << std::endl;
 }
 
-void RuleEvaluator::evaluateRule(Rule rule)
+Relation RuleEvaluator::evaluateRule(Rule rule)
 {
     // Evaluate the predicates on the right-hand side of the rule
     Relation relation = evaluateRulePredicates(rule);
@@ -107,15 +107,6 @@ const Relation RuleEvaluator::evaluateRulePredicate(Predicate predicate) const
 
 void RuleEvaluator::printRuleResult(Rule rule, Relation results) const
 {
-    std::cout << rule.toString() << "." << std::endl;
-
-    // Print Tuples
-    for (Tuple tuple : results.getTuples())
-    {
-        if (tuple.size() > 0)
-        {
-            std::cout << "  " << tuple.toString(results.getScheme()) << std::endl;
-        }
-    }
+    // TODO
 }
 #endif

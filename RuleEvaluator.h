@@ -3,6 +3,7 @@
 
 #include "DatalogDatabase.h"
 #include "Graph.h"
+#include "StronglyConnectedComponent.h"
 
 class RuleEvaluator
 {
@@ -14,7 +15,7 @@ public:
           program(_program),
           dependencyGraph(_dependencyGraph){};
 
-    void evaluateRules();
+    StronglyConnectedComponent evaluateRules();
 
 private:
     DatalogDatabase &database;
@@ -23,8 +24,9 @@ private:
 
     const std::set<Rule> convertIdSetToRuleSet(std::set<int> clique);
     Rule convertIdToRule(int id) const;
-    void evaluateRuleSet(const std::set<Rule> &rules);
-    void evaluateRule(Rule rule);
+    StronglyConnectedComponent evaluateRuleSet(
+        const std::set<Rule> &rules);
+    Relation evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;
     const Relation evaluateRulePredicate(Predicate predicate) const;
     void printRuleResult(Rule rule, Relation results) const;
