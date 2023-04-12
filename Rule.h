@@ -14,9 +14,9 @@ private:
 
 public:
     Rule(Predicate _head) : head(_head), ruleId(-1){};
-    Rule(Predicate _head, int _ruleId) : head(_head), ruleId(_ruleId){};
     ~Rule(){};
 
+    void setId(int _ruleId) { ruleId = _ruleId; }
 
     Predicate getHead() const { return head; }
     std::string getName() const { return head.getName(); }

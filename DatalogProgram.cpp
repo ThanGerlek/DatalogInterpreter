@@ -18,8 +18,8 @@ void DatalogProgram::addToDomain(std::string str) { domain.insert(str); }
 void DatalogProgram::addRule(Rule rule)
 {
     int ruleId = static_cast<int>(rules.size());
-    Rule newRule(rule.getHead(), ruleId);
-    rules.push_back(newRule);
+    rule.setId(ruleId);
+    rules.push_back(rule);
 }
 
 Rule DatalogProgram::getRuleFromId(int ruleId) const
