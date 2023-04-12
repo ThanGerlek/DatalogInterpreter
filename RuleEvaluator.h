@@ -29,7 +29,8 @@ private:
     Relation evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;
     const Relation evaluateRulePredicate(Predicate predicate) const;
-    void printRuleResult(Rule rule, Relation results) const;
+    void printRuleEvaluationResults(
+        const std::vector<StronglyConnectedComponent> &components) const;
     //
 };
 

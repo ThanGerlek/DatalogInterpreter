@@ -68,7 +68,7 @@ Relation RuleEvaluator::evaluateRule(Rule rule)
 
     // Print new results
     Relation newTuples = relation.subtract(table);
-    printRuleResult(rule, newTuples); // TODO? Extract output?
+    // TODO SCCs
 
     // Update relation in the database to the new relation
     database.unionIntoDatabase(relation, tableName);
@@ -105,8 +105,12 @@ const Relation RuleEvaluator::evaluateRulePredicate(Predicate predicate) const
     return relation;
 }
 
-void RuleEvaluator::printRuleResult(Rule rule, Relation results) const
+void RuleEvaluator::printRuleEvaluationResults(const std::vector<StronglyConnectedComponent> &components) const
 {
-    // TODO
+    std::cout << "Rule Evaluation" << std::endl;
+    for (const StronglyConnectedComponent &component : components)
+    {
+        std::cout << component.toString();
+    }
 }
 #endif
