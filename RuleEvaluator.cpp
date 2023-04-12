@@ -37,6 +37,17 @@ Rule RuleEvaluator::convertIdToRule(int id) const
  */
 StronglyConnectedComponent RuleEvaluator::buildSCCFromRuleSet(const std::set<Rule> &rules)
 {
+    if (rules.size() == 1)
+    {
+        for (Rule rule : rules)
+        {
+            if (!isRuleSelfDependent(rule))
+            {
+                return buildSingletonSCC(rule);
+            }
+        }
+    }
+
     StronglyConnectedComponent component;
 
     int numPasses = 0;
@@ -53,6 +64,26 @@ StronglyConnectedComponent RuleEvaluator::buildSCCFromRuleSet(const std::set<Rul
         }
     } while (prevSize != database.size());
 
+    return component;
+}
+
+bool RuleEvaluator::isRuleSelfDependent(Rule rule)
+{
+    for (Predicate pred : rule.getPredicates())
+    {
+        if (rule.getName() == pred.getName())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+StronglyConnectedComponent RuleEvaluator::buildSingletonSCC(Rule rule)
+{
+    StronglyConnectedComponent component;
+    Relation newRules = evaluateRule(rule);
+    component.addIteration(rule, newRules);
     return component;
 }
 

@@ -26,6 +26,8 @@ private:
     Rule convertIdToRule(int id) const;
     StronglyConnectedComponent buildSCCFromRuleSet(
         const std::set<Rule> &rules);
+    bool isRuleSelfDependent(Rule rule);
+    StronglyConnectedComponent buildSingletonSCC(Rule rule);
     Relation evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;
     const Relation evaluateRulePredicate(Predicate predicate) const;
