@@ -11,10 +11,7 @@ private:
     std::vector<std::set<int>> forest;
 
 public:
-    DFSForest()
-    {
-        initializeDfsTree();
-    }
+    DFSForest(){};
 
     void addNode(Node &node)
     {
