@@ -14,7 +14,7 @@ private:
     std::string resultString;
 
 public:
-    StronglyConnectedComponent(){};
+    StronglyConnectedComponent() : numPasses(0){};
 
     std::string toString() const
     {
@@ -31,6 +31,8 @@ public:
         {
             rules.push_back(rule);
         }
+
+        numPasses++;
 
         std::stringstream sstream;
         sstream << rule.toString() << "."
