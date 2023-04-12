@@ -27,7 +27,10 @@ public:
 
     void addIteration(Rule rule, Relation &resultRelation)
     {
-        rules.push_back(rule);
+        if (!containsRule(rule))
+        {
+            rules.push_back(rule);
+        }
 
         std::stringstream sstream;
         sstream << rule.toString() << "."
@@ -59,6 +62,18 @@ private:
             addComma = true;
         }
         return sstream.str();
+    }
+
+    bool containsRule(Rule &rule)
+    {
+        for (Rule other : rules)
+        {
+            if (other.getRuleId() == rule.getRuleId())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 };
 
