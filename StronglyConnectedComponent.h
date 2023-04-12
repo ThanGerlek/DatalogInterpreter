@@ -16,7 +16,7 @@ private:
 public:
     StronglyConnectedComponent(){};
 
-    std::string toString()
+    std::string toString() const
     {
         std::stringstream out;
         out << "SCC: " << ruleList() << std::endl;
@@ -41,7 +41,7 @@ public:
     }
 
 private:
-    std::string ruleList()
+    std::string ruleList() const
     {
         std::string out = "";
         for (Rule rule : rules)
