@@ -3,15 +3,17 @@
 
 #include "RuleEvaluator.h"
 
-StronglyConnectedComponent RuleEvaluator::evaluateRules()
+void RuleEvaluator::evaluateRules()
 {
-    // TODO
+    std::vector<StronglyConnectedComponent> components;
     std::vector<std::set<int>> cliques = dependencyGraph.findAllCliques();
     for (std::set<int> clique : cliques)
     {
         const std::set<Rule> ruleSet = convertIdSetToRuleSet(clique);
-        StronglyConnectedComponent component = evaluateRuleSet(ruleSet);
+        StronglyConnectedComponent component = buildSCCFromRuleSet(ruleSet);
+        components.push_back(component);
     }
+    printRuleEvaluationResults(components);
 }
 
 const std::set<Rule> RuleEvaluator::convertIdSetToRuleSet(std::set<int> clique)
@@ -33,7 +35,7 @@ Rule RuleEvaluator::convertIdToRule(int id) const
 /**
  * @brief Update the Database with the specified Rules of the DatalogProgram.
  */
-StronglyConnectedComponent RuleEvaluator::evaluateRuleSet(const std::set<Rule> &rules)
+StronglyConnectedComponent RuleEvaluator::buildSCCFromRuleSet(const std::set<Rule> &rules)
 {
     StronglyConnectedComponent component;
 
@@ -50,6 +52,8 @@ StronglyConnectedComponent RuleEvaluator::evaluateRuleSet(const std::set<Rule> &
             component.addIteration(rule, newRules);
         }
     } while (prevSize != database.size());
+
+    return component;
 }
 
 Relation RuleEvaluator::evaluateRule(Rule rule)
@@ -64,14 +68,11 @@ Relation RuleEvaluator::evaluateRule(Rule rule)
     std::string tableName = rule.getName();
     Relation table = database.getRelation(tableName);
     relation = relation.makeUnionCompatibleWith(table);
-    // relation = relation.unionWith(table);
-
-    // Print new results
-    Relation newTuples = relation.subtract(table);
-    // TODO SCCs
-
-    // Update relation in the database to the new relation
     database.unionIntoDatabase(relation, tableName);
+
+    Relation newTuples = relation.subtract(table);
+
+    return newTuples;
 }
 
 const Relation RuleEvaluator::evaluateRulePredicates(Rule rule) const

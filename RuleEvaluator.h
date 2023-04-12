@@ -15,7 +15,7 @@ public:
           program(_program),
           dependencyGraph(_dependencyGraph){};
 
-    StronglyConnectedComponent evaluateRules();
+    void evaluateRules();
 
 private:
     DatalogDatabase &database;
@@ -24,14 +24,13 @@ private:
 
     const std::set<Rule> convertIdSetToRuleSet(std::set<int> clique);
     Rule convertIdToRule(int id) const;
-    StronglyConnectedComponent evaluateRuleSet(
+    StronglyConnectedComponent buildSCCFromRuleSet(
         const std::set<Rule> &rules);
     Relation evaluateRule(Rule rule);
     const Relation evaluateRulePredicates(Rule rule) const;
     const Relation evaluateRulePredicate(Predicate predicate) const;
     void printRuleEvaluationResults(
         const std::vector<StronglyConnectedComponent> &components) const;
-    //
 };
 
 #endif
