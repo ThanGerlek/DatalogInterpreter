@@ -58,7 +58,7 @@ private:
         {
             if (addComma)
             {
-                sstream << ", ";
+                sstream << ",";
             }
             sstream << "R" << rule.getRuleId();
             addComma = true;

@@ -25,7 +25,7 @@ public:
         {
             if (i != 0)
             {
-                out << " ";
+                out << ", ";
             }
             out << scheme.at(i) << "=" << this->at(i);
         }
