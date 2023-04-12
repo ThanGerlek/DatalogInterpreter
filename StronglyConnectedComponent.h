@@ -25,14 +25,17 @@ public:
         return out.str();
     }
 
-    void addIteration(Rule rule, Relation &resultRelation)
+    void beginNewPass()
+    {
+        numPasses++;
+    }
+
+    void addRuleResult(Rule rule, Relation &resultRelation)
     {
         if (!containsRule(rule))
         {
             rules.push_back(rule);
         }
-
-        numPasses++;
 
         std::stringstream sstream;
         sstream << rule.toString() << "."

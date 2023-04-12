@@ -50,17 +50,16 @@ StronglyConnectedComponent RuleEvaluator::buildSCCFromRuleSet(const std::set<Rul
 
     StronglyConnectedComponent component;
 
-    int numPasses = 0;
     unsigned int prevSize = 0;
     do
     {
-        numPasses++;
+        component.beginNewPass();
         prevSize = database.size();
 
         for (Rule rule : rules)
         {
             Relation newRules = evaluateRule(rule);
-            component.addIteration(rule, newRules);
+            component.addRuleResult(rule, newRules);
         }
     } while (prevSize != database.size());
 
@@ -83,7 +82,8 @@ StronglyConnectedComponent RuleEvaluator::buildSingletonSCC(Rule rule)
 {
     StronglyConnectedComponent component;
     Relation newRules = evaluateRule(rule);
-    component.addIteration(rule, newRules);
+    component.beginNewPass();
+    component.addRuleResult(rule, newRules);
     return component;
 }
 
