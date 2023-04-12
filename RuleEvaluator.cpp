@@ -113,5 +113,6 @@ void RuleEvaluator::printRuleEvaluationResults(const std::vector<StronglyConnect
     {
         std::cout << component.toString();
     }
+    std::cout << std::endl;
 }
 #endif
