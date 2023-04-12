@@ -7,9 +7,16 @@
 
 class Rule
 {
+private:
+    Predicate head;
+    std::vector<Predicate> bodyPredicates;
+    int ruleId;
+
 public:
-    Rule(Predicate _head) : head(_head){};
+    Rule(Predicate _head) : head(_head), ruleId(-1){};
+    Rule(Predicate _head, int _ruleId) : head(_head), ruleId(_ruleId){};
     ~Rule(){};
+
 
     Predicate getHead() const { return head; }
     std::string getName() const { return head.getName(); }
@@ -50,11 +57,6 @@ public:
     {
         return ruleId;
     }
-
-private:
-    Predicate head;
-    std::vector<Predicate> bodyPredicates;
-    int ruleId;
 };
 
 #endif

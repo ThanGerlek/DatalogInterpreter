@@ -12,9 +12,15 @@ const std::set<std::string> *DatalogProgram::getDomain() const { return &domain;
 
 void DatalogProgram::addScheme(Predicate scheme) { schemes.push_back(scheme); }
 void DatalogProgram::addQuery(Predicate query) { queries.push_back(query); }
-void DatalogProgram::addRule(Rule rule) { rules.push_back(rule); }
 void DatalogProgram::addFact(Predicate fact) { facts.push_back(fact); }
 void DatalogProgram::addToDomain(std::string str) { domain.insert(str); }
+
+void DatalogProgram::addRule(Rule rule)
+{
+    int ruleId = static_cast<int>(rules.size());
+    Rule newRule(rule.getHead(), ruleId);
+    rules.push_back(newRule);
+}
 
 Rule DatalogProgram::getRuleFromId(int ruleId) const
 {
