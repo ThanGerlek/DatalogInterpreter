@@ -27,16 +27,18 @@ public:
 
     void addIteration(Rule rule, Relation &resultRelation)
     {
+        rules.push_back(rule);
+
         std::stringstream sstream;
         sstream << rule.toString() << "."
-                     << std::endl;
+                << std::endl;
 
         for (Tuple tuple : resultRelation.getTuples())
         {
             if (tuple.size() > 0)
             {
                 sstream << "  " << tuple.toString(resultRelation.getScheme())
-                             << std::endl;
+                        << std::endl;
             }
         }
         resultString += sstream.str();
@@ -45,16 +47,18 @@ public:
 private:
     std::string ruleList() const
     {
-        std::string out = "";
+        std::stringstream sstream;
+        bool addComma = false;
         for (Rule rule : rules)
         {
-            if (out.length() != 0)
+            if (addComma)
             {
-                out += ", ";
+                sstream << ", ";
             }
-            out += "R" + rule.getRuleId();
+            sstream << "R" << rule.getRuleId();
+            addComma = true;
         }
-        return out;
+        return sstream.str();
     }
 };
 
